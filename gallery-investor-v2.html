@@ -1529,6 +1529,15 @@
                 overflow-x: hidden;
             }
             
+            /* 手机竖屏时左侧内容往右移，与网页版等比 */
+            .content-left {
+                padding-left: 6vw;
+            }
+            
+            .title {
+                left: 18vw;
+            }
+            
             /* 页面包装器：设置实际占用高度，确保页面分隔 */
             .page-wrapper {
                 width: 100vw;
@@ -1598,6 +1607,13 @@
                 display: block;
                 margin-bottom: 0;
             }
+        }
+        
+        /* 临时隐藏第4页及之后的所有页面 - 客户演示用 */
+        #page4, #page5, #page6, #page7, #page8, #page9, #page10,
+        #page11, #page12, #page13, #page14, #page15, #page16, #page17,
+        #page18, #page19, #page20, #page21, #page22, #page23, #page24 {
+            display: none !important;
         }
 
     </style>
