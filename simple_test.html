@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>简单测试</title>
+    <style>
+        body {
+            background: #000;
+            color: #FFD700;
+            font-family: Arial;
+            padding: 50px;
+            font-size: 18px;
+        }
+        
+        .big-button {
+            background: #FFD700;
+            color: #000;
+            border: none;
+            padding: 30px 60px;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .big-button:hover {
+            background: #FFA500;
+            transform: scale(1.05);
+        }
+        
+        .box {
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid #FFD700;
+            padding: 30px;
+            margin: 20px 0;
+            border-radius: 10px;
+            display: none;
+        }
+        
+        .box.show {
+            display: block;
+        }
+        
+        .status {
+            background: #333;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 超级简单测试</h1>
+    
+    <div class="status" id="status">
+        状态：等待操作...
+    </div>
+    
+    <h2>测试1：点击按钮</h2>
+    <button class="big-button" onclick="test1()">点我测试！</button>
+    
+    <div class="box" id="box1">
+        <h3>✅ 成功！</h3>
+        <p>如果你看到这个，说明点击功能正常！</p>
+    </div>
+    
+    <hr style="border-color: #FFD700; margin: 40px 0;">
+    
+    <h2>测试2：键盘按键</h2>
+    <p>请按键盘上的任意键...</p>
+    
+    <div class="box" id="box2">
+        <h3>✅ 键盘正常！</h3>
+        <p id="key-info">你按了：</p>
+    </div>
+    
+    <hr style="border-color: #FFD700; margin: 40px 0;">
+    
+    <h2>测试3：按 N 键专项测试</h2>
+    <p style="font-size: 24px; color: #FFA500;">
+        请按键盘上的 <strong>N</strong> 键（注意：要用英文输入法）
+    </p>
+    
+    <div class="box" id="box3">
+        <h3>🎉 N 键成功！</h3>
+        <p>太好了！N 键功能正常，可以用在主PPT中了！</p>
+    </div>
+    
+    <script>
+        const status = document.getElementById('status');
+        
+        // 测试1：点击
+        function test1() {
+            document.getElementById('box1').classList.add('show');
+            status.textContent = '状态：✅ 点击测试成功！';
+            console.log('✓ 点击测试通过');
+        }
+        
+        // 测试2：任意按键
+        let keyPressed = false;
+        document.addEventListener('keydown', function(e) {
+            console.log('按键检测:', e.key, 'keyCode:', e.keyCode);
+            
+            if (!keyPressed) {
+                document.getElementById('box2').classList.add('show');
+                keyPressed = true;
+            }
+            
+            document.getElementById('key-info').innerHTML = 
+                '你按了：<strong style="color: #FFA500; font-size: 24px;">' + e.key + '</strong><br>' +
+                'keyCode: ' + e.keyCode + '<br>' +
+                '时间: ' + new Date().toLocaleTimeString();
+            
+            status.textContent = '状态：检测到按键 "' + e.key + '"';
+            
+            // 测试3：N键专项
+            if (e.key === 'n' || e.key === 'N') {
+                document.getElementById('box3').classList.add('show');
+                status.textContent = '状态：🎉 N 键测试成功！功能完全正常！';
+                console.log('✓✓✓ N 键测试通过！');
+            }
+        });
+        
+        // 页面加载检测
+        window.addEventListener('load', function() {
+            console.log('=== 诊断信息 ===');
+            console.log('✓ 页面加载完成');
+            console.log('✓ JavaScript 正常运行');
+            console.log('浏览器:', navigator.userAgent);
+            console.log('================');
+            
+            status.textContent = '状态：✅ 页面已就绪，请开始测试';
+        });
+        
+        // 输入法检测
+        document.addEventListener('compositionstart', function() {
+            status.textContent = '状态：⚠️ 检测到中文输入法，请切换到英文输入法！';
+            console.warn('输入法状态：中文');
+        });
+        
+        document.addEventListener('compositionend', function() {
+            status.textContent = '状态：输入法已切换';
+            console.log('输入法状态：已结束输入');
+        });
+    </script>
+</body>
+</html>

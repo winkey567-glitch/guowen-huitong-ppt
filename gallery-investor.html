@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>国文汇通商业计划书 - 投资人版</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <script src="particles.js-master/particles.js-master/particles.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scrollbar-width: none;
+        }
+        *::-webkit-scrollbar { display: none; }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            background: #000;
+            color: #F9F9F7;
+        }
+        
+        .page {
+            min-height: 100vh;
+            scroll-snap-align: start;
+            position: relative;
+            padding: 8vh 6vw;
+            overflow: hidden;
+        }
+        
+        /* 黑金配色 */
+        .gold-gradient {
+            background: linear-gradient(135deg, #FFD700, #D4AF37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .text-gold { color: #FFD700; }
+        .text-light { color: rgba(255, 255, 255, 0.9); }
+        .text-muted { color: rgba(255, 255, 255, 0.6); }
+        
+        /* 玻璃卡片 */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 215, 0, 0.4);
+            box-shadow: 0 20px 40px rgba(255, 215, 0, 0.2);
+        }
+        
+        /* 标题样式 */
+        .page-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 3rem;
+            line-height: 1.2;
+        }
+        
+        .section-label {
+            font-size: 0.85rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: rgba(255, 215, 0, 0.7);
+            margin-bottom: 2rem;
+        }
+        
+        /* 大数字展示 */
+        .big-number {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 300;
+            line-height: 1;
+            margin-bottom: 1rem;
+        }
+        
+        /* 网格布局 */
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+        
+        @media (max-width: 768px) {
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+        }
+        
+        /* 时间轴 */
+        .timeline {
+            position: relative;
+            padding-left: 3rem;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, #FFD700, rgba(255, 215, 0, 0.2));
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-left: 2rem;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -3rem;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #FFD700;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+        }
+        
+        /* 页码指示器 */
+        .page-indicator {
+            position: fixed;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+        }
+        
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 215, 0, 0.3);
+            margin: 10px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .dot.active {
+            background: #FFD700;
+            transform: scale(1.5);
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+        }
+        
+        /* Particles.js 容器 */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* 青铜爵杯装饰 */
+        .hero-decoration {
+            position: absolute;
+            right: 8%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 400px;
+            height: 500px;
+            z-index: 5;
+        }
+        
+        .hero-decoration img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 0 40px rgba(255, 215, 0, 0.4));
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        /* 背景图片 */
+        .bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.15;
+            z-index: 0;
+        }
+        
+        .bg-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(10, 10, 10, 0.95), rgba(10, 10, 10, 0.98));
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- 页码指示器 -->
+    <div class="page-indicator" id="pageIndicator">
+        <!-- 动态生成 -->
+    </div>
+    
+    <!-- Slide 1: 封面 -->
+    <section class="page" id="page-1">
+        <div id="particles-js"></div>
+        
+        <!-- 青铜爵杯装饰 -->
+        <div class="hero-decoration">
+            <img src="output/cup.png" alt="青铜爵杯">
+        </div>
+        
+        <div class="content-wrapper" style="max-width: 50%; padding-top: 15vh;">
+            <div class="section-label">Business Proposal · 2026</div>
+            <h1 class="page-title gold-gradient" style="font-size: clamp(4rem, 10vw, 8rem);">
+                国文汇通
+            </h1>
+            <div style="width: 120px; height: 3px; background: linear-gradient(90deg, #FFD700, #FFA500); margin: 2rem 0;"></div>
+            <h2 style="font-size: 2rem; font-weight: 600; color: #F7E7CE; margin-bottom: 2rem;">
+                商业计划书
+            </h2>
+            <p style="font-size: 1.3rem; line-height: 1.8; color: rgba(255, 255, 255, 0.8); margin-bottom: 2rem;">
+                数字文创资产合规发行与交易一站式平台
+            </p>
+            <p style="font-size: 1.1rem; color: rgba(255, 215, 0, 0.8); letter-spacing: 0.2em;">
+                汇聚文化之光 · 通达数字未来
+            </p>
+        </div>
+    </section>
+    
+    <script>
+        // 背景图随机选择
+        const bgImages = [
+            'output/andrew-kliatskyi-JdX0OeTj5S0-unsplash.jpg',
+            'output/majed-swan-tzhqSmy58d8-unsplash.jpg',
+            'output/pawel-czerwinski-stcl1Pj2WzY-unsplash.jpg',
+            'output/pawel-czerwinski-WtNk-Ab9JEY-unsplash.jpg'
+        ];
+        
+        // 为每个页面随机分配背景图
+        document.addEventListener('DOMContentLoaded', () => {
+            const bgImageElements = document.querySelectorAll('.bg-image');
+            bgImageElements.forEach(img => {
+                const randomBg = bgImages[Math.floor(Math.random() * bgImages.length)];
+                img.src = randomBg;
+            });
+        });
+        
+        // Particles.js 初始化
+        particlesJS('particles-js', {
+            "particles": {
+                "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": ["#FFD700", "#D4AF37"] },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.4, "random": true, "anim": { "enable": true, "speed": 0.8, "opacity_min": 0.1 } },
+                "size": { "value": 4, "random": true, "anim": { "enable": true, "speed": 2, "size_min": 1 } },
+                "line_linked": { "enable": true, "distance": 150, "color": "#FFD700", "opacity": 0.2, "width": 1 },
+                "move": { "enable": true, "speed": 1, "direction": "none", "random": true, "out_mode": "out" }
+            },
+            "interactivity": {
+                "events": { "onhover": { "enable": true, "mode": "grab" }, "resize": true },
+                "modes": { "grab": { "distance": 200, "line_linked": { "opacity": 0.3 } } }
+            },
+            "retina_detect": true
+        });
+        
+        // 页码指示器生成
+        const totalPages = 24;
+        const indicator = document.getElementById('pageIndicator');
+        for (let i = 1; i <= totalPages; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'dot' + (i === 1 ? ' active' : '');
+            dot.onclick = () => scrollToPage(i);
+            indicator.appendChild(dot);
+        }
+        
+        function scrollToPage(num) {
+            document.getElementById(`page-${num}`).scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // 滚动监听更新页码
+        window.addEventListener('scroll', () => {
+            const pages = document.querySelectorAll('.page');
+            const dots = document.querySelectorAll('.dot');
+            
+            pages.forEach((page, index) => {
+                const rect = page.getBoundingClientRect();
+                if (rect.top >= -100 && rect.top < window.innerHeight / 2) {
+                    dots.forEach(d => d.classList.remove('active'));
+                    dots[index].classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
+    <!-- Slide 2: 政策东风 -->
+    <section class="page" id="page-2">
+        <img src="output/andrew-kliatskyi-JdX0OeTj5S0-unsplash.jpg" class="bg-image">
+        <div class="bg-overlay"></div>
+        
+        <div class="content-wrapper">
+            <div class="section-label">Policy Support · National Strategy</div>
+            <h2 class="page-title gold-gradient">1. 政策东风：文化数字化的国家战略</h2>
+            
+            <div class="grid-3" style="margin-bottom: 3rem;">
+                <div class="glass-card">
+                    <h3 class="text-gold" style="font-size: 1.5rem; margin-bottom: 1rem;">📜 顶层设计</h3>
+                    <p class="text-light" style="line-height: 1.8; margin-bottom: 1rem;">
+                        <strong>2022年5月</strong><br>
+                        中共中央办公厅、国务院办公厅印发《关于推进实施国家文化数字化战略的意见》
+                    </p>
+                    <p class="text-muted" style="font-size: 0.95rem; line-height: 1.6;">
+                        从战略高度为文化数字化发展提供了根本遵循和行动指南
+                    </p>
+                </div>
+                
+                <div class="glass-card">
+                    <h3 class="text-gold" style="font-size: 1.5rem; margin-bottom: 1rem;">🎯 战略目标</h3>
+                    <p class="text-light" style="line-height: 1.8; margin-bottom: 0.5rem;">
+                        <span class="gold-gradient" style="font-size: 1.5rem; font-weight: 700;">2025年</span><br>
+                        基本建成文化数字化基础设施和服务平台
+                    </p>
+                    <p class="text-light" style="line-height: 1.8;">
+                        <span class="gold-gradient" style="font-size: 1.5rem; font-weight: 700;">2035年</span><br>
+                        建成国家文化大数据体系，中华文化全景呈现
+                    </p>
+                </div>
+                
+                <div class="glass-card">
+                    <h3 class="text-gold" style="font-size: 1.5rem; margin-bottom: 1rem;">💡 重点任务</h3>
+                    <p class="text-light" style="line-height: 1.8; margin-bottom: 1rem;">
+                        8项重点任务，包括关联形成中华文化数据库、夯实基础设施等
+                    </p>
+                    <p class="text-muted" style="font-size: 0.95rem; line-height: 1.6;">
+                        明确提出<strong class="text-gold">"培育一批新型文化企业"</strong>，平台型企业迎来爆发期
+                    </p>
+                </div>
+            </div>
+            
+            <!-- 时间轴 -->
+            <div class="glass-card">
+                <h3 class="text-gold" style="font-size: 1.3rem; margin-bottom: 2rem;">战略发展时间轴</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="big-number gold-gradient" style="font-size: 2.5rem;">2022.05</div>
+                        <p class="text-light">《意见》发布，顶层设计出台</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="big-number gold-gradient" style="font-size: 2.5rem;">2025</div>
+                        <p class="text-light">基本建成基础设施和服务平台</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="big-number gold-gradient" style="font-size: 2.5rem;">2035</div>
+                        <p class="text-light">建成国家文化大数据体系</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Slide 3: 行业浪潮 -->
+    <section class="page" id="page-3">
+        <img src="output/majed-swan-tzhqSmy58d8-unsplash.jpg" class="bg-image">
+        <div class="bg-overlay"></div>
+        
+        <div class="content-wrapper">
+            <div class="section-label">Market Overview · Industry Trends</div>
+            <h2 class="page-title gold-gradient">2. 行业浪潮：数字文创资产的崛起</h2>
+            
+            <div class="grid-2" style="margin-bottom: 3rem;">
+                <div class="glass-card" style="border: 2px solid rgba(255, 215, 0, 0.4);">
+                    <h3 class="text-gold" style="font-size: 1.5rem; margin-bottom: 2rem;">📊 市场规模持续扩大</h3>
+                    <div style="margin-bottom: 2rem;">
+                        <div class="big-number gold-gradient">13.5万亿元</div>
+                        <p class="text-light" style="font-size: 1.1rem;">2024年中国数字文化行业市场规模</p>
+                    </div>
+                    <div>
+                        <div class="big-number gold-gradient">3000亿元</div>
+                        <p class="text-light" style="font-size: 1.1rem;">2027年数字资产细分市场规模预测</p>
+                    </div>
+                </div>
+                
+                <div class="glass-card">
+                    <h3 class="text-gold" style="font-size: 1.5rem; margin-bottom: 2rem;">👥 Z世代成消费主力</h3>
+                    <div style="margin-bottom: 2rem;">
+                        <div class="big-number gold-gradient">67%</div>
+                        <p class="text-light" style="font-size: 1.1rem;">Z世代（95后、00后）占比</p>
+                    </div>
+                    <p class="text-muted" style="line-height: 1.8;">
+                        数字原住民，对新鲜事物接受度高，追求个性化、情感化和社交化的消费体验，愿意为具有文化价值和情感共鸣的数字资产付费
+                    </p>
+                </div>
+            </div>
+            
+            <div class="glass-card">
+                <h3 class="text-gold" style="font-size: 1.5rem; margin-bottom: 2rem;">🚀 行业三大趋势</h3>
+                <div class="grid-3">
+                    <div>
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">📈</div>
+                        <h4 class="gold-gradient" style="font-size: 1.2rem; margin-bottom: 0.5rem;">合规化</h4>
+                        <p class="text-muted">监管政策日趋完善，合规成为平台生存和发展的前提</p>
+                    </div>
+                    <div>
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🔗</div>
+                        <h4 class="gold-gradient" style="font-size: 1.2rem; margin-bottom: 0.5rem;">数实融合</h4>
+                        <p class="text-muted">数字资产与实体经济深度融合，连接线上与线下</p>
+                    </div>
+                    <div>
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🌐</div>
+                        <h4 class="gold-gradient" style="font-size: 1.2rem; margin-bottom: 0.5rem;">生态化</h4>
+                        <p class="text-muted">构建涵盖IP孵化、发行、交易、消费的完整生态</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 4: 国文汇通为何出现 -->
+    <section class="page" id="page-4">
+        <img src="output/pawel-czerwinski-WtNk-Ab9JEY-unsplash.jpg" class="bg-image">
+        <div class="bg-overlay"></div>
+        
+        <div class="content-wrapper">
+            <div class="section-label">Mission · Why We Exist</div>
+            <h2 class="page-title gold-gradient">3. 国文汇通为何出现？</h2>
+            
+            <div class="grid-2" style="margin-bottom: 3rem;">
+                <div class="glass-card" style="border-left: 4px solid #FF6B35;">
+                    <h3 style="color: #FF6B35; font-size: 1.8rem; margin-bottom: 2rem;">❌ 市场痛点</h3>
+                    <p class="text-light" style="font-size: 1.2rem; line-height: 2; margin-bottom: 1.5rem;">
+                        在巨大需求的当下，市场亟需权威、合规、透明的平台来规范交易，重塑行业秩序，保护创作者与消费者权益。
+                    </p>
+                </div>
+                
+                <div class="glass-card" style="border-left: 4px solid #FFD700;">
+                    <h3 class="text-gold" style="font-size: 1.8rem; margin-bottom: 2rem;">✅ 我们的使命</h3>
+                    <div style="margin-bottom: 1.5rem;">
+                        <h4 class="gold-gradient" style="font-size: 1.1rem; margin-bottom: 0.5rem;">🏛️ 政策导向</h4>
+                        <p class="text-muted">响应国家文化数字化战略，成为连接文化、科技与金融的桥梁</p>
+                    </div>
+                    <div style="margin-bottom: 1.5rem;">
+                        <h4 class="gold-gradient" style="font-size: 1.1rem; margin-bottom: 0.5rem;">🔐 技术赋能</h4>
+                        <p class="text-muted">利用区块链确保数字资产的确权、追溯与交易，构建可信生态</p>
+                    </div>
+                    <div>
+                        <h4 class="gold-gradient" style="font-size: 1.1rem; margin-bottom: 0.5rem;">⚖️ 重塑秩序</h4>
+                        <p class="text-muted">让文化价值高效流转，保护各方权益</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="glass-card" style="background: rgba(255, 215, 0, 0.1); border: 2px solid rgba(255, 215, 0, 0.4);">
+                <p class="text-light" style="font-size: 1.3rem; line-height: 2; text-align: center;">
+                    <strong class="gold-gradient">国文汇通的出现，是市场、政策和技术共同作用的必然结果，是时代的呼唤。</strong>
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Slide 5: 平台核心优势（一）-->
+    <section class="page" id="page-5">
+        <img src="output/pawel-czerwinski-stcl1Pj2WzY-unsplash.jpg" class="bg-image">
+        <div class="bg-overlay"></div>
+        
+        <div class="content-wrapper">
+            <div class="section-label">Core Advantages · Part 1</div>
+            <h2 class="page-title gold-gradient">4. 平台核心优势：构建坚实的护城河（一）</h2>
+            
+            <div class="grid-2">
+                <div class="glass-card">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🏛️</div>
+                    <h3 class="text-gold" style="font-size: 1.5rem; margin-bottom: 1.5rem;">国资背书，权威合规</h3>
+                    <p class="text-light" style="line-height: 1.8;">
+                        文交所直属、国企背景，双重监管加持，业务全流程可溯，公信力远超同行业其他平台。
+                    </p>
+                </div>
+                
+                <div class="glass-card">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">📜</div>
+                    <h3 class="text-gold" style="font-size: 1.5rem; margin-bottom: 1.5rem;">全资质完备，合规扎实</h3>
+                    <p class="text-light" style="line-height: 1.8;">
+                        持全链条合规证照，接入<strong class="text-gold">星火链网子链紫金山链</strong>，承接国家文化数字化战略，确权存证能力领先。
+                    </p>
+                </div>
+                
+                <div class="glass-card">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">📱</div>
+                    <h3 class="text-gold" style="font-size: 1.5rem; margin-bottom: 1.5rem;">全渠道覆盖，触达高效</h3>
+                    <p class="text-light" style="line-height: 1.8;">
+                        APP全平台应用商城上架，覆盖主流终端，打通用户获取通道，扩大市场覆盖面。
+                    </p>
+                </div>
+                
+                <div class="glass-card">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">💳</div>
+                    <h3 class="text-gold" style="font-size: 1.5rem; margin-bottom: 1.5rem;">支付最优，安全便捷</h3>
+                    <p class="text-light" style="line-height: 1.8;">
+                        搭建行业顶尖支付通道，即将对接省级结算中心持牌机构存管资金，兼顾资金安全与操作便捷性。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Slide 6: 平台核心优势（二）-->
+    <section class="page" id="page-6">
+        <img src="output/andrew-kliatskyi-JdX0OeTj5S0-unsplash.jpg" class="bg-image">
+        <div class="bg-overlay"></div>
+        
+        <div class="content-wrapper">
+            <div class="section-label">Core Advantages · Part 2</div>
+            <h2 class="page-title gold-gradient">5. 平台核心优势：构建坚实的护城河（二）</h2>
+            
+            <div class="grid-3">
+                <div class="glass-card">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">💰</div>
+                    <h3 class="text-gold" style="font-size: 1.5rem; margin-bottom: 1.5rem;">经济模型完整</h3>
+                    <p class="text-light" style="line-height: 1.8; margin-bottom: 1rem;">
+                        以<strong class="text-gold">"寄存复利+生态多元"</strong>玩法为核心
+                    </p>
+                    <p class="text-muted" style="line-height: 1.6;">
+                        绑定真实需求抑制炒作，资产价值稳步增长
+                    </p>
+                </div>
+                
+                <div class="glass-card">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🔄</div>
+                    <h3 class="text-gold" style="font-size: 1.5rem; margin-bottom: 1.5rem;">生态清晰，数实融合</h3>
+                    <p class="text-light" style="line-height: 1.8; margin-bottom: 1rem;">
+                        构建<strong class="text-gold">"数字获取-通宝流转-实体消费"</strong>闭环
+                    </p>
+                    <p class="text-muted" style="line-height: 1.6;">
+                        依托五大模块，摆脱市场情绪驱动
+                    </p>
+                </div>
+                
+                <div class="glass-card">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">👥</div>
+                    <h3 class="text-gold" style="font-size: 1.5rem; margin-bottom: 1.5rem;">团队顶尖，资源丰厚</h3>
+                    <p class="text-light" style="line-height: 1.8; margin-bottom: 1rem;">
+                        团队操盘过<strong class="text-gold">Ibox、唯一艺术</strong>等顶级平台
+                    </p>
+                    <p class="text-muted" style="line-height: 1.6;">
+                        依托省文投实现"体育+文旅"跨界布局
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Slide 7: 平台团队介绍 -->
+    <section class="page" id="page-7">
+        <img src="output/majed-swan-tzhqSmy58d8-unsplash.jpg" class="bg-image">
+        <div class="bg-overlay"></div>
+        
+        <div class="content-wrapper">
+            <div class="section-label">Core Team · Leadership</div>
+            <h2 class="page-title gold-gradient">6. 平台团队介绍</h2>
+            
+            <p class="text-light" style="font-size: 1.2rem; line-height: 2; margin-bottom: 3rem;">
+                核心团队拥有丰富的数字艺术与区块链资产化运营经验，是<strong class="text-gold">国内最早布局数字文化资产的专业团队</strong>。
+            </p>
+            
+            <div class="grid-3">
+                <div class="glass-card">
+                    <h3 class="text-gold" style="font-size: 1.5rem; margin-bottom: 1rem;">战略负责人</h3>
+                    <div class="big-number gold-gradient" style="font-size: 2rem; margin-bottom: 1rem;">佟世天</div>
+                    <p class="text-light" style="line-height: 1.8; margin-bottom: 1rem;">
+                        带领<strong>"唯一艺术"</strong>原班人马
+                    </p>
+                    <p class="text-muted" style="line-height: 1.6;">
+                        中国数字艺术、数字版权与区块链资产领域的资深创业者，全面负责国文汇通的战略规划与创新发展
+                    </p>
+                </div>
+                
+                <div class="glass-card">
+                    <h3 class="text-gold" style="font-size: 1.5rem; margin-bottom: 1rem;">运营负责人</h3>
+                    <div class="big-number gold-gradient" style="font-size: 2rem; margin-bottom: 1rem;">"喜鹊"团队</div>
+                    <p class="text-light" style="line-height: 1.8; margin-bottom: 1rem;">
+                        原<strong>IBOX平台总运营</strong>领衔
+                    </p>
+                    <p class="text-muted" style="line-height: 1.6; margin-bottom: 1rem;">
+                        曾推动IBOX市值超<strong class="text-gold">百亿元</strong>、单日交易额近<strong class="text-gold">20亿元</strong>
+                    </p>
+                    <p class="text-muted" style="line-height: 1.6;">
+                        负责平台增长策略、用户体系打造与生态协同发展
+                    </p>
+                </div>
+                
+                <div class="glass-card">
+                    <h3 class="text-gold" style="font-size: 1.5rem; margin-bottom: 1rem;">首席宣传官 (CMO)</h3>
+                    <div class="big-number gold-gradient" style="font-size: 2rem; margin-bottom: 1rem;">Jeff</div>
+                    <p class="text-light" style="line-height: 1.8; margin-bottom: 1rem;">
+                        链大教育创始人<br>
+                        Cardano 亚洲增长负责人
+                    </p>
+                    <p class="text-muted" style="line-height: 1.6;">
+                        长期深耕数字经济与区块链教育领域，专注品牌战略、产业传播与人才培养体系建设
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Slide 8: 平台战略资源 -->
+    <section class="page" id="page-8">
+        <img src="output/pawel-czerwinski-WtNk-Ab9JEY-unsplash.jpg" class="bg-image">
+        <div class="bg-overlay"></div>
+        
+        <div class="content-wrapper">
+            <div class="section-label">Strategic Resources · Partnerships</div>
+            <h2 class="page-title gold-gradient">7. 平台战略资源矩阵</h2>
+            
+            <div class="grid-2">
+                <div class="glass-card">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🏢</div>
+                    <h3 class="text-gold" style="font-size: 1.5rem; margin-bottom: 1.5rem;">交易所资源</h3>
+                    <p class="text-light" style="font-size: 1.1rem; margin-bottom: 1rem;">战略合作，平台资源对接</p>
+                    <p class="text-muted" style="line-height: 1.8;">
+                        <strong class="text-gold">江苏、四川、甘肃、安徽</strong>等省级文交所
+                    </p>
+                </div>
+                
+                <div class="glass-card">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🤝</div>
+                    <h3 class="text-gold" style="font-size: 1.5rem; margin-bottom: 1.5rem;">股东资源</h3>
+                    <p class="text-light" style="font-size: 1.1rem; margin-bottom: 1rem;">虚实结合，实体权益体系支撑</p>
+                    <p class="text-muted" style="line-height: 1.8;">
+                        <strong class="text-gold">江苏文投、凤凰出版、省演艺、省广电</strong>等
+                    </p>
+                </div>
+                
+                <div class="glass-card">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🌏</div>
+                    <h3 class="text-gold" style="font-size: 1.5rem; margin-bottom: 1.5rem;">跨区域文旅局资源</h3>
+                    <p class="text-light" style="font-size: 1.1rem; margin-bottom: 1rem;">地方资源转化为国家平台优势</p>
+                    <p class="text-muted" style="line-height: 1.8;">
+                        重点合作：<strong class="text-gold">福建泉州市文旅局</strong>
+                    </p>
+                </div>
+                
+                <div class="glass-card">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🎨</div>
+                    <h3 class="text-gold" style="font-size: 1.5rem; margin-bottom: 1.5rem;">合作品牌资源</h3>
+                    <p class="text-light" style="font-size: 1.1rem; margin-bottom: 1rem;">构建高质量内容供给矩阵</p>
+                    <p class="text-muted" style="line-height: 1.8;">
+                        <strong class="text-gold">凤凰出版、泉州木偶剧院、紫金文创</strong>等
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>

@@ -1,0 +1,188 @@
+<!-- 组件4: Dashboard 数据仪表盘 -->
+<!-- 用途: 汇报业绩、讲增长率、展示关键数据 -->
+<!-- 使用方法: 修改数字、百分比、图表数据 -->
+
+<section class="slide py-20 px-12 min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
+    <div class="max-w-7xl mx-auto">
+        <!-- 页面标题 -->
+        <h2 class="text-5xl md:text-6xl font-bold mb-16 bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
+            核心数据
+        </h2>
+        
+        <!-- 数据卡片网格 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+            
+            <!-- 数据卡片1 - 大数字 -->
+            <div class="data-card text-center">
+                <div class="text-6xl font-black bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent mb-4 animate-count" data-target="13.5">
+                    0
+                </div>
+                <p class="text-2xl font-bold text-yellow-400 mb-2">万亿元</p>
+                <p class="text-gray-400">市场规模</p>
+                <div class="mt-4 h-2 bg-gray-700 rounded-full overflow-hidden">
+                    <div class="h-full bg-gradient-to-r from-yellow-500 to-orange-500 animate-progress" style="width: 85%"></div>
+                </div>
+            </div>
+            
+            <!-- 数据卡片2 - 百分比 -->
+            <div class="data-card text-center">
+                <div class="text-6xl font-black bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent mb-4 animate-count" data-target="67">
+                    0
+                </div>
+                <p class="text-2xl font-bold text-yellow-400 mb-2">%</p>
+                <p class="text-gray-400">用户占比</p>
+                <div class="mt-4 h-2 bg-gray-700 rounded-full overflow-hidden">
+                    <div class="h-full bg-gradient-to-r from-yellow-500 to-orange-500 animate-progress" style="width: 67%"></div>
+                </div>
+            </div>
+            
+            <!-- 数据卡片3 - 增长率 -->
+            <div class="data-card text-center">
+                <div class="flex items-center justify-center gap-2 mb-4">
+                    <span class="text-6xl font-black bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent animate-count" data-target="150">0</span>
+                    <span class="text-3xl text-green-400">↑</span>
+                </div>
+                <p class="text-2xl font-bold text-yellow-400 mb-2">%</p>
+                <p class="text-gray-400">同比增长</p>
+            </div>
+            
+            <!-- 数据卡片4 - 用户数 -->
+            <div class="data-card text-center">
+                <div class="text-6xl font-black bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent mb-4 animate-count" data-target="1000">
+                    0
+                </div>
+                <p class="text-2xl font-bold text-yellow-400 mb-2">万+</p>
+                <p class="text-gray-400">活跃用户</p>
+            </div>
+        </div>
+        
+        <!-- 环形图 + 柱状图组合 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+            
+            <!-- 环形进度图 -->
+            <div class="glass-card rounded-3xl p-10">
+                <h3 class="text-3xl font-bold mb-8 text-yellow-400 text-center">完成度</h3>
+                <div class="flex items-center justify-center">
+                    <svg width="300" height="300" class="transform -rotate-90">
+                        <!-- 背景圆环 -->
+                        <circle cx="150" cy="150" r="120" fill="none" stroke="#374151" stroke-width="30"/>
+                        <!-- 进度圆环 -->
+                        <circle cx="150" cy="150" r="120" fill="none" stroke="url(#goldGradient)" stroke-width="30"
+                                stroke-dasharray="754" stroke-dashoffset="188" class="progress-ring-circle"
+                                stroke-linecap="round"/>
+                        <defs>
+                            <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#FFD700"/>
+                                <stop offset="100%" style="stop-color:#FFA500"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <div class="absolute text-center">
+                        <div class="text-6xl font-black text-yellow-400">75%</div>
+                        <p class="text-gray-400 mt-2">目标达成</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 柱状图 -->
+            <div class="glass-card rounded-3xl p-10">
+                <h3 class="text-3xl font-bold mb-8 text-yellow-400">月度增长</h3>
+                <div class="flex items-end justify-around h-64 gap-4">
+                    <div class="flex flex-col items-center gap-2 flex-1">
+                        <div class="w-full bg-gradient-to-t from-yellow-500 to-orange-500 rounded-t-lg animate-bar-grow" style="height: 60%"></div>
+                        <p class="text-sm text-gray-400">1月</p>
+                    </div>
+                    <div class="flex flex-col items-center gap-2 flex-1">
+                        <div class="w-full bg-gradient-to-t from-yellow-500 to-orange-500 rounded-t-lg animate-bar-grow animation-delay-200" style="height: 75%"></div>
+                        <p class="text-sm text-gray-400">2月</p>
+                    </div>
+                    <div class="flex flex-col items-center gap-2 flex-1">
+                        <div class="w-full bg-gradient-to-t from-yellow-500 to-orange-500 rounded-t-lg animate-bar-grow animation-delay-400" style="height: 90%"></div>
+                        <p class="text-sm text-gray-400">3月</p>
+                    </div>
+                    <div class="flex flex-col items-center gap-2 flex-1">
+                        <div class="w-full bg-gradient-to-t from-yellow-500 to-orange-500 rounded-t-lg animate-bar-grow animation-delay-600" style="height: 100%"></div>
+                        <p class="text-sm text-gray-400">4月</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .data-card {
+        background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 165, 0, 0.05) 100%);
+        border: 2px solid rgba(255, 215, 0, 0.3);
+        border-radius: 1.5rem;
+        padding: 2rem;
+        transition: all 0.3s ease;
+    }
+    
+    .data-card:hover {
+        transform: scale(1.05);
+        border-color: rgba(255, 215, 0, 0.6);
+        box-shadow: 0 20px 40px rgba(255, 215, 0, 0.2);
+    }
+    
+    .glass-card {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    @keyframes barGrow {
+        from { height: 0; }
+        to { height: var(--target-height); }
+    }
+    
+    .animate-bar-grow {
+        animation: barGrow 1s ease-out forwards;
+    }
+    
+    @keyframes progressFill {
+        from { stroke-dashoffset: 754; }
+        to { stroke-dashoffset: 188; }
+    }
+    
+    .progress-ring-circle {
+        animation: progressFill 2s ease-out forwards;
+    }
+    
+    .animation-delay-200 { animation-delay: 0.2s; }
+    .animation-delay-400 { animation-delay: 0.4s; }
+    .animation-delay-600 { animation-delay: 0.6s; }
+</style>
+
+<script>
+// 数字滚动动画
+function animateNumber(element) {
+    const target = parseFloat(element.dataset.target);
+    const duration = 2000;
+    const step = target / (duration / 16);
+    let current = 0;
+    
+    const timer = setInterval(() => {
+        current += step;
+        if (current >= target) {
+            element.textContent = target;
+            clearInterval(timer);
+        } else {
+            element.textContent = Math.floor(current);
+        }
+    }, 16);
+}
+
+// 页面加载时触发
+document.querySelectorAll('.animate-count').forEach(el => {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateNumber(entry.target);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+    observer.observe(el);
+});
+</script>

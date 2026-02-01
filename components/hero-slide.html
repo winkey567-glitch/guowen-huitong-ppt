@@ -1,0 +1,86 @@
+<!-- 组件1: 全屏封面 Hero Slide -->
+<!-- 用途: 镇场子专用，适合PPT开场 -->
+<!-- 使用方法: 修改标题、副标题、底部文字即可 -->
+
+<section class="slide hero-slide flex items-center justify-center relative overflow-hidden min-h-screen">
+    <!-- 动态背景粒子效果 -->
+    <div class="absolute inset-0 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"></div>
+    <div class="particles absolute inset-0"></div>
+    
+    <!-- 装饰性几何图形 -->
+    <div class="absolute top-0 right-0 w-96 h-96 rounded-full border-2 border-yellow-500/20 -mr-48 -mt-48 animate-pulse"></div>
+    <div class="absolute bottom-0 left-0 w-64 h-64 rounded-full border-2 border-yellow-500/20 -ml-32 -mb-32 animate-pulse"></div>
+    
+    <!-- 主内容区 -->
+    <div class="text-center z-10 px-8 max-w-6xl">
+        <!-- 主标题 -->
+        <h1 class="text-8xl md:text-9xl font-black mb-8 text-white animate-fade-in-up">
+            您的项目名称
+        </h1>
+        
+        <!-- 装饰线 -->
+        <div class="w-32 h-1.5 mx-auto mb-8 bg-gradient-to-r from-yellow-500 to-orange-500 animate-fade-in-up animation-delay-200"></div>
+        
+        <!-- 副标题 -->
+        <h2 class="text-4xl md:text-5xl font-bold mb-12 text-yellow-400 animate-fade-in-up animation-delay-400">
+            一句话概括您的项目
+        </h2>
+        
+        <!-- 描述文字 -->
+        <p class="text-2xl md:text-3xl mb-16 text-gray-300 animate-fade-in-up animation-delay-600">
+            详细描述或定位语
+        </p>
+        
+        <!-- 底部标语 -->
+        <p class="text-xl bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent animate-fade-in-up animation-delay-800">
+            2026 · 您的口号或标语
+        </p>
+    </div>
+    
+    <!-- 滚动提示 -->
+    <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
+        <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+        </svg>
+    </div>
+</section>
+
+<style>
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .animate-fade-in-up {
+        animation: fadeInUp 0.8s ease-out forwards;
+        opacity: 0;
+    }
+    
+    .animation-delay-200 { animation-delay: 0.2s; }
+    .animation-delay-400 { animation-delay: 0.4s; }
+    .animation-delay-600 { animation-delay: 0.6s; }
+    .animation-delay-800 { animation-delay: 0.8s; }
+    
+    /* 粒子背景效果 */
+    .particles {
+        background-image: 
+            radial-gradient(2px 2px at 20% 30%, white, transparent),
+            radial-gradient(2px 2px at 60% 70%, white, transparent),
+            radial-gradient(1px 1px at 50% 50%, white, transparent),
+            radial-gradient(1px 1px at 80% 10%, white, transparent);
+        background-size: 200% 200%;
+        animation: particleMove 20s ease-in-out infinite;
+        opacity: 0.3;
+    }
+    
+    @keyframes particleMove {
+        0%, 100% { background-position: 0% 0%; }
+        50% { background-position: 100% 100%; }
+    }
+</style>

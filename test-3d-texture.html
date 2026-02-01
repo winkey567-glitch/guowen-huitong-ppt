@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>国文汇通 - 3D 贴图测试</title>
+    <style>
+        body { 
+            margin: 0; 
+            background-color: #050505; 
+            overflow: hidden; 
+            font-family: "Microsoft YaHei", sans-serif; 
+        }
+        canvas { display: block; }
+        
+        .ui-overlay {
+            position: absolute;
+            top: 20%;
+            left: 8%;
+            z-index: 100;
+            pointer-events: none;
+            color: #d4af37;
+        }
+        .title { 
+            font-size: 72px; 
+            font-weight: bold; 
+            margin: 0; 
+            letter-spacing: 12px; 
+        }
+        .subtitle { 
+            font-size: 20px; 
+            color: rgba(212, 175, 55, 0.7); 
+            margin-top: 20px; 
+            line-height: 1.6; 
+            max-width: 500px; 
+        }
+        
+        #loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #FFD700;
+            font-size: 20px;
+            text-align: center;
+            z-index: 200;
+        }
+        
+        .controls {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+        
+        .controls button {
+            display: block;
+            margin-bottom: 10px;
+            padding: 10px 20px;
+            background: rgba(255, 215, 0, 0.2);
+            border: 1px solid #FFD700;
+            color: #FFD700;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        
+        .controls button:hover {
+            background: rgba(255, 215, 0, 0.4);
+        }
+        
+        .controls button.active {
+            background: rgba(255, 215, 0, 0.6);
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <div id="loading">加载 3D 模型中...</div>
+    
+    <div class="ui-overlay">
+        <h1 class="title">国文汇通</h1>
+        <div class="subtitle">
+            数字文创资产合规发行与交易一站式平台<br>
+            响应国家文化数字化战略，构建权威、透明的文化资产生态体系
+        </div>
+    </div>
+    
+    <div class="controls">
+        <button id="btn-texture" class="active">贴图模式</button>
+        <button id="btn-wireframe">线框模式</button>
+        <button id="btn-both">混合模式</button>
+    </div>
+    
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+    
+    <script type="module">
+        import * as THREE from 'three';
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+        
+        let scene, camera, renderer, model;
+        let originalMaterials = [];
+        const loading = document.getElementById('loading');
+        
+        init();
+        animate();
+        
+        function init() {
+            // 创建场景
+            scene = new THREE.Scene();
+            
+            // 创建相机
+            camera = new THREE.PerspectiveCamera(
+                45,
+                window.innerWidth / window.innerHeight, 
+                0.1, 
+                1000
+            );
+            camera.position.set(0, -0.5, 5);
+            camera.lookAt(0, 0, 0);
+            
+            // 创建渲染器
+            renderer = new THREE.WebGLRenderer({ 
+                antialias: true, 
+                alpha: true 
+            });
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
+            
+            // 环境光
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambientLight);
+            
+            // 方向光
+            const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            dirLight.position.set(5, 5, 5);
+            scene.add(dirLight);
+            
+            // 金色点光源
+            const pointLight = new THREE.PointLight(0xFFD700, 0.5);
+            pointLight.position.set(-5, -3, 3);
+            scene.add(pointLight);
+            
+            // 加载 GLB 模型
+            const loader = new GLTFLoader();
+            
+            loader.load(
+                './output/texture_v128_768_moved.glb',
+                function (gltf) {
+                    loading.textContent = '模型加载成功！';
+                    
+                    model = gltf.scene;
+                    
+                    // 保存原始材质
+                    model.traverse((child) => {
+                        if (child.isMesh) {
+                            originalMaterials.push({
+                                mesh: child,
+                                material: child.material
+                            });
+                        }
+                    });
+                    
+                    // 计算模型大小并居中
+                    const box = new THREE.Box3().setFromObject(model);
+                    const center = box.getCenter(new THREE.Vector3());
+                    const size = box.getSize(new THREE.Vector3());
+                    
+                    model.position.x = -center.x;
+                    model.position.y = -center.y;
+                    model.position.z = -center.z;
+                    
+                    const maxDim = Math.max(size.x, size.y, size.z);
+                    const scale = 3 / maxDim;
+                    model.scale.set(scale, scale, scale);
+                    
+                    model.position.x += 1.5;
+                    model.position.y -= 1.2;  // 再往下移动
+                    model.rotation.y = Math.PI / 6;
+                    
+                    scene.add(model);
+                    
+                    loading.style.display = 'none';
+                },
+                function (xhr) {
+                    const percent = (xhr.loaded / xhr.total * 100).toFixed(0);
+                    loading.textContent = `加载进度: ${percent}%`;
+                },
+                function (error) {
+                    loading.textContent = '加载失败: ' + error.message;
+                    console.error('GLB 加载错误:', error);
+                }
+            );
+            
+            // 按钮事件
+            document.getElementById('btn-texture').addEventListener('click', () => setMode('texture'));
+            document.getElementById('btn-wireframe').addEventListener('click', () => setMode('wireframe'));
+            document.getElementById('btn-both').addEventListener('click', () => setMode('both'));
+            
+            window.addEventListener('resize', onWindowResize);
+        }
+        
+        function setMode(mode) {
+            if (!model) return;
+            
+            // 更新按钮状态
+            document.querySelectorAll('.controls button').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`btn-${mode}`).classList.add('active');
+            
+            if (mode === 'texture') {
+                // 贴图模式：使用原始材质
+                originalMaterials.forEach(item => {
+                    item.mesh.material = item.material;
+                });
+            } else if (mode === 'wireframe') {
+                // 线框模式：金色线框
+                originalMaterials.forEach(item => {
+                    item.mesh.material = new THREE.MeshBasicMaterial({
+                        color: 0xFFD700,
+                        wireframe: true,
+                        transparent: true,
+                        opacity: 0.9
+                    });
+                });
+            } else if (mode === 'both') {
+                // 混合模式：贴图+金色线框边缘
+                originalMaterials.forEach(item => {
+                    item.mesh.material = item.material.clone();
+                    item.mesh.material.wireframe = false;
+                    // 添加边缘光
+                    if (item.mesh.material.emissive) {
+                        item.mesh.material.emissive.setHex(0xFFD700);
+                        item.mesh.material.emissiveIntensity = 0.2;
+                    }
+                });
+            }
+        }
+        
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+        
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            if (model) {
+                model.rotation.y += 0.003;
+            }
+            
+            renderer.render(scene, camera);
+        }
+    </script>
+</body>
+</html>

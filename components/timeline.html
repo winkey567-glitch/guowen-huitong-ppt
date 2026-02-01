@@ -1,0 +1,123 @@
+<!-- 组件3: Timeline 时间轴 -->
+<!-- 用途: 讲公司发展历程、项目计划、过去与未来 -->
+<!-- 使用方法: 复制时间节点，修改年份、标题、描述 -->
+
+<section class="slide py-20 px-12 min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
+    <div class="max-w-6xl mx-auto">
+        <!-- 页面标题 -->
+        <h2 class="text-5xl md:text-6xl font-bold mb-20 text-center bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
+            发展路线图
+        </h2>
+        
+        <!-- 时间轴容器 -->
+        <div class="relative">
+            <!-- 中央主线 -->
+            <div class="absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-yellow-500 via-orange-500 to-yellow-500 -translate-x-1/2"></div>
+            
+            <!-- 时间节点1 - 左侧 -->
+            <div class="timeline-item mb-16 flex items-center">
+                <div class="w-1/2 pr-12 text-right">
+                    <div class="glass-card rounded-2xl p-6 hover:scale-105 transition-transform">
+                        <h3 class="text-3xl font-bold text-yellow-400 mb-3">2024年</h3>
+                        <h4 class="text-xl font-bold mb-2 text-gray-200">阶段标题</h4>
+                        <p class="text-gray-400">
+                            这个阶段的详细描述，可以写关键事件、里程碑等。
+                        </p>
+                    </div>
+                </div>
+                <div class="timeline-dot absolute left-1/2 -translate-x-1/2"></div>
+                <div class="w-1/2 pl-12"></div>
+            </div>
+            
+            <!-- 时间节点2 - 右侧 -->
+            <div class="timeline-item mb-16 flex items-center">
+                <div class="w-1/2 pr-12"></div>
+                <div class="timeline-dot absolute left-1/2 -translate-x-1/2"></div>
+                <div class="w-1/2 pl-12">
+                    <div class="glass-card rounded-2xl p-6 hover:scale-105 transition-transform">
+                        <h3 class="text-3xl font-bold text-yellow-400 mb-3">2025年</h3>
+                        <h4 class="text-xl font-bold mb-2 text-gray-200">阶段标题</h4>
+                        <p class="text-gray-400">
+                            这个阶段的详细描述，可以写关键事件、里程碑等。
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 时间节点3 - 左侧 -->
+            <div class="timeline-item mb-16 flex items-center">
+                <div class="w-1/2 pr-12 text-right">
+                    <div class="glass-card rounded-2xl p-6 hover:scale-105 transition-transform">
+                        <h3 class="text-3xl font-bold text-yellow-400 mb-3">2026年</h3>
+                        <h4 class="text-xl font-bold mb-2 text-gray-200">阶段标题</h4>
+                        <p class="text-gray-400">
+                            这个阶段的详细描述，可以写关键事件、里程碑等。
+                        </p>
+                    </div>
+                </div>
+                <div class="timeline-dot absolute left-1/2 -translate-x-1/2"></div>
+                <div class="w-1/2 pl-12"></div>
+            </div>
+            
+            <!-- 时间节点4 - 右侧（未来/目标） -->
+            <div class="timeline-item flex items-center">
+                <div class="w-1/2 pr-12"></div>
+                <div class="timeline-dot absolute left-1/2 -translate-x-1/2 animate-pulse"></div>
+                <div class="w-1/2 pl-12">
+                    <div class="glass-card rounded-2xl p-6 border-2 border-yellow-500/50 hover:scale-105 transition-transform">
+                        <h3 class="text-3xl font-bold text-yellow-400 mb-3">2027+</h3>
+                        <h4 class="text-xl font-bold mb-2 text-gray-200">未来愿景</h4>
+                        <p class="text-gray-400">
+                            长期目标和愿景描述。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 横向时间轴变体（适合移动端） -->
+        <div class="mt-20 md:hidden">
+            <div class="space-y-8">
+                <div class="glass-card rounded-2xl p-6">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="timeline-dot-small"></div>
+                        <h3 class="text-2xl font-bold text-yellow-400">2024</h3>
+                    </div>
+                    <h4 class="text-lg font-bold mb-2">阶段标题</h4>
+                    <p class="text-gray-400">描述内容</p>
+                </div>
+                <!-- 重复其他节点... -->
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .glass-card {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+    }
+    
+    .timeline-dot {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #FFD700, #FFA500);
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+        border: 4px solid #0f172a;
+    }
+    
+    .timeline-dot-small {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #FFD700, #FFA500);
+        flex-shrink: 0;
+    }
+    
+    .timeline-item {
+        position: relative;
+    }
+</style>

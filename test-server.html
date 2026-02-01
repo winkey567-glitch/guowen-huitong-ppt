@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>服务器测试</title>
+    <style>
+        body {
+            background: #0A0A0A;
+            color: #FFD700;
+            font-family: monospace;
+            padding: 50px;
+            font-size: 20px;
+        }
+        h1 { color: #FFD700; }
+        .success { color: #00FF00; font-size: 30px; }
+    </style>
+</head>
+<body>
+    <h1>✅ 服务器测试成功！</h1>
+    <p class="success">如果你能看到这个页面，说明服务器正常运行。</p>
+    <p>当前时间: <span id="time"></span></p>
+    <p>请尝试访问:</p>
+    <ul>
+        <li><a href="gallery-investor-v2.html" style="color: #FFD700;">gallery-investor-v2.html</a></li>
+        <li><a href="test-3d-simple.html" style="color: #FFD700;">test-3d-simple.html</a></li>
+    </ul>
+    <script>
+        document.getElementById('time').textContent = new Date().toLocaleString('zh-CN');
+    </script>
+</body>
+</html>

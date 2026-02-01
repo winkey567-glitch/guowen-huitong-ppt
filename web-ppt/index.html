@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>国文汇通商业计划书 - 网页版</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
+        
+        * {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        
+        body {
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        
+        .slide {
+            min-height: 100vh;
+            scroll-snap-align: start;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(255, 215, 0, 0.2);
+            border-color: rgba(255, 215, 0, 0.3);
+        }
+        
+        .gold-gradient {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .bg-radial-dark {
+            background: radial-gradient(circle at top right, #1a237e 0%, #0f172a 50%, #000000 100%);
+        }
+        
+        .text-shadow-gold {
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+        
+        .border-glow {
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+        }
+        
+        .number-highlight {
+            font-size: 3rem;
+            font-weight: 900;
+            line-height: 1;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        .stagger-1 { animation-delay: 0.1s; }
+        .stagger-2 { animation-delay: 0.2s; }
+        .stagger-3 { animation-delay: 0.3s; }
+        .stagger-4 { animation-delay: 0.4s; }
+        
+        .geometric-decoration {
+            position: absolute;
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            pointer-events: none;
+        }
+        
+        .scroll-indicator {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+        
+        .page-number {
+            position: fixed;
+            bottom: 20px;
+            right: 30px;
+            color: #F7E7CE;
+            font-size: 0.875rem;
+            z-index: 50;
+        }
+        
+        /* 右侧装饰元素 */
+        .hero-right-decoration {
+            position: absolute;
+            right: 10%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 400px;
+            height: 400px;
+            z-index: 5;
+        }
+        
+        /* 强化的金色圆环 */
+        .golden-orbit {
+            position: absolute;
+            border: 3px solid rgba(255, 215, 0, 0.4);
+            border-radius: 50%;
+            animation: rotate 20s linear infinite;
+        }
+        
+        .orbit-1 {
+            width: 400px;
+            height: 400px;
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.3), inset 0 0 40px rgba(255, 215, 0, 0.1);
+        }
+        
+        .orbit-2 {
+            width: 320px;
+            height: 320px;
+            top: 40px;
+            left: 40px;
+            border: 2px solid rgba(255, 215, 0, 0.25);
+            animation-duration: 30s;
+            animation-direction: reverse;
+        }
+        
+        .orbit-3 {
+            width: 240px;
+            height: 240px;
+            top: 80px;
+            left: 80px;
+            border: 2px solid rgba(255, 215, 0, 0.15);
+            animation-duration: 40s;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        /* 核心关键词容器 */
+        .core-values {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 10;
+        }
+        
+        .value-item {
+            font-size: 1.125rem;
+            font-weight: 500;
+            color: rgba(247, 231, 206, 0.9);
+            margin: 1rem 0;
+            letter-spacing: 0.3em;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            animation: pulse 3s ease-in-out infinite;
+        }
+        
+        .value-item:nth-child(1) { animation-delay: 0s; }
+        .value-item:nth-child(2) { animation-delay: 1s; }
+        .value-item:nth-child(3) { animation-delay: 2s; }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.7; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+        
+        /* 金色光束 */
+        .light-beam {
+            position: absolute;
+            top: -10%;
+            right: -5%;
+            width: 300px;
+            height: 600px;
+            background: linear-gradient(135deg, 
+                rgba(255, 215, 0, 0.15) 0%, 
+                rgba(255, 215, 0, 0.05) 50%, 
+                transparent 100%);
+            transform: rotate(-15deg);
+            filter: blur(30px);
+            animation: shimmer 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes shimmer {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+        
+        /* 数字代码雨 */
+        .digital-rain {
+            position: absolute;
+            right: 5%;
+            top: 0;
+            width: 100px;
+            height: 100%;
+            overflow: hidden;
+            opacity: 0.2;
+            pointer-events: none;
+        }
+        
+        .code-column {
+            position: absolute;
+            font-family: 'Courier New', monospace;
+            font-size: 0.75rem;
+            color: #FFD700;
+            animation: fall linear infinite;
+        }
+        
+        .code-column:nth-child(1) { left: 10%; animation-duration: 8s; animation-delay: 0s; }
+        .code-column:nth-child(2) { left: 40%; animation-duration: 10s; animation-delay: 2s; }
+        .code-column:nth-child(3) { left: 70%; animation-duration: 12s; animation-delay: 4s; }
+        
+        @keyframes fall {
+            0% { top: -100%; opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { top: 100%; opacity: 0; }
+        }
+    </style>
+</head>
+<body class="bg-radial-dark text-gray-200">
+    
+    <!-- 页码指示器 -->
+    <div class="page-number" id="pageIndicator">1 / 16</div>
+    
+    <!-- Slide 1: 封面 -->
+    <section class="slide flex items-center justify-center relative overflow-hidden" id="slide-1">
+        <!-- 装饰性几何图形 -->
+        <div class="geometric-decoration w-96 h-96 rounded-full top-0 right-0 -mr-48 -mt-48"></div>
+        <div class="geometric-decoration w-64 h-64 rounded-full bottom-0 left-0 -ml-32 -mb-32"></div>
+        
+        <!-- 金色光束 -->
+        <div class="light-beam"></div>
+        
+        <!-- 数字代码雨 -->
+        <div class="digital-rain">
+            <div class="code-column">01010<br>11001<br>10110<br>01101<br>11010</div>
+            <div class="code-column">10101<br>00110<br>11100<br>01011<br>10010</div>
+            <div class="code-column">11011<br>01100<br>10011<br>00101<br>11101</div>
+        </div>
+        
+        <!-- 右侧装饰：强化圆环 + 核心关键词 -->
+        <div class="hero-right-decoration">
+            <!-- 三层旋转圆环 -->
+            <div class="golden-orbit orbit-1"></div>
+            <div class="golden-orbit orbit-2"></div>
+            <div class="golden-orbit orbit-3"></div>
+            
+            <!-- 核心价值关键词 -->
+            <div class="core-values">
+                <div class="value-item">合规</div>
+                <div class="value-item">·</div>
+                <div class="value-item">权威</div>
+                <div class="value-item">·</div>
+                <div class="value-item">透明</div>
+            </div>
+        </div>
+        
+        <div class="text-center z-10 px-8" style="margin-right: 200px;">
+            <h1 class="text-8xl font-black mb-8 fade-in-up text-shadow-gold" style="color: #e2e8f0;">
+                国文汇通
+            </h1>
+            <div class="w-32 h-1 mx-auto mb-8 fade-in-up stagger-1" style="background: linear-gradient(90deg, #FFD700, #FFA500);"></div>
+            <h2 class="text-4xl font-bold mb-12 fade-in-up stagger-2" style="color: #F7E7CE;">
+                商业计划书
+            </h2>
+            <p class="text-2xl mb-16 fade-in-up stagger-3" style="color: #cbd5e1;">
+                数字文创资产合规发行与交易一站式平台
+            </p>
+            <p class="text-xl gold-gradient fade-in-up stagger-4">
+                2026 · 汇聚文化之光 · 通达数字未来
+            </p>
+        </div>
+        
+        <div class="scroll-indicator">
+            <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+        </div>
+    </section>
+    
+    <!-- Slide 2: 政策东风 -->
+    <section class="slide py-20 px-12 relative" id="slide-2">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-5xl font-bold mb-16 gold-gradient">
+                1. 政策东风：文化数字化的国家战略
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- 卡片1 -->
+                <div class="glass-card rounded-2xl p-8">
+                    <div class="w-12 h-1 bg-gradient-to-r from-yellow-500 to-orange-500 mb-6"></div>
+                    <h3 class="text-2xl font-bold mb-6 text-yellow-400">顶层设计：战略定调</h3>
+                    <p class="text-lg leading-relaxed mb-4">2022年5月：中办、国办印发《关于推进实施国家文化数字化战略的意见》</p>
+                    <p class="text-lg leading-relaxed">战略高度：为文化数字化发展提供了根本遵循，是国家级战略方向</p>
+                </div>
+                
+                <!-- 卡片2 -->
+                <div class="glass-card rounded-2xl p-8">
+                    <div class="w-12 h-1 bg-gradient-to-r from-yellow-500 to-orange-500 mb-6"></div>
+                    <h3 class="text-2xl font-bold mb-6 text-yellow-400">战略目标：两步走</h3>
+                    <p class="text-lg leading-relaxed mb-4"><span class="gold-gradient font-bold text-2xl">2025年</span>：基本建成文化数字化基础设施和服务平台</p>
+                    <p class="text-lg leading-relaxed"><span class="gold-gradient font-bold text-2xl">2035年</span>：建成国家文化大数据体系，中华文化全景呈现</p>
+                </div>
+                
+                <!-- 卡片3 -->
+                <div class="glass-card rounded-2xl p-8">
+                    <div class="w-12 h-1 bg-gradient-to-r from-yellow-500 to-orange-500 mb-6"></div>
+                    <h3 class="text-2xl font-bold mb-6 text-yellow-400">重点任务与机遇</h3>
+                    <p class="text-lg leading-relaxed mb-4">任务：关联形成中华文化数据库、夯实基础设施</p>
+                    <p class="text-lg leading-relaxed">机遇：明确'培育一批新型文化企业'，平台型企业迎来爆发期</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Slide 3: 行业浪潮 -->
+    <section class="slide py-20 px-12 relative" id="slide-3">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-5xl font-bold mb-16 gold-gradient">
+                2. 行业浪潮：数字文创资产的崛起
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
+                <!-- 市场规模 -->
+                <div class="glass-card rounded-2xl p-10 border-glow">
+                    <h3 class="text-3xl font-bold mb-8 text-yellow-400">市场规模：万亿级蓝海</h3>
+                    <div class="mb-8">
+                        <div class="number-highlight gold-gradient mb-2">13.5万亿元</div>
+                        <p class="text-xl">2024年中国数字文化行业市场规模</p>
+                    </div>
+                    <div>
+                        <div class="number-highlight gold-gradient mb-2">3000亿元</div>
+                        <p class="text-xl">2027年数字资产细分市场规模预测</p>
+                    </div>
+                </div>
+                
+                <!-- 核心人群 -->
+                <div class="glass-card rounded-2xl p-10">
+                    <h3 class="text-3xl font-bold mb-8 text-yellow-400">核心人群：Z世代主导</h3>
+                    <div class="mb-8">
+                        <div class="number-highlight gold-gradient mb-2">67%</div>
+                        <p class="text-xl">Z世代（95后、00后）是绝对主力</p>
+                    </div>
+                    <p class="text-xl leading-relaxed">消费特征：追求个性化、情感共鸣，愿为文化价值付费</p>
+                </div>
+            </div>
+            
+            <!-- 三大趋势 -->
+            <div class="glass-card rounded-2xl p-10">
+                <h3 class="text-3xl font-bold mb-8 text-yellow-400">行业三大趋势</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div>
+                        <div class="text-6xl mb-4">📊</div>
+                        <h4 class="text-xl font-bold mb-3 gold-gradient">合规化</h4>
+                        <p class="text-lg">监管完善，正规军进场，合规是生存前提</p>
+                    </div>
+                    <div>
+                        <div class="text-6xl mb-4">🔗</div>
+                        <h4 class="text-xl font-bold mb-3 gold-gradient">数实融合</h4>
+                        <p class="text-lg">赋能实体经济，连接线上线下消费</p>
+                    </div>
+                    <div>
+                        <div class="text-6xl mb-4">🌐</div>
+                        <h4 class="text-xl font-bold mb-3 gold-gradient">生态化</h4>
+                        <p class="text-lg">从单一交易走向'IP孵化-发行-应用'完整生态</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 继续添加其他slides... 这里先展示前3页作为示例 -->
+    
+    <script>
+        // 滚动监听，更新页码
+        let currentSlide = 1;
+        const totalSlides = 16;
+        
+        window.addEventListener('scroll', () => {
+            const slides = document.querySelectorAll('.slide');
+            slides.forEach((slide, index) => {
+                const rect = slide.getBoundingClientRect();
+                if (rect.top >= 0 && rect.top < window.innerHeight / 2) {
+                    currentSlide = index + 1;
+                    document.getElementById('pageIndicator').textContent = `${currentSlide} / ${totalSlides}`;
+                }
+            });
+        });
+        
+        // 数字滚动动画
+        function animateNumber(element, target, duration = 1500) {
+            const start = 0;
+            const increment = target / (duration / 16);
+            let current = start;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    element.textContent = target;
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current);
+                }
+            }, 16);
+        }
+        
+        // Intersection Observer for scroll-triggered animations
+        const observerOptions = {
+            threshold: 0.2,
+            rootMargin: '0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in-up');
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.glass-card').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>

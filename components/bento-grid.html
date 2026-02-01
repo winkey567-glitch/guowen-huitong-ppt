@@ -1,0 +1,118 @@
+<!-- 组件2: Bento Grid 多卡片布局 -->
+<!-- 用途: 讲产品功能、要点、团队介绍 - 万能且高级 -->
+<!-- 使用方法: 复制卡片块，修改图标、标题、内容 -->
+
+<section class="slide py-20 px-12 min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
+    <div class="max-w-7xl mx-auto">
+        <!-- 页面标题 -->
+        <h2 class="text-5xl md:text-6xl font-bold mb-16 bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
+            您的章节标题
+        </h2>
+        
+        <!-- Bento Grid 布局 - 3列网格 -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-fr">
+            
+            <!-- 卡片1 - 标准卡片 -->
+            <div class="glass-card rounded-3xl p-8 hover:scale-105 transition-transform duration-300">
+                <div class="icon-badge mb-6">
+                    <span class="text-5xl">🎯</span>
+                </div>
+                <h3 class="text-2xl font-bold mb-4 text-yellow-400">卡片标题1</h3>
+                <p class="text-lg text-gray-300 leading-relaxed">
+                    这里填写卡片内容描述，可以是产品功能、团队成员介绍等。
+                </p>
+            </div>
+            
+            <!-- 卡片2 - 带数据的卡片 -->
+            <div class="glass-card rounded-3xl p-8 hover:scale-105 transition-transform duration-300">
+                <div class="icon-badge mb-6">
+                    <span class="text-5xl">📊</span>
+                </div>
+                <h3 class="text-2xl font-bold mb-4 text-yellow-400">卡片标题2</h3>
+                <div class="text-5xl font-black bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent mb-4">
+                    99%
+                </div>
+                <p class="text-lg text-gray-300">
+                    关键数据说明
+                </p>
+            </div>
+            
+            <!-- 卡片3 - 列表式卡片 -->
+            <div class="glass-card rounded-3xl p-8 hover:scale-105 transition-transform duration-300">
+                <div class="icon-badge mb-6">
+                    <span class="text-5xl">✨</span>
+                </div>
+                <h3 class="text-2xl font-bold mb-4 text-yellow-400">卡片标题3</h3>
+                <ul class="space-y-3">
+                    <li class="flex items-start gap-3">
+                        <span class="text-yellow-500 mt-1">•</span>
+                        <span class="text-gray-300">要点1</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="text-yellow-500 mt-1">•</span>
+                        <span class="text-gray-300">要点2</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="text-yellow-500 mt-1">•</span>
+                        <span class="text-gray-300">要点3</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- 卡片4 - 大卡片（跨2列） -->
+            <div class="glass-card rounded-3xl p-8 md:col-span-2 hover:scale-105 transition-transform duration-300">
+                <div class="icon-badge mb-6">
+                    <span class="text-5xl">🚀</span>
+                </div>
+                <h3 class="text-3xl font-bold mb-6 text-yellow-400">重点卡片标题</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="text-xl font-bold mb-3 text-gray-200">子标题1</h4>
+                        <p class="text-gray-400">详细描述内容...</p>
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-bold mb-3 text-gray-200">子标题2</h4>
+                        <p class="text-gray-400">详细描述内容...</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 卡片5 - 强调卡片（带边框高亮） -->
+            <div class="glass-card rounded-3xl p-8 border-2 border-yellow-500/50 hover:scale-105 transition-transform duration-300">
+                <div class="icon-badge mb-6">
+                    <span class="text-5xl">⭐</span>
+                </div>
+                <h3 class="text-2xl font-bold mb-4 text-yellow-400">核心亮点</h3>
+                <p class="text-lg text-gray-300 leading-relaxed">
+                    这是一个强调卡片，适合放置最重要的信息。
+                </p>
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+<style>
+    .glass-card {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+    }
+    
+    .glass-card:hover {
+        background: rgba(255, 255, 255, 0.08);
+        box-shadow: 0 20px 40px rgba(255, 215, 0, 0.2);
+        border-color: rgba(255, 215, 0, 0.3);
+    }
+    
+    .icon-badge {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 165, 0, 0.1));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+</style>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PPT标题 - 在这里修改</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/black.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
+        
+        * { font-family: 'Noto Sans SC', sans-serif; }
+        
+        .reveal { background: radial-gradient(circle at top right, #1a237e 0%, #0f172a 50%, #000000 100%); }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(255, 215, 0, 0.2);
+        }
+        
+        .gold-gradient {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            
+            <!-- 在这里插入组件 -->
+            <!-- 复制 components 文件夹中的代码块 -->
+            
+            <!-- 示例: 封面页 -->
+            <section class="flex items-center justify-center">
+                <div class="text-center">
+                    <h1 class="text-8xl font-black mb-8 text-white">项目名称</h1>
+                    <p class="text-3xl text-yellow-400">副标题</p>
+                </div>
+            </section>
+            
+            <!-- 示例: 内容页 -->
+            <section class="py-20 px-12">
+                <h2 class="text-5xl font-bold mb-16 gold-gradient">章节标题</h2>
+                <div class="grid grid-cols-3 gap-8">
+                    <div class="glass-card rounded-3xl p-8">
+                        <h3 class="text-2xl font-bold text-yellow-400 mb-4">卡片1</h3>
+                        <p class="text-gray-300">内容描述</p>
+                    </div>
+                </div>
+            </section>
+            
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            transition: 'slide',
+            backgroundTransition: 'fade'
+        });
+    </script>
+</body>
+</html>

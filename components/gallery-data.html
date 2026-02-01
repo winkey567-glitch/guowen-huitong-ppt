@@ -1,0 +1,219 @@
+<!-- Digital Gallery 数据展示页 -->
+<!-- 极致留白 + 巨大数字 + 克莱因蓝点缀 -->
+
+<style>
+    .gallery-data-page {
+        min-height: 100vh;
+        background: #F9F9F7;
+        color: #111111;
+        padding: 12vh 10vw;
+        position: relative;
+    }
+    
+    /* Split Layout for Data */
+    .data-split {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10vw;
+        margin-top: 8vh;
+    }
+    
+    /* Minimal Section Title */
+    .section-title-minimal {
+        font-family: 'Inter', sans-serif;
+        font-size: 0.85rem;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: rgba(17, 17, 17, 0.4);
+        margin-bottom: 6vh;
+        text-align: center;
+    }
+    
+    /* Huge Number Display */
+    .number-display {
+        position: relative;
+        padding: 6rem 4rem;
+        border: 1px solid rgba(17, 17, 17, 0.08);
+        background: #FFFFFF;
+        transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    .number-display:hover {
+        border-color: rgba(0, 47, 167, 0.3);
+        transform: translateY(-5px);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+    }
+    
+    /* The Number - Extreme Size */
+    .display-number {
+        font-family: 'Playfair Display', serif;
+        font-size: 8rem;
+        font-weight: 300;
+        line-height: 1;
+        color: #002FA7;
+        margin-bottom: 2rem;
+        opacity: 0;
+        animation: numberReveal 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+    }
+    
+    .display-unit {
+        font-size: 2rem;
+        font-weight: 400;
+        color: #111111;
+        margin-left: 0.5rem;
+    }
+    
+    /* Description - Tiny */
+    .display-description {
+        font-size: 0.9rem;
+        line-height: 1.8;
+        color: rgba(17, 17, 17, 0.6);
+        max-width: 300px;
+    }
+    
+    /* Ultra-thin Progress Bar */
+    .progress-bar-container {
+        width: 100%;
+        height: 1px;
+        background: rgba(17, 17, 17, 0.1);
+        margin-top: 3rem;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .progress-bar-fill {
+        height: 100%;
+        background: #002FA7;
+        width: 0;
+        animation: progressFill 2s cubic-bezier(0.16, 1, 0.3, 1) 1s forwards;
+    }
+    
+    /* Percentage Circle - Minimal */
+    .percentage-circle {
+        width: 300px;
+        height: 300px;
+        position: relative;
+        margin: 4rem auto;
+    }
+    
+    .circle-svg {
+        transform: rotate(-90deg);
+    }
+    
+    .circle-bg {
+        fill: none;
+        stroke: rgba(17, 17, 17, 0.05);
+        stroke-width: 1;
+    }
+    
+    .circle-progress {
+        fill: none;
+        stroke: #002FA7;
+        stroke-width: 1;
+        stroke-dasharray: 880;
+        stroke-dashoffset: 880;
+        animation: circleProgress 2s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
+    }
+    
+    .circle-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+    
+    .circle-number {
+        font-family: 'Playfair Display', serif;
+        font-size: 4rem;
+        font-weight: 300;
+        color: #111111;
+    }
+    
+    .circle-label {
+        font-size: 0.8rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: rgba(17, 17, 17, 0.5);
+        margin-top: 1rem;
+    }
+    
+    /* Klein Blue Accent Line */
+    .accent-line-vertical {
+        position: absolute;
+        width: 1px;
+        height: 60%;
+        background: linear-gradient(180deg, transparent, #002FA7, transparent);
+        left: 50%;
+        top: 20%;
+        opacity: 0.3;
+    }
+    
+    /* Animations */
+    @keyframes numberReveal {
+        from {
+            opacity: 0;
+            transform: translateY(50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    @keyframes progressFill {
+        to { width: var(--progress-width, 75%); }
+    }
+    
+    @keyframes circleProgress {
+        to { stroke-dashoffset: calc(880 - 880 * var(--circle-percent, 0.67)); }
+    }
+</style>
+
+<div class="gallery-data-page">
+    <div class="accent-line-vertical"></div>
+    
+    <div class="section-title-minimal">Market Overview · 2024-2027</div>
+    
+    <div class="data-split">
+        <!-- Left: Large Number -->
+        <div class="number-display">
+            <div class="display-number">
+                13.5<span class="display-unit">万亿元</span>
+            </div>
+            <div class="display-description">
+                2024年中国数字文化行业市场规模<br>
+                持续保持高速增长态势
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-bar-fill" style="--progress-width: 85%"></div>
+            </div>
+        </div>
+        
+        <!-- Right: Large Number -->
+        <div class="number-display">
+            <div class="display-number">
+                3000<span class="display-unit">亿元</span>
+            </div>
+            <div class="display-description">
+                2027年数字资产细分市场规模预测<br>
+                年复合增长率超过40%
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-bar-fill" style="--progress-width: 60%"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Percentage Circle -->
+    <div class="percentage-circle">
+        <svg class="circle-svg" width="300" height="300">
+            <circle class="circle-bg" cx="150" cy="150" r="140"/>
+            <circle class="circle-progress" cx="150" cy="150" r="140" style="--circle-percent: 0.67"/>
+        </svg>
+        <div class="circle-text">
+            <div class="circle-number">67%</div>
+            <div class="circle-label">Z世代占比</div>
+        </div>
+    </div>
+</div>

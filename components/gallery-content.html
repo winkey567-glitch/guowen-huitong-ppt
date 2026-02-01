@@ -1,0 +1,210 @@
+<!-- Digital Gallery 内容页组件 -->
+<!-- 极简 + 艺术 + 科技 + 权威 融合风格 -->
+
+<style>
+    .gallery-content-page {
+        min-height: 100vh;
+        background: #111111;
+        color: #F9F9F7;
+        padding: 10vh 8vw;
+        position: relative;
+    }
+    
+    /* Asymmetric Grid Layout */
+    .asymmetric-grid {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 8vw;
+        align-items: start;
+    }
+    
+    /* Section Number - Huge Serif */
+    .section-number {
+        font-family: 'Playfair Display', serif;
+        font-size: 12rem;
+        font-weight: 300;
+        color: rgba(249, 249, 247, 0.08);
+        line-height: 1;
+        position: sticky;
+        top: 10vh;
+    }
+    
+    /* Content Area */
+    .content-area {
+        padding-top: 2rem;
+    }
+    
+    /* Title - Serif, Large */
+    .content-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 4rem;
+        font-weight: 700;
+        line-height: 1.2;
+        margin-bottom: 3rem;
+        color: #F9F9F7;
+        opacity: 0;
+        animation: staggerReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+    }
+    
+    /* Ultra-thin Divider */
+    .thin-divider {
+        width: 100%;
+        height: 1px;
+        background: rgba(249, 249, 247, 0.2);
+        margin: 3rem 0;
+    }
+    
+    /* Data Card - Minimal */
+    .data-card {
+        background: rgba(249, 249, 247, 0.03);
+        border: 1px solid rgba(249, 249, 247, 0.1);
+        padding: 3rem;
+        margin-bottom: 2rem;
+        transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        opacity: 0;
+        animation: staggerReveal 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    
+    .data-card:nth-child(1) { animation-delay: 0.4s; }
+    .data-card:nth-child(2) { animation-delay: 0.5s; }
+    .data-card:nth-child(3) { animation-delay: 0.6s; }
+    
+    .data-card:hover {
+        background: rgba(249, 249, 247, 0.05);
+        border-color: rgba(0, 47, 167, 0.4);
+        transform: translateX(10px);
+    }
+    
+    /* Card Label - Uppercase, Tiny */
+    .card-label {
+        font-size: 0.75rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: rgba(249, 249, 247, 0.5);
+        margin-bottom: 1.5rem;
+    }
+    
+    /* Card Value - Huge Number */
+    .card-value {
+        font-family: 'Playfair Display', serif;
+        font-size: 5rem;
+        font-weight: 300;
+        line-height: 1;
+        color: #002FA7;
+        margin-bottom: 1rem;
+    }
+    
+    /* Card Description - Small Sans */
+    .card-description {
+        font-size: 0.95rem;
+        line-height: 1.7;
+        color: rgba(249, 249, 247, 0.7);
+    }
+    
+    /* Klein Blue Accent Dot */
+    .accent-dot {
+        width: 8px;
+        height: 8px;
+        background: #002FA7;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 1rem;
+        animation: breathe 3s ease-in-out infinite;
+    }
+    
+    @keyframes breathe {
+        0%, 100% { opacity: 0.6; transform: scale(1); }
+        50% { opacity: 1; transform: scale(1.2); }
+    }
+    
+    /* List Item - Minimal */
+    .minimal-list {
+        list-style: none;
+        padding: 0;
+    }
+    
+    .minimal-list li {
+        padding: 1.5rem 0;
+        border-bottom: 1px solid rgba(249, 249, 247, 0.1);
+        font-size: 1.1rem;
+        color: rgba(249, 249, 247, 0.8);
+        display: flex;
+        align-items: center;
+        transition: all 0.4s ease;
+    }
+    
+    .minimal-list li:hover {
+        padding-left: 2rem;
+        color: #F9F9F7;
+    }
+    
+    /* Abstract Line Decoration */
+    .abstract-line {
+        position: absolute;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(0, 47, 167, 0.3), transparent);
+        width: 40%;
+        top: 30%;
+        right: 0;
+        opacity: 0.5;
+    }
+    
+    @keyframes staggerReveal {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+<div class="gallery-content-page">
+    <div class="abstract-line"></div>
+    
+    <div class="asymmetric-grid">
+        <!-- Left: Section Number -->
+        <div class="section-number">01</div>
+        
+        <!-- Right: Content -->
+        <div class="content-area">
+            <h2 class="content-title">政策东风<br>文化数字化的国家战略</h2>
+            
+            <div class="thin-divider"></div>
+            
+            <!-- Data Cards -->
+            <div class="data-card">
+                <div class="card-label">Strategic Directive</div>
+                <div class="card-value">2022</div>
+                <div class="card-description">
+                    中办、国办印发《关于推进实施国家文化数字化战略的意见》<br>
+                    为文化数字化发展提供根本遵循
+                </div>
+            </div>
+            
+            <div class="data-card">
+                <div class="card-label">Milestone Timeline</div>
+                <ul class="minimal-list">
+                    <li>
+                        <span class="accent-dot"></span>
+                        2025年：基本建成文化数字化基础设施和服务平台
+                    </li>
+                    <li>
+                        <span class="accent-dot"></span>
+                        2035年：建成国家文化大数据体系，中华文化全景呈现
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="data-card">
+                <div class="card-label">Core Opportunity</div>
+                <div class="card-description">
+                    明确"培育一批新型文化企业"<br>
+                    平台型企业迎来爆发期
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

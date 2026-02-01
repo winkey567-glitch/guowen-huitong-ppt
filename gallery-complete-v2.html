@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>国文汇通商业计划书 - 完整版</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;700;900&family=Inter:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <script src="particles.js-master/particles.js-master/particles.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scrollbar-width: none;
+        }
+        *::-webkit-scrollbar { display: none; }
+        
+        body {
+            font-family: 'Noto Sans SC', 'Inter', sans-serif;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            background: #000;
+        }
+        
+        .page {
+            min-height: 100vh;
+            scroll-snap-align: start;
+            position: relative;
+            padding: 8vh 6vw;
+            color: #F9F9F7;
+        }
+        
+        /* 封面页 */
+        .page-cover {
+            background: 
+                radial-gradient(ellipse at 30% 50%, rgba(20, 20, 20, 0.75), rgba(10, 10, 10, 0.90)),
+                url('output/pawel-czerwinski-stcl1Pj2WzY-unsplash.jpg');
+            background-size: cover;
+            background-position: center;
+            display: grid;
+            grid-template-columns: 55% 45%;
+            padding: 0;
+        }
+        
+        .cover-left {
+            padding: 10vh 8vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .cover-right {
+            background: linear-gradient(135deg, rgba(10, 10, 10, 0.3), rgba(26, 26, 26, 0.5));
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .subtitle-small {
+            font-size: 0.9rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(255, 215, 0, 0.7);
+            margin-bottom: 3rem;
+        }
+        
+        .title-huge {
+            font-size: clamp(4rem, 10vw, 8rem);
+            font-weight: 900;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #FFD700, #D4AF37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 2rem;
+        }
+        
+        .description-large {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 3rem;
+        }
+        
+        /* 通用样式 */
+        .section-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 6rem;
+            font-weight: 300;
+            color: rgba(255, 215, 0, 0.1);
+            margin-bottom: 1rem;
+        }
+        
+        .section-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: rgba(255, 215, 0, 0.7);
+            letter-spacing: 0.1em;
+            margin-bottom: 3rem;
+        }
+        
+        /* 卡片系统 */
+        .card-grid {
+            display: grid;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .card-grid-2 { grid-template-columns: repeat(2, 1fr); }
+        .card-grid-3 { grid-template-columns: repeat(3, 1fr); }
+        
+        .info-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 1rem;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .info-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 215, 0, 0.4);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
+        }
+        
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #FFD700;
+            margin-bottom: 1rem;
+        }
+        
+        .card-content {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .card-highlight {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #FFD700;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* 时间轴 */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+        
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .timeline-year {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #FFD700;
+            text-align: right;
+        }
+        
+        .timeline-content {
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 3px solid #FFD700;
+            padding: 1.5rem 2rem;
+            border-radius: 0.5rem;
+        }
+        
+        .timeline-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #FFF;
+            margin-bottom: 0.5rem;
+        }
+        
+        .timeline-desc {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        /* 数据展示 */
+        .data-showcase {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4rem;
+            margin: 3rem 0;
+        }
+        
+        .data-item {
+            text-align: center;
+        }
+        
+        .data-number {
+            font-size: 4rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+        
+        .data-label {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        /* 分栏布局 */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+        
+        /* 背景装饰 */
+        .bg-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            background-image: 
+                linear-gradient(rgba(255, 215, 0, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 215, 0, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .page > * {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Particles.js */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        /* 页码指示器 */
+        .page-indicator {
+            position: fixed;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 999;
+        }
+        
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 215, 0, 0.3);
+            margin: 10px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .dot.active {
+            background: #FFD700;
+            transform: scale(1.5);
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        
+        /* 列表样式 */
+        .bullet-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .bullet-list li {
+            padding-left: 2rem;
+            margin-bottom: 1rem;
+            position: relative;
+            line-height: 1.6;
+        }
+        
+        .bullet-list li:before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #FFD700;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- 页码指示器 -->
+    <div class="page-indicator" id="pageIndicator"></div>
+    
+    <!-- Slide 1: 封面 -->
+    <div class="page page-cover" id="page1">
+        <div id="particles-js"></div>
+        <div class="cover-left">
+            <div class="subtitle-small">Business Proposal · 2026</div>
+            <h1 class="title-huge">国文汇通</h1>
+            <p class="description-large">
+                数字文创资产合规发行与交易一站式平台<br>
+                响应国家文化数字化战略，构建权威、透明的文化资产生态体系
+            </p>
+            <div style="color: rgba(255, 215, 0, 0.8); font-size: 1.1rem; letter-spacing: 0.2em;">
+                汇聚文化之光 · 通达数字未来
+            </div>
+        </div>
+        <div class="cover-right">
+            <!-- 这里可以放瓷器图片 -->
+            <div style="font-size: 8rem; opacity: 0.3;">🏺</div>
+        </div>
+    </div>
+    
+    <!-- Slide 2: 政策东风 -->
+    <div class="page" id="page2" style="background: linear-gradient(rgba(17, 17, 17, 0.95), rgba(17, 17, 17, 0.97)), url('output/andrew-kliatskyi-JdX0OeTj5S0-unsplash.jpg'); background-size: cover;">
+        <div class="bg-pattern"></div>
+        <div class="section-number">01</div>
+        <h2 class="section-title">政策东风：文化数字化的国家战略</h2>
+        
+        <div class="card-grid card-grid-3" style="margin-bottom: 3rem;">
+            <div class="info-card">
+                <div class="card-icon">🏛️</div>
+                <div class="card-title">顶层设计</div>
+                <div class="card-content">
+                    中共中央办公厅、国务院办公厅于<strong style="color: #FFD700;">2022年5月</strong>印发《关于推进实施国家文化数字化战略的意见》，从战略高度为文化数字化发展提供了根本遵循和行动指南。
+                </div>
+            </div>
+            
+            <div class="info-card">
+                <div class="card-icon">🎯</div>
+                <div class="card-title">战略目标</div>
+                <div class="card-content">
+                    到<strong style="color: #FFD700;">2025年</strong>，基本建成文化数字化基础设施和服务平台；到<strong style="color: #FFD700;">2035年</strong>，建成国家文化大数据体系，中华文化全景呈现。
+                </div>
+            </div>
+            
+            <div class="info-card">
+                <div class="card-icon">💡</div>
+                <div class="card-title">重点任务</div>
+                <div class="card-content">
+                    提出8项重点任务，明确"<strong style="color: #FFD700;">培育一批新型文化企业</strong>"，为平台型企业提供前所未有的发展机遇。
+                </div>
+            </div>
+        </div>
+        
+        <div style="background: rgba(255, 255, 255, 0.05); border-radius: 1rem; padding: 2rem;">
+            <h3 style="color: #FFD700; font-size: 1.3rem; margin-bottom: 1.5rem;">战略发展时间轴</h3>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-year">2022.05</div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">《意见》发布</div>
+                        <div class="timeline-desc">顶层设计出台，国家战略启动</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2025</div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">基础设施建成</div>
+                        <div class="timeline-desc">基本建成文化数字化基础设施和服务平台</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2035</div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">大数据体系完成</div>
+                        <div class="timeline-desc">建成国家文化大数据体系，中华文化全景呈现</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Particles.js 初始化
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {"value": 80, "density": {"enable": true, "value_area": 800}},
+                "color": {"value": ["#FFD700", "#D4AF37"]},
+                "shape": {"type": "circle"},
+                "opacity": {"value": 0.4, "random": true, "anim": {"enable": true, "speed": 0.8, "opacity_min": 0.1}},
+                "size": {"value": 4, "random": true, "anim": {"enable": true, "speed": 3, "size_min": 1}},
+                "line_linked": {"enable": true, "distance": 150, "color": "#FFD700", "opacity": 0.2, "width": 1},
+                "move": {"enable": true, "speed": 1, "direction": "none", "random": true, "out_mode": "out"}
+            },
+            "interactivity": {
+                "events": {"onhover": {"enable": true, "mode": "grab"}},
+                "modes": {"grab": {"distance": 200, "line_linked": {"opacity": 0.3}}}
+            }
+        });
+        
+        // 页码指示器生成
+        const totalPages = 24;
+        const indicator = document.getElementById('pageIndicator');
+        for (let i = 1; i <= totalPages; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'dot' + (i === 1 ? ' active' : '');
+            dot.onclick = () => scrollToPage(i);
+            indicator.appendChild(dot);
+        }
+        
+        function scrollToPage(num) {
+            document.getElementById('page' + num).scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // 更新页码指示器
+        window.addEventListener('scroll', () => {
+            const pages = document.querySelectorAll('.page');
+            const dots = document.querySelectorAll('.dot');
+            
+            pages.forEach((page, index) => {
+                const rect = page.getBoundingClientRect();
+                if (rect.top >= -100 && rect.top < window.innerHeight / 2) {
+                    dots.forEach(d => d.classList.remove('active'));
+                    dots[index].classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

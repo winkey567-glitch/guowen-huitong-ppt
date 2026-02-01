@@ -1,0 +1,1640 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>国文汇通 - 博物馆风格</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;700;900&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:wght@300;400;600;700&family=Montserrat:wght@300;400;600;700&family=Crimson+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="particles.js-master/particles.js-master/particles.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scrollbar-width: none;
+        }
+        *::-webkit-scrollbar { display: none; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+        }
+        
+        /* 每一页占满屏幕 */
+        .page {
+            min-height: 100vh;
+            scroll-snap-align: start;
+            position: relative;
+        }
+        
+        /* 页面1：封面 - 黑色主导 + 背景图 */
+        .page-1 {
+            background: 
+                radial-gradient(ellipse at 30% 50%, 
+                    rgba(20, 20, 20, 0.75) 0%,
+                    rgba(10, 10, 10, 0.85) 40%,
+                    rgba(10, 10, 10, 0.90) 100%),
+                url('output/pawel-czerwinski-stcl1Pj2WzY-unsplash.jpg');
+            background-size: cover;
+            background-position: center;
+            display: grid;
+            grid-template-columns: 60% 40%;
+            position: relative;
+        }
+        
+        .content-left {
+            padding: 10vh 8vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            background: radial-gradient(ellipse at 50% 50%, 
+                rgba(15, 15, 15, 0.5) 0%,
+                transparent 70%);
+        }
+        
+        .whitespace-right {
+            background: linear-gradient(135deg, 
+                rgba(10, 10, 10, 0.3) 0%, 
+                rgba(17, 17, 17, 0.4) 50%,
+                rgba(26, 26, 26, 0.5) 100%);
+            position: relative;
+        }
+        
+        .divider {
+            position: absolute;
+            left: 0;
+            top: 20%;
+            bottom: 20%;
+            width: 1px;
+            background: linear-gradient(180deg, 
+                transparent 0%,
+                rgba(255, 215, 0, 0.3) 20%,
+                rgba(255, 215, 0, 0.6) 50%,
+                rgba(255, 215, 0, 0.3) 80%,
+                transparent 100%);
+        }
+        
+        .subtitle {
+            font-size: 0.9rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255, 215, 0, 0.7);
+            margin-bottom: 4rem;
+            text-shadow: 0 0 20px rgba(255, 107, 53, 0.15);
+        }
+        
+        .title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(4rem, 10vw, 9rem);
+            font-weight: 900;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #FFD700, #D4AF37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 3rem;
+        }
+        
+        .description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 500px;
+            margin-bottom: 4rem;
+        }
+        
+        .button {
+            display: inline-block;
+            padding: 0.8rem 2.5rem;
+            background: transparent;
+            border: 1px solid #FFD700;
+            color: #FFD700;
+            font-size: 0.85rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            width: fit-content;
+        }
+        
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 10px 30px rgba(255, 215, 0, 0.4),
+                0 5px 15px rgba(255, 107, 53, 0.15);
+            border-color: rgba(255, 215, 0, 0.9);
+        }
+        
+        .circle {
+            position: absolute;
+            width: 380px;
+            height: 380px;
+            border: 3px solid rgba(255, 215, 0, 0.4);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: 
+                rotate 60s linear infinite,
+                pulse-circle 4s ease-in-out infinite,
+                glow-shift 8s ease-in-out infinite;
+            box-shadow: 
+                0 0 50px rgba(255, 215, 0, 0.3),
+                inset 0 0 50px rgba(255, 215, 0, 0.1);
+            background: transparent;
+        }
+        
+        .circle::before {
+            content: '';
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: 
+                rotate-reverse 40s linear infinite,
+                pulse-inner 3s ease-in-out infinite 0.5s;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+        }
+        
+        .circle::after {
+            content: '';
+            position: absolute;
+            width: 140px;
+            height: 140px;
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: 
+                rotate 30s linear infinite,
+                pulse-inner 2.5s ease-in-out infinite 1s;
+        }
+        
+        /* 核心关键词 */
+        .core-keywords {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 10;
+        }
+        
+        .keyword {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: rgba(255, 215, 0, 0.9);
+            letter-spacing: 0.3em;
+            margin: 0.8rem 0;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+            animation: pulse-text 3s ease-in-out infinite;
+        }
+        
+        .keyword:nth-child(1) { animation-delay: 0s; }
+        .keyword:nth-child(2) { animation-delay: 1s; }
+        .keyword:nth-child(3) { animation-delay: 2s; }
+        
+        @keyframes pulse-text {
+            0%, 100% { opacity: 0.7; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.08); }
+        }
+        
+        @keyframes rotate {
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        @keyframes rotate-reverse {
+            to { transform: translate(-50%, -50%) rotate(-360deg); }
+        }
+        
+        @keyframes pulse-circle {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.05);
+                opacity: 0.8;
+            }
+        }
+        
+        @keyframes pulse-inner {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                border-color: rgba(255, 215, 0, 0.1);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.1);
+                border-color: rgba(255, 215, 0, 0.25);
+            }
+        }
+        
+        @keyframes glow-shift {
+            0%, 100% {
+                box-shadow: 0 0 50px rgba(255, 215, 0, 0.3);
+            }
+            33% {
+                box-shadow: 0 0 60px rgba(255, 215, 0, 0.4);
+            }
+            66% {
+                box-shadow: 0 0 55px rgba(255, 107, 53, 0.25);
+            }
+        }
+        
+        /* 金色光束 - 右上角 */
+        .light-beam {
+            position: absolute;
+            top: -10%;
+            right: -5%;
+            width: 350px;
+            height: 700px;
+            background: linear-gradient(135deg, 
+                rgba(255, 215, 0, 0.2) 0%, 
+                rgba(255, 215, 0, 0.08) 50%, 
+                transparent 100%);
+            transform: rotate(-15deg);
+            filter: blur(40px);
+            animation: shimmer 5s ease-in-out infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes shimmer {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.7; }
+        }
+        
+        /* 3D 青铜爵杯 */
+        .cup-3d-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 350px;
+            height: 450px;
+            perspective: 1000px;
+            z-index: 5;
+        }
+        
+        .cup-3d {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            animation: rotate3d 20s linear infinite;
+        }
+        
+        .cup-3d img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 0 40px rgba(255, 215, 0, 0.6));
+        }
+        
+        @keyframes rotate3d {
+            0% { transform: rotateY(0deg) rotateX(5deg); }
+            100% { transform: rotateY(360deg) rotateX(5deg); }
+        }
+        
+        /* 光环装饰 */
+        .cup-glow {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            background: radial-gradient(circle, 
+                rgba(255, 215, 0, 0.15) 0%, 
+                rgba(255, 215, 0, 0.05) 50%, 
+                transparent 100%);
+            animation: pulse-glow 4s ease-in-out infinite;
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+            50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+        }
+        
+        /* 粒子瓷器画布 */
+        #vase-canvas {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 5;
+            pointer-events: none;
+        }
+        
+        /* 抽象线条装饰 */
+        .abstract-lines {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .line {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.2), transparent);
+            animation: flowLine 8s ease-in-out infinite;
+        }
+        
+        .line:nth-child(1) {
+            top: 25%;
+            width: 40%;
+            right: 10%;
+            animation-delay: 0s;
+        }
+        
+        .line:nth-child(2) {
+            top: 45%;
+            width: 30%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+        
+        .line:nth-child(3) {
+            top: 65%;
+            width: 35%;
+            right: 5%;
+            animation-delay: 4s;
+        }
+        
+        @keyframes flowLine {
+            0%, 100% {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            50% {
+                opacity: 1;
+                transform: translateX(30px);
+            }
+        }
+        
+        /* 底部渐变光效 */
+        .gradient-glow {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            background: radial-gradient(ellipse at bottom, rgba(255, 215, 0, 0.08), transparent);
+            pointer-events: none;
+        }
+        
+        /* 页面2：政策东风 - 深色 + 背景图 */
+        .page-2 {
+            background: 
+                linear-gradient(rgba(17, 17, 17, 0.95), rgba(17, 17, 17, 0.97)),
+                url('output/andrew-kliatskyi-JdX0OeTj5S0-unsplash.jpg');
+            background-size: cover;
+            background-position: center;
+            color: #F9F9F7;
+            padding: 10vh 8vw;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* 网格背景 */
+        .grid-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 215, 0, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 215, 0, 0.05) 1px, transparent 1px);
+            background-size: 100px 100px;
+            pointer-events: none;
+        }
+        
+        /* 数据流线条 */
+        .data-flow {
+            position: absolute;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(180deg, transparent, rgba(255, 215, 0, 0.25), transparent);
+            animation: dataFlowDown 6s ease-in-out infinite;
+        }
+        
+        .data-flow:nth-child(1) {
+            left: 20%;
+            animation-delay: 0s;
+        }
+        
+        .data-flow:nth-child(2) {
+            left: 50%;
+            animation-delay: 2s;
+        }
+        
+        .data-flow:nth-child(3) {
+            left: 80%;
+            animation-delay: 4s;
+        }
+        
+        @keyframes dataFlowDown {
+            0%, 100% {
+                opacity: 0;
+                transform: translateY(-100%);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(100%);
+            }
+        }
+        
+        .section-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 8rem;
+            font-weight: 300;
+            color: rgba(249, 249, 247, 0.08);
+            margin-bottom: 2rem;
+        }
+        
+        .content-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 700;
+            line-height: 1.3;
+            letter-spacing: 0.05em;
+            margin-bottom: 3rem;
+        }
+        
+        .divider-thin {
+            width: 100%;
+            height: 1px;
+            background: rgba(249, 249, 247, 0.2);
+            margin: 2rem 0;
+        }
+        
+        .data-card {
+            background: rgba(249, 249, 247, 0.03);
+            border: 1px solid rgba(249, 249, 247, 0.1);
+            padding: 2.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.4s ease;
+        }
+        
+        .data-card:hover {
+            background: rgba(249, 249, 247, 0.05);
+            transform: translateX(10px);
+        }
+        
+        .card-label {
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(249, 249, 247, 0.5);
+            margin-bottom: 1rem;
+        }
+        
+        .card-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 300;
+            background: linear-gradient(135deg, #FFD700, #D4AF37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+        
+        .card-text {
+            color: rgba(249, 249, 247, 0.7);
+            line-height: 1.7;
+        }
+        
+        /* 页面3：市场数据 - 黑色 + 背景图 */
+        .page-3 {
+            background: 
+                linear-gradient(rgba(10, 10, 10, 0.96), rgba(10, 10, 10, 0.98)),
+                url('output/majed-swan-tzhqSmy58d8-unsplash.jpg');
+            background-size: cover;
+            background-position: center;
+            padding: 10vh 8vw;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* 抽象几何背景 */
+        .geometric-bg {
+            position: absolute;
+            top: 10%;
+            right: 5%;
+            width: 400px;
+            height: 400px;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            border-radius: 50%;
+            animation: pulse 8s ease-in-out infinite;
+            box-shadow: 0 0 40px rgba(107, 95, 255, 0.1);
+        }
+        
+        .geometric-bg::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 20%;
+            width: 60%;
+            height: 60%;
+            border: 1px solid rgba(255, 215, 0, 0.12);
+            transform: rotate(45deg);
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.3;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.6;
+            }
+        }
+        
+        /* 点状装饰 */
+        .dots-pattern {
+            position: absolute;
+            bottom: 10%;
+            left: 5%;
+            width: 200px;
+            height: 200px;
+            background-image: 
+                radial-gradient(circle at 30% 30%, rgba(255, 107, 53, 0.08) 1px, transparent 1px),
+                radial-gradient(circle at 70% 70%, rgba(107, 95, 255, 0.08) 1px, transparent 1px),
+                radial-gradient(circle, rgba(255, 215, 0, 0.15) 2px, transparent 2px);
+            background-size: 15px 15px, 15px 15px, 20px 20px;
+            background-position: 0 0, 10px 10px, 0 0;
+        }
+        
+        .section-label {
+            text-align: center;
+            font-size: 0.85rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: rgba(255, 215, 0, 0.6);
+            margin-bottom: 4vh;
+            margin-top: 8vh;
+        }
+        
+        .data-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            margin-bottom: 4rem;
+            padding: 0 5%;
+        }
+        
+        .number-box {
+            padding: 5rem 4rem;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            background: rgba(255, 255, 255, 0.03);
+            position: relative;
+        }
+        
+        .number-box::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 10%;
+            width: 80%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.4), transparent);
+            box-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
+        }
+        
+        .big-number {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 300;
+            background: linear-gradient(135deg, #FFD700, #D4AF37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+        }
+        
+        .unit {
+            font-size: 1.8rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-left: 0.5rem;
+        }
+        
+        .number-desc {
+            font-size: 1.1rem;
+            line-height: 2;
+            color: rgba(255, 255, 255, 0.75);
+        }
+        
+        /* 页面4：Z世代 - 黑色 + 背景图 */
+        .page-4 {
+            background: 
+                radial-gradient(ellipse at center, 
+                    rgba(10, 10, 10, 0.94) 0%,
+                    rgba(10, 10, 10, 0.97) 100%),
+                url('output/pawel-czerwinski-WtNk-Ab9JEY-unsplash.jpg');
+            background-size: cover;
+            background-position: center;
+            padding: 10vh 8vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .center-content {
+            text-align: center;
+            max-width: 600px;
+        }
+        
+        .huge-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 8rem;
+            font-weight: 300;
+            background: linear-gradient(135deg, #FFD700, #D4AF37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 2rem;
+        }
+        
+        /* 全屏按钮 */
+        .fullscreen-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.9), rgba(212, 175, 55, 0.9));
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+        
+        .fullscreen-btn:hover {
+            background: linear-gradient(135deg, #FFD700, #D4AF37);
+            transform: scale(1.1);
+            box-shadow: 
+                0 10px 30px rgba(255, 215, 0, 0.5),
+                0 0 20px rgba(107, 95, 255, 0.2);
+        }
+        
+        /* 页码指示器 */
+        .page-indicator {
+            position: fixed;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 998;
+        }
+        
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 215, 0, 0.4);
+            margin: 10px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .dot.active {
+            background: linear-gradient(135deg, #FFD700, #D4AF37);
+            transform: scale(1.5);
+            box-shadow: 0 0 10px rgba(107, 95, 255, 0.3);
+        }
+        
+        /* 红橙和蓝紫色点缀装饰 - 2% */
+        .page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 10% 20%, rgba(255, 107, 53, 0.03) 0%, transparent 30%),
+                radial-gradient(ellipse at 90% 80%, rgba(107, 95, 255, 0.03) 0%, transparent 30%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .page > * {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Particles.js 容器 - 覆盖整个首页 */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        .page-1 .content-left,
+        .page-1 .whitespace-right {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* --- 新增优化样式 --- */
+        
+        /* 通用内页容器 - 限制宽度，居中，垂直分布 */
+        .inner-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding-top: 8vh;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Page 2: 政策时间轴 */
+        .policy-timeline {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 4vh;
+            position: relative;
+        }
+        
+        .policy-timeline::before {
+            content: '';
+            position: absolute;
+            top: 30px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.5), transparent);
+            z-index: 0;
+        }
+
+        .timeline-item {
+            flex: 1;
+            padding: 0 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .timeline-year {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            color: #FFD700;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+            background: #111; /* 遮挡线条 */
+            display: inline-block;
+            padding-right: 1rem;
+        }
+
+        .timeline-content {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 1px solid rgba(255, 215, 0, 0.3);
+            padding: 1.5rem;
+            height: 100%;
+            transition: transform 0.3s;
+        }
+        
+        .timeline-content:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        /* Page 4: 痛点解决方案对比 */
+        .comparison-container {
+            display: grid;
+            grid-template-columns: 1fr 1px 1fr;
+            gap: 4rem;
+            align-items: stretch;
+        }
+        
+        .comparison-divider {
+            background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        }
+
+        .pain-list, .solution-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .compare-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 1.5rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .pain-item {
+            background: rgba(255, 107, 53, 0.05);
+            border: 1px solid rgba(255, 107, 53, 0.2);
+        }
+        
+        .pain-item:hover {
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.1);
+        }
+
+        .solution-item {
+            background: rgba(255, 215, 0, 0.05);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+        
+        .solution-item:hover {
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.1);
+        }
+
+        .item-icon {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            min-width: 40px;
+        }
+
+        /* Page 6: 双币模型 */
+        .token-model-container {
+            display: grid;
+            grid-template-columns: 4fr 3fr;
+            gap: 4rem;
+            height: 60vh;
+        }
+
+        .token-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            justify-content: center;
+        }
+
+        .token-card {
+            display: flex;
+            align-items: center;
+            padding: 2rem;
+            background: linear-gradient(90deg, rgba(255,215,0,0.05), transparent);
+            border-left: 4px solid #FFD700;
+            transition: transform 0.3s;
+        }
+        
+        .token-card:hover {
+            transform: translateX(10px);
+            background: linear-gradient(90deg, rgba(255,215,0,0.1), transparent);
+        }
+
+        .deflation-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            align-content: center;
+        }
+
+        .deflation-item {
+            padding: 1.5rem;
+            text-align: center;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 50%;
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.8);
+            transition: all 0.3s;
+        }
+        
+        .deflation-item:hover {
+            border-color: #FFD700;
+            color: #FFD700;
+            transform: scale(1.05);
+        }
+
+        /* Page 7: 路线图 */
+        .roadmap-steps {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .roadmap-step {
+            position: relative;
+            padding-top: 3rem;
+        }
+
+        .roadmap-step::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .roadmap-step.active::before {
+            background: linear-gradient(90deg, #FFD700, #FFA500);
+            box-shadow: 0 0 15px rgba(255,215,0,0.5);
+        }
+
+        .step-year {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: #FFD700;
+            margin-bottom: 1rem;
+        }
+
+        .step-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 0.8rem;
+            letter-spacing: 0.1em;
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- 页面1：封面 -->
+    <div class="page page-1" id="page1">
+        <div id="particles-js"></div>
+        <div class="content-left">
+            <div class="subtitle">Business Proposal · 2026</div>
+            <h1 class="title">国文汇通</h1>
+            <p class="description">
+                数字文创资产合规发行与交易一站式平台<br>
+                响应国家文化数字化战略，构建权威、透明的文化资产生态体系
+            </p>
+            <a href="#page2" class="button">探索详情</a>
+        </div>
+        <div class="whitespace-right">
+            <div class="divider"></div>
+            
+            <!-- 金色光束 -->
+            <div class="light-beam"></div>
+            
+            <!-- 3D 青铜爵杯 -->
+            <div class="cup-glow"></div>
+            <div class="cup-3d-container">
+                <div class="cup-3d">
+                    <img src="output/cup.png" alt="青铜爵杯">
+                </div>
+            </div>
+            
+            <div class="abstract-lines">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+            <div class="gradient-glow"></div>
+        </div>
+    </div>
+    
+    <!-- 页面2：政策东风 -->
+    <div class="page page-2" id="page2">
+        <div class="grid-bg"></div>
+        <div class="data-flow"></div>
+        <div class="data-flow"></div>
+        <div class="data-flow"></div>
+        
+        <div class="inner-container">
+            <div class="section-number">01</div>
+            <h2 class="content-title">政策东风<br>文化数字化的国家战略</h2>
+            <div class="divider-thin"></div>
+            
+            <div class="policy-timeline">
+                <div class="timeline-item">
+                    <div class="timeline-year">2022</div>
+                    <div class="timeline-content">
+                        <div class="card-label">Strategic Directive</div>
+                        <p class="card-text">
+                            中办、国办印发《关于推进实施国家文化数字化战略的意见》<br>
+                            为文化数字化发展提供根本遵循
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-year">2025</div>
+                    <div class="timeline-content">
+                        <div class="card-label">Infrastructure</div>
+                        <p class="card-text">
+                            基本建成文化数字化基础设施和服务平台<br>
+                            形成线上线下融合互动、立体覆盖的文化服务供给体系
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-year">2035</div>
+                    <div class="timeline-content">
+                        <div class="card-label">Full Panorama</div>
+                        <p class="card-text">
+                            建成国家文化大数据体系<br>
+                            中华文化全景呈现，文化数字化生产力快速发展
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 页面3：市场数据 -->
+    <div class="page page-3" id="page3">
+        <div class="geometric-bg"></div>
+        <div class="dots-pattern"></div>
+        
+        <div class="inner-container">
+            <div class="section-label">Market Overview · 2024-2027</div>
+            <h2 class="content-title" style="text-align: center; margin-bottom: 4rem;">万亿级市场蓝海 爆发式增长机遇</h2>
+            
+            <div class="data-grid">
+                <div class="number-box">
+                    <div class="big-number">13.5<span class="unit">万亿元</span></div>
+                    <div class="number-desc">
+                        2024年中国数字文化行业市场规模<br>
+                        持续保持高速增长态势
+                    </div>
+                </div>
+                
+                <div class="number-box">
+                    <div class="big-number">3000<span class="unit">亿元</span></div>
+                    <div class="number-desc">
+                        2027年数字资产细分市场规模预测<br>
+                        年复合增长率超过40%
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 页面4：痛点与解决方案 -->
+    <div class="page page-4" id="page4">
+        <div class="geometric-bg"></div>
+        
+        <div class="inner-container">
+            <div class="section-label">Pain Points & Solutions</div>
+            <h2 class="content-title" style="text-align: center; margin-bottom: 4rem;">直击行业痛点 给出完美方案</h2>
+            
+            <div class="comparison-container">
+                <!-- 痛点 -->
+                <div class="pain-list">
+                    <h3 class="content-title" style="font-size: 2rem; color: #FF6B35; margin-bottom: 1rem;">行业痛点</h3>
+                    
+                    <div class="compare-item pain-item">
+                        <span class="item-icon">❌</span>
+                        <div>
+                            <div class="card-label" style="color: #FF6B35;">交易乱象</div>
+                            <p class="card-text">中小平台跑路频发，炒作泡沫严重，缺乏有效监管，用户资产无保障。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="compare-item pain-item">
+                        <span class="item-icon">❌</span>
+                        <div>
+                            <div class="card-label" style="color: #FF6B35;">权益不清</div>
+                            <p class="card-text">确权困难，版权纠纷不断，数字资产流失严重，创作者权益难以维护。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="compare-item pain-item">
+                        <span class="item-icon">❌</span>
+                        <div>
+                            <div class="card-label" style="color: #FF6B35;">信任缺失</div>
+                            <p class="card-text">由于行业乱象，导致大众信任度低，机构观望情绪浓厚，行业发展受阻。</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="comparison-divider"></div>
+                
+                <!-- 解决方案 -->
+                <div class="solution-list">
+                    <h3 class="content-title" style="font-size: 2rem; color: #FFD700; margin-bottom: 1rem;">我们的方案</h3>
+                    
+                    <div class="compare-item solution-item">
+                        <span class="item-icon">✅</span>
+                        <div>
+                            <div class="card-label" style="color: #FFD700;">国资背书</div>
+                            <p class="card-text">国企控股平台，权威可信，严格合规运营，为用户资产提供坚实保障。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="compare-item solution-item">
+                        <span class="item-icon">✅</span>
+                        <div>
+                            <div class="card-label" style="color: #FFD700;">区块链确权</div>
+                            <p class="card-text">利用区块链技术进行链上存证，数据不可篡改，永久追溯，确权清晰。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="compare-item solution-item">
+                        <span class="item-icon">✅</span>
+                        <div>
+                            <div class="card-label" style="color: #FFD700;">合规牌照</div>
+                            <p class="card-text">持牌经营，接受政府监管，流程透明，法律保障完善，重塑行业信任。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 页面5：核心护城河 -->
+    <div class="page page-5" id="page5" style="background: linear-gradient(rgba(10, 10, 10, 0.96), rgba(10, 10, 10, 0.98)), url('output/pawel-czerwinski-WtNk-Ab9JEY-unsplash.jpg'); background-size: cover; background-position: center;">
+        <div class="dots-pattern"></div>
+        
+        <div class="inner-container">
+            <div class="section-number">02</div>
+            <h2 class="content-title">核心护城河<br>三大竞争优势</h2>
+            <div class="divider-thin"></div>
+            
+            <div class="data-grid" style="grid-template-columns: 1fr 1fr 1fr; gap: 2rem;">
+                <div class="number-box">
+                    <div class="card-label" style="font-size: 1.5rem; margin-bottom: 1rem;">🏛️</div>
+                    <div class="card-label" style="color: #FFD700;">国资背书</div>
+                    <p class="number-desc" style="margin-top: 1.5rem;">
+                        国企控股平台<br>
+                        政府资源支持<br>
+                        权威信用背书
+                    </p>
+                </div>
+                
+                <div class="number-box">
+                    <div class="card-label" style="font-size: 1.5rem; margin-bottom: 1rem;">🔗</div>
+                    <div class="card-label" style="color: #FFD700;">技术壁垒</div>
+                    <p class="number-desc" style="margin-top: 1.5rem;">
+                        区块链底层技术<br>
+                        智能合约系统<br>
+                        数据安全加密
+                    </p>
+                </div>
+                
+                <div class="number-box">
+                    <div class="card-label" style="font-size: 1.5rem; margin-bottom: 1rem;">📜</div>
+                    <div class="card-label" style="color: #FFD700;">合规牌照</div>
+                    <p class="number-desc" style="margin-top: 1.5rem;">
+                        持牌经营资质<br>
+                        监管合规体系<br>
+                        法律保障完善
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 页面6：商业模式 - 双币模型 -->
+    <div class="page page-6" id="page6" style="background: linear-gradient(rgba(17, 17, 17, 0.95), rgba(17, 17, 17, 0.97)), url('output/andrew-kliatskyi-JdX0OeTj5S0-unsplash.jpg'); background-size: cover; background-position: center;">
+        <div class="grid-bg"></div>
+        <div class="inner-container">
+            <div class="section-label">Business Model · Dual Token System</div>
+            <h2 class="content-title" style="margin-bottom: 3rem;">双币驱动 · 价值共生</h2>
+            
+            <div class="token-model-container">
+                <div class="token-cards">
+                    <div class="token-card">
+                        <div style="margin-right: 2rem; font-size: 3rem;">🎫</div>
+                        <div>
+                            <div class="card-label" style="color: #FFD700; margin-bottom: 0.5rem;">基石资产 · 国文通卷</div>
+                            <div class="big-number" style="font-size: 2.5rem; margin-bottom: 0.5rem;">1000万份</div>
+                            <p class="card-text">总量恒定，永不增发。作为平台权益凭证，通过寄存锁定产出通宝，具有极强的稀缺性和价值锚定属性。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="token-card">
+                        <div style="margin-right: 2rem; font-size: 3rem;">🪙</div>
+                        <div>
+                            <div class="card-label" style="color: #FFD700; margin-bottom: 0.5rem;">流通积分 · 国文通宝</div>
+                            <div class="big-number" style="font-size: 2.5rem; margin-bottom: 0.5rem;">10亿个</div>
+                            <p class="card-text">每日产出，用于支付手续费、打新认购、权益兑换等。具备完善的销毁通缩机制，生态越繁荣，价值越高。</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="deflation-grid">
+                    <div class="deflation-item">手续费销毁</div>
+                    <div class="deflation-item">打新认购</div>
+                    <div class="deflation-item">权益兑换</div>
+                    <div class="deflation-item">平台回购</div>
+                    <div class="deflation-item">生态建设</div>
+                    <div class="deflation-item" style="border-color: #FFD700; color: #FFD700;">极致通缩</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 页面7：发展路线图 -->
+    <div class="page page-7" id="page7" style="background: linear-gradient(rgba(10, 10, 10, 0.96), rgba(10, 10, 10, 0.98)), url('output/majed-swan-tzhqSmy58d8-unsplash.jpg'); background-size: cover; background-position: center;">
+        <div class="geometric-bg"></div>
+        
+        <div class="inner-container">
+            <div class="section-number">03</div>
+            <h2 class="content-title">发展路线图<br>三步走战略</h2>
+            <div class="divider-thin"></div>
+            
+            <div class="roadmap-steps">
+                <div class="roadmap-step active">
+                    <div class="step-year">1-2年</div>
+                    <div class="step-title">夯实基础 · 建立信任</div>
+                    <p class="card-text">
+                        完成平台搭建，获取合规牌照，上线核心功能。<br>
+                        引入头部IP，建立示范案例，积累种子用户。
+                    </p>
+                </div>
+                
+                <div class="roadmap-step">
+                    <div class="step-year">3-4年</div>
+                    <div class="step-title">规模扩张 · 生态构建</div>
+                    <p class="card-text">
+                        拓展品类覆盖，深化产业合作，打造爆款IP。<br>
+                        完善双币模型，激活社区治理，实现盈利平衡。
+                    </p>
+                </div>
+                
+                <div class="roadmap-step">
+                    <div class="step-year">5年+</div>
+                    <div class="step-title">行业领先 · 全球布局</div>
+                    <p class="card-text">
+                        成为中国领先的文化数字资产基础设施。<br>
+                        探索国际化路径，输出中国文化，构建全球生态。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 页面8：愿景使命 -->
+    <div class="page page-8" id="page8" style="background: radial-gradient(ellipse at center, rgba(10, 10, 10, 0.94) 0%, rgba(10, 10, 10, 0.97) 100%), url('output/pawel-czerwinski-stcl1Pj2WzY-unsplash.jpg'); background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center;">
+        <div class="center-content" style="max-width: 800px;">
+            <div class="section-label" style="margin-bottom: 3rem;">Vision & Mission</div>
+            <h2 class="content-title" style="font-size: 3.5rem; text-align: center; margin-bottom: 3rem;">
+                汇聚文化之光<br>通达数字未来
+            </h2>
+            <p class="description" style="font-size: 1.3rem; text-align: center; line-height: 2; margin: 0 auto 3rem;">
+                以国家文化数字化战略为指引<br>
+                以区块链技术为支撑<br>
+                构建权威、透明、可信的文化资产生态<br>
+                让每一份文化价值都能被确权、流通、增值
+            </p>
+            <div style="text-align: center;">
+                <div class="huge-number" style="font-size: 6rem; margin-bottom: 1rem;">国文汇通</div>
+                <p class="card-text" style="font-size: 1.1rem; letter-spacing: 0.3em;">
+                    中国领先的数字文创资产基础设施
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 全屏按钮 -->
+    <button class="fullscreen-btn" onclick="toggleFullscreen()">⛶</button>
+    
+    <!-- 页码指示器 -->
+    <div class="page-indicator">
+        <div class="dot active" onclick="scrollToPage(1)"></div>
+        <div class="dot" onclick="scrollToPage(2)"></div>
+        <div class="dot" onclick="scrollToPage(3)"></div>
+        <div class="dot" onclick="scrollToPage(4)"></div>
+        <div class="dot" onclick="scrollToPage(5)"></div>
+        <div class="dot" onclick="scrollToPage(6)"></div>
+        <div class="dot" onclick="scrollToPage(7)"></div>
+        <div class="dot" onclick="scrollToPage(8)"></div>
+    </div>
+    
+    <script>
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
+        }
+        
+        function scrollToPage(num) {
+            document.getElementById('page' + num).scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // 更新页码指示器
+        window.addEventListener('scroll', () => {
+            const pages = document.querySelectorAll('.page');
+            const dots = document.querySelectorAll('.dot');
+            
+            pages.forEach((page, index) => {
+                const rect = page.getBoundingClientRect();
+                if (rect.top >= -100 && rect.top < window.innerHeight / 2) {
+                    dots.forEach(d => d.classList.remove('active'));
+                    dots[index].classList.add('active');
+                }
+            });
+        });
+        
+        // Particles.js 初始化 - 黑金风格配置
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {
+                    "value": 100,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": ["#FFD700", "#D4AF37", "#FF6B35", "#6B5FFF"]
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    }
+                },
+                "opacity": {
+                    "value": 0.4,
+                    "random": true,
+                    "anim": {
+                        "enable": true,
+                        "speed": 0.8,
+                        "opacity_min": 0.15,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 5,
+                    "random": true,
+                    "anim": {
+                        "enable": true,
+                        "speed": 3,
+                        "size_min": 2,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 180,
+                    "color": "#FFD700",
+                    "opacity": 0.25,
+                    "width": 1.5
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 1,
+                    "direction": "none",
+                    "random": true,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": false
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 200,
+                        "line_linked": {
+                            "opacity": 0.3
+                        }
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+        
+        // 粒子瓷器绘制
+        const canvas = document.getElementById('vase-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // 定义瓷器轮廓路径（根据参考图的造型）
+        const vaseOutline = [
+            // 瓶口外沿（宽口）
+            {x: 200, y: 20}, {x: 250, y: 25}, {x: 285, y: 35}, {x: 305, y: 50},
+            // 瓶口内收
+            {x: 310, y: 65}, {x: 305, y: 80}, {x: 295, y: 95},
+            // 瓶颈（收窄）
+            {x: 280, y: 110}, {x: 260, y: 120}, {x: 245, y: 130}, {x: 235, y: 145},
+            // 瓶肩（开始外扩）
+            {x: 240, y: 160}, {x: 250, y: 175}, {x: 265, y: 190}, {x: 280, y: 205},
+            // 瓶身最宽处
+            {x: 290, y: 220}, {x: 298, y: 240}, {x: 302, y: 260}, {x: 303, y: 280},
+            // 瓶身中部
+            {x: 302, y: 310}, {x: 298, y: 340}, {x: 292, y: 370}, {x: 285, y: 395},
+            // 瓶身下部（收窄）
+            {x: 275, y: 415}, {x: 260, y: 430}, {x: 240, y: 442}, {x: 220, y: 450},
+            // 瓶底
+            {x: 200, y: 455}, {x: 180, y: 450}, {x: 160, y: 442}, {x: 140, y: 430},
+            // 左侧瓶身下部
+            {x: 125, y: 415}, {x: 115, y: 395}, {x: 108, y: 370}, {x: 102, y: 340},
+            // 左侧瓶身中部
+            {x: 98, y: 310}, {x: 97, y: 280}, {x: 98, y: 260}, {x: 102, y: 240},
+            // 左侧瓶身最宽处
+            {x: 110, y: 220}, {x: 120, y: 205}, {x: 135, y: 190}, {x: 150, y: 175},
+            // 左侧瓶肩
+            {x: 160, y: 160}, {x: 165, y: 145}, {x: 155, y: 130}, {x: 140, y: 120},
+            // 左侧瓶颈
+            {x: 120, y: 110}, {x: 105, y: 95}, {x: 95, y: 80}, {x: 90, y: 65},
+            // 左侧瓶口
+            {x: 95, y: 50}, {x: 115, y: 35}, {x: 150, y: 25}, {x: 200, y: 20}
+        ];
+        
+        // 密集的三角形网格（参考图的样式）
+        const generateTriangleGrid = () => {
+            const lines = [];
+            const rows = 12;
+            const startY = 140;
+            const endY = 450;
+            
+            for (let row = 0; row < rows; row++) {
+                const t = row / (rows - 1);
+                const y = startY + (endY - startY) * t;
+                
+                // 根据瓶身宽度计算当前行的左右边界
+                let leftX = 200, rightX = 200;
+                if (y < 220) {
+                    // 瓶肩部分（扩张）
+                    const factor = (y - 140) / 80;
+                    leftX = 165 - factor * 65;
+                    rightX = 235 + factor * 65;
+                } else if (y < 395) {
+                    // 瓶身最宽部分
+                    leftX = 100;
+                    rightX = 300;
+                } else {
+                    // 瓶底收窄
+                    const factor = (y - 395) / 55;
+                    leftX = 100 + factor * 80;
+                    rightX = 300 - factor * 80;
+                }
+                
+                const width = rightX - leftX;
+                const segments = Math.floor(width / 40);
+                
+                // 水平线
+                for (let i = 0; i <= segments; i++) {
+                    const x1 = leftX + (width / segments) * i;
+                    const x2 = leftX + (width / segments) * (i + 1);
+                    if (i < segments) {
+                        lines.push({x1, y1: y, x2, y2: y});
+                    }
+                }
+                
+                // 对角线（形成三角形）
+                if (row < rows - 1) {
+                    const nextT = (row + 1) / (rows - 1);
+                    const nextY = startY + (endY - startY) * nextT;
+                    
+                    let nextLeftX = 200, nextRightX = 200;
+                    if (nextY < 220) {
+                        const factor = (nextY - 140) / 80;
+                        nextLeftX = 165 - factor * 65;
+                        nextRightX = 235 + factor * 65;
+                    } else if (nextY < 395) {
+                        nextLeftX = 100;
+                        nextRightX = 300;
+                    } else {
+                        const factor = (nextY - 395) / 55;
+                        nextLeftX = 100 + factor * 80;
+                        nextRightX = 300 - factor * 80;
+                    }
+                    
+                    const nextWidth = nextRightX - nextLeftX;
+                    const nextSegments = Math.floor(nextWidth / 40);
+                    
+                    for (let i = 0; i <= segments; i++) {
+                        const x1 = leftX + (width / segments) * i;
+                        const x2 = nextLeftX + (nextWidth / nextSegments) * i;
+                        const x3 = nextLeftX + (nextWidth / nextSegments) * (i + 1);
+                        
+                        lines.push({x1, y1: y, x2, y2: nextY});
+                        if (i < segments) {
+                            lines.push({x1: x1, y1: y, x2: x3, y2: nextY});
+                        }
+                    }
+                }
+            }
+            
+            return lines;
+        };
+        
+        const geometricPattern = generateTriangleGrid();
+        
+        // 粒子类（增强发光）
+        class Particle {
+            constructor(x, y, isPattern = false) {
+                this.baseX = x;
+                this.baseY = y;
+                this.x = x + (Math.random() - 0.5) * 10;
+                this.y = y + (Math.random() - 0.5) * 10;
+                this.size = isPattern ? Math.random() * 2 + 1.5 : Math.random() * 1.5 + 1;
+                this.speedX = (Math.random() - 0.5) * 0.2;
+                this.speedY = (Math.random() - 0.5) * 0.2;
+                this.opacity = Math.random() * 0.3 + 0.7;
+                this.color = '#FFD700';
+                this.isPattern = isPattern;
+            }
+            
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                
+                const dx = this.baseX - this.x;
+                const dy = this.baseY - this.y;
+                this.x += dx * 0.05;
+                this.y += dy * 0.05;
+                
+                this.opacity += (Math.random() - 0.5) * 0.02;
+                this.opacity = Math.max(0.6, Math.min(1, this.opacity));
+            }
+            
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = this.opacity;
+                
+                // 强发光效果
+                ctx.shadowBlur = this.isPattern ? 20 : 12;
+                ctx.shadowColor = '#FFD700';
+                
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+        
+        // 生成轮廓粒子
+        const particles = [];
+        for (let i = 0; i < vaseOutline.length - 1; i++) {
+            const p1 = vaseOutline[i];
+            const p2 = vaseOutline[i + 1];
+            const distance = Math.hypot(p2.x - p1.x, p2.y - p1.y);
+            const particleCount = Math.ceil(distance / 2);
+            
+            for (let j = 0; j < particleCount; j++) {
+                const t = j / particleCount;
+                const x = p1.x + (p2.x - p1.x) * t;
+                const y = p1.y + (p2.y - p1.y) * t;
+                particles.push(new Particle(x, y, false));
+            }
+        }
+        
+        // 生成几何图案粒子
+        geometricPattern.forEach(line => {
+            const distance = Math.hypot(line.x2 - line.x1, line.y2 - line.y1);
+            const particleCount = Math.ceil(distance / 2.5);
+            
+            for (let j = 0; j < particleCount; j++) {
+                const t = j / particleCount;
+                const x = line.x1 + (line.x2 - line.x1) * t;
+                const y = line.y1 + (line.y2 - line.y1) * t;
+                particles.push(new Particle(x, y, true));
+            }
+        });
+        
+        // 动画循环
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // 绘制底部光晕
+            const gradient = ctx.createRadialGradient(200, 460, 0, 200, 460, 150);
+            gradient.addColorStop(0, 'rgba(255, 215, 0, 0.3)');
+            gradient.addColorStop(0.5, 'rgba(255, 215, 0, 0.1)');
+            gradient.addColorStop(1, 'rgba(255, 215, 0, 0)');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 400, 400, 100);
+            
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+            
+            requestAnimationFrame(animate);
+        }
+        
+        animate();
+    </script>
+</body>
+</html>

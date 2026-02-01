@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>3D 基础测试</title>
+    <style>
+        body {
+            margin: 0;
+            background: #0A0A0A;
+            overflow: hidden;
+        }
+        #info {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: #FFD700;
+            font-family: monospace;
+            font-size: 18px;
+            background: rgba(0,0,0,0.9);
+            padding: 20px;
+            border-radius: 5px;
+            z-index: 100;
+            max-width: 500px;
+        }
+    </style>
+</head>
+<body>
+    <div id="info">步骤 1: 加载 Three.js 库...</div>
+    
+    <!-- 使用传统方式引入 Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <script>
+        const info = document.getElementById('info');
+        
+        // 检查 Three.js 是否加载
+        if (typeof THREE === 'undefined') {
+            info.textContent = '错误: Three.js 未加载';
+        } else {
+            info.textContent = '步骤 2: Three.js 加载成功，版本 ' + THREE.REVISION;
+            
+            setTimeout(() => {
+                try {
+                    info.textContent = '步骤 3: 创建场景...';
+                    
+                    // 创建场景
+                    const scene = new THREE.Scene();
+                    
+                    // 创建相机
+                    const camera = new THREE.PerspectiveCamera(
+                        45,
+                        window.innerWidth / window.innerHeight,
+                        0.1,
+                        1000
+                    );
+                    camera.position.z = 150;
+                    
+                    // 创建渲染器
+                    const renderer = new THREE.WebGLRenderer({ 
+                        antialias: true, 
+                        alpha: true 
+                    });
+                    renderer.setSize(window.innerWidth, window.innerHeight);
+                    document.body.appendChild(renderer.domElement);
+                    
+                    info.textContent = '步骤 4: 添加光源和立方体...';
+                    
+                    // 添加光源
+                    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+                    scene.add(ambientLight);
+                    
+                    const pointLight = new THREE.PointLight(0xFFD700, 2);
+                    pointLight.position.set(100, 100, 100);
+                    scene.add(pointLight);
+                    
+                    // 创建金色线框立方体
+                    const geometry = new THREE.BoxGeometry(50, 50, 50);
+                    const material = new THREE.MeshBasicMaterial({ 
+                        color: 0xFFD700, 
+                        wireframe: true 
+                    });
+                    const cube = new THREE.Mesh(geometry, material);
+                    scene.add(cube);
+                    
+                    info.textContent = '步骤 5: 开始动画渲染...';
+                    
+                    // 动画循环
+                    let frameCount = 0;
+                    function animate() {
+                        requestAnimationFrame(animate);
+                        
+                        cube.rotation.x += 0.01;
+                        cube.rotation.y += 0.01;
+                        
+                        renderer.render(scene, camera);
+                        
+                        frameCount++;
+                        if (frameCount === 60) {
+                            info.textContent = '✅ 成功！你应该看到一个旋转的金色立方体';
+                        }
+                    }
+                    
+                    animate();
+                    
+                    // 窗口大小调整
+                    window.addEventListener('resize', function() {
+                        camera.aspect = window.innerWidth / window.innerHeight;
+                        camera.updateProjectionMatrix();
+                        renderer.setSize(window.innerWidth, window.innerHeight);
+                    });
+                    
+                } catch (error) {
+                    info.textContent = '错误: ' + error.message;
+                    console.error('详细错误:', error);
+                }
+            }, 500);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,3712 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>国文汇通商业计划书 - 完整版</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="particles.js-master/particles.js-master/particles.min.js"></script>
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+    <style>
+        /* 引入新下载的字体 */
+        @font-face {
+            font-family: 'FangZheng BangShu';
+            src: url('output/方正榜书行简体.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        @font-face {
+            font-family: 'CustomFont1';
+            src: url('output/267af6618eedf394bd0f9567c7bd458a.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        @font-face {
+            font-family: 'CustomFont2';
+            src: url('output/84ae4436bd5910a734e55f5497757896.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        @font-face {
+            font-family: 'CustomFont3';
+            src: url('output/8921f935c2f55b72a079cf0ee3640321.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        @font-face {
+            font-family: 'MechSong';
+            src: url('output/MechSong-Bold-2.ttf') format('truetype');
+            font-weight: bold;
+            font-style: normal;
+        }
+        
+        /* ==================== 全局设计规范 (Global Design System) ==================== */
+        :root {
+            /* 投屏基准分辨率 - 16:9 */
+            --base-width: 1920;
+            --base-height: 1080;
+            --aspect-ratio: 16 / 9;
+            
+            /* 主题色 */
+            --theme-gold: #D4AF37;
+            --theme-gold-light: #FFD700;
+            --theme-gold-dim: rgba(255, 215, 0, 0.45);
+            --theme-bg: #0A0A0A;
+            --theme-text: #F9F9F7;
+            --theme-text-dim: #aaaaaa;
+            
+            /* 布局铁律 - 像素级重合 */
+            --header-top: 8%;           /* 标题距顶部 */
+            --header-left: 8%;          /* 标题距左边 */
+            --content-top: 25%;         /* 内容区起始位置 */
+            --content-bottom: 85%;      /* 内容区结束位置 */
+            --content-side: 10%;        /* 内容区两侧边距 */
+            
+            /* 字体规范 */
+            --font-title: 3.5rem;
+            --font-card-title: 1.5rem;
+            --font-body: 1.1rem;
+            --line-height: 1.6;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; scrollbar-width: none; }
+        *::-webkit-scrollbar { display: none; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            background: var(--theme-bg);
+            color: var(--theme-text);
+        }
+        
+        /* 视口锁定 - 16:9固定比例，居中显示 */
+        .page {
+            width: 100vw;
+            height: calc(100vw / (16 / 9));
+            max-height: 100vh;
+            max-width: calc(100vh * (16 / 9));
+            margin: 0 auto;
+            scroll-snap-align: start;
+            position: relative;
+            padding: 0;
+            overflow: hidden;
+            display: block;
+            aspect-ratio: 16 / 9;
+        }
+        
+        /* 确保滚动容器正确 */
+        html {
+            scroll-snap-type: y mandatory;
+            background: #000;
+        }
+        
+        /* 封面页面特殊处理 - 允许溢出显示Hash效果 */
+        .page-1 {
+            overflow: visible;
+        }
+        
+        /* 封面特殊布局 */
+        .page-1 {
+            display: grid;
+            grid-template-columns: 50% 50%;  /* 分割线往右移，平分空间 */
+            padding: 0;
+        }
+        
+        .content-left {
+            padding: 8vh 4vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .whitespace-right {
+            background: transparent;
+            position: relative;
+        }
+        
+        .divider {
+            display: none;
+        }
+        
+        /* 文字样式 */
+        
+        /* 数字印章容器 - 磨砂玻璃质感 */
+        .title {
+            font-family: 'FangZheng BangShu', 'CustomFont1', 'Noto Serif SC', 'STSong', serif;
+            font-size: clamp(7.5625rem, 15.125vw, 13.0625rem);
+            font-weight: 400;
+            color: #D4AF37;
+            position: absolute;
+            top: 50%;
+            left: 12vw;
+            transform: translateY(-50%);
+            width: 495px;
+            height: 495px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 0;
+            padding: 1.5rem;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.4), 0 0 40px rgba(212, 175, 55, 0.2);
+            backdrop-filter: blur(20px) saturate(120%);
+            background: radial-gradient(circle at 30% 30%, rgba(255, 215, 0, 0.06) 0%, rgba(212, 175, 55, 0.03) 50%, transparent 100%);
+            border: 0.5px solid rgba(255, 215, 0, 0.25);
+            box-shadow: inset 0 0 60px rgba(255, 215, 0, 0.04), 0 0 30px rgba(255, 215, 0, 0.08);
+            animation: seal-pulse 6s ease-in-out infinite, seal-glow-breathe 5s ease-in-out infinite;
+        }
+        
+        @keyframes seal-pulse {
+            0%, 100% { 
+                box-shadow: inset 0 0 60px rgba(255, 215, 0, 0.04), 0 0 30px rgba(255, 215, 0, 0.08);
+                border-color: rgba(255, 215, 0, 0.25);
+            }
+            50% { 
+                box-shadow: inset 0 0 70px rgba(255, 215, 0, 0.06), 0 0 40px rgba(255, 215, 0, 0.12);
+                border-color: rgba(255, 215, 0, 0.35);
+            }
+        }
+        
+        @keyframes seal-glow-breathe {
+            0%, 100% {
+                text-shadow: 0 0 20px rgba(212, 175, 55, 0.4), 0 0 40px rgba(212, 175, 55, 0.2);
+            }
+            50% {
+                text-shadow: 0 0 24px rgba(212, 175, 55, 0.5), 0 0 44px rgba(212, 175, 55, 0.28);
+            }
+        }
+        
+        /* 印章内文字排列 */
+        .title span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+        }
+        
+        /* L型角落坐标点 - 精致发光 */
+        .title::before,
+        .title::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            border-color: rgba(255, 215, 0, 0.7);
+            border-style: solid;
+            box-shadow: 0 0 12px rgba(255, 215, 0, 0.4), 0 0 25px rgba(255, 215, 0, 0.15);
+        }
+        
+        .title::before {
+            top: -1px;
+            left: -1px;
+            border-width: 1.5px 0 0 1.5px;
+        }
+        
+        .title::after {
+            bottom: -1px;
+            right: -1px;
+            border-width: 0 1.5px 1.5px 0;
+        }
+        
+        /* 副标题 - 左上角 */
+        .subtitle {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9625rem;
+            color: rgba(255, 215, 0, 0.45);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            position: absolute;
+            top: 4vh;
+            left: 4vw;
+            font-weight: 400;
+        }
+        
+        /* 资产ID标识 - 防伪代码（印章上方左侧格子） */
+        .asset-id {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9625rem;
+            color: rgba(255, 215, 0, 0.45);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            position: absolute;
+            top: calc(50vh - 275px);
+            left: 12vw;
+            font-weight: 400;
+        }
+        
+        /* 添加其他三个角的坐标点 */
+        .seal-corner-tl,
+        .seal-corner-tr,
+        .seal-corner-bl,
+        .seal-corner-br {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-color: rgba(255, 215, 0, 0.6);
+            border-style: solid;
+            pointer-events: none;
+        }
+        
+        .seal-corner-tr {
+            top: calc(50vh - 247.5px - 1px);
+            left: calc(12vw + 495px - 19px);
+            border-width: 1.5px 1.5px 0 0;
+            border-color: rgba(255, 215, 0, 0.7);
+            box-shadow: 0 0 12px rgba(255, 215, 0, 0.4), 0 0 25px rgba(255, 215, 0, 0.15);
+        }
+        
+        .seal-corner-bl {
+            top: calc(50vh + 247.5px - 19px);
+            left: calc(12vw - 1px);
+            border-width: 0 0 1.5px 1.5px;
+            border-color: rgba(255, 215, 0, 0.7);
+            box-shadow: 0 0 12px rgba(255, 215, 0, 0.4), 0 0 25px rgba(255, 215, 0, 0.15);
+        }
+        
+        /* 微缩数据显示 - 实时确权信息 */
+        .micro-data {
+            position: absolute;
+            font-family: 'Courier New', 'Roboto Mono', 'JetBrains Mono', monospace;
+            font-size: 13.75px;
+            color: rgba(212, 175, 55, 0.45);
+            letter-spacing: 2.75px;
+            pointer-events: none;
+            font-weight: 400;
+            text-shadow: 0 0 6px rgba(212, 175, 55, 0.2);
+        }
+        
+        .micro-data-top {
+            top: calc(50vh - 275px);
+            left: calc(12vw + 227px);
+        }
+        
+        .micro-data-bottom {
+            top: calc(50vh - 275px);
+            left: calc(12vw + 351px);
+        }
+        
+        @keyframes stream-scroll {
+            0% { transform: translateY(-50%) translateX(0); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(-50%) translateX(20px); opacity: 0; }
+        }
+        
+        .description {
+            font-size: 1.375rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.6);
+            position: absolute;
+            top: calc(50vh + 275px);
+            left: 12vw;
+            font-weight: 300;
+            letter-spacing: 0.12em;
+            max-width: 618px;
+        }
+        
+        .button {
+            display: inline-block;
+            padding: 1.03125rem 2.75rem;
+            background: transparent;
+            border: 1px solid rgba(255, 215, 0, 0.4);
+            color: rgba(255, 215, 0, 0.7);
+            font-size: 1.03125rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            width: fit-content;
+            font-weight: 300;
+            position: absolute;
+            top: calc(50vh + 358px);
+            left: 12vw;
+        }
+        
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+            opacity: 1;
+        }
+        
+        /* 扫描线/坐标轴 - 连接印章和模型（虚实导引线）*/
+        .scan-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 3;
+        }
+        
+        .scan-line {
+            position: absolute;
+            height: 0.5px;
+            background: linear-gradient(90deg, 
+                rgba(255, 215, 0, 0.3) 0%, 
+                rgba(255, 215, 0, 0.15) 15%, 
+                transparent 30%,
+                rgba(255, 215, 0, 0.1) 45%,
+                transparent 60%,
+                rgba(255, 215, 0, 0.05) 75%,
+                transparent 100%);
+            opacity: 0.8;
+        }
+        
+        .scan-line:nth-child(1) {
+            top: calc(50vh - 60px);
+            left: calc(12vw + 360px);
+            width: 35vw;
+            animation: scan-pulse-smooth 4s ease-in-out infinite;
+        }
+        
+        .scan-line:nth-child(2) {
+            top: 50vh;
+            left: calc(12vw + 360px);
+            width: 30vw;
+            animation: scan-pulse-smooth 4s ease-in-out infinite 1s;
+        }
+        
+        .scan-line:nth-child(3) {
+            top: calc(50vh + 60px);
+            left: calc(12vw + 360px);
+            width: 32vw;
+            animation: scan-pulse-smooth 4s ease-in-out infinite 2s;
+        }
+        
+        @keyframes scan-pulse-smooth {
+            0%, 100% { opacity: 0.3; transform: scaleX(1); }
+            50% { opacity: 0.6; transform: scaleX(1.05); }
+        }
+        
+        /* 3D 模型容器 */
+        .cup-3d-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+        }
+        
+        #bronze-3d-canvas {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .cup-glow {
+            display: none;
+        }
+        
+        .light-beam {
+            position: absolute;
+            top: -10%;
+            right: -5%;
+            width: 350px;
+            height: 700px;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2) 0%, rgba(255, 215, 0, 0.08) 50%, transparent 100%);
+            transform: rotate(-15deg);
+            filter: blur(40px);
+            animation: shimmer 5s ease-in-out infinite;
+            pointer-events: none;
+        }
+        
+        /* 3D模型底部环境光晕 - 覆盖层（右下角向中心） */
+        .model-ambient-glow {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse 50% 50% at 85% 85%, 
+                rgba(255, 215, 0, 0.5) 0%, 
+                rgba(255, 200, 100, 0.3) 10%, 
+                rgba(212, 175, 55, 0.18) 20%, 
+                rgba(255, 215, 0, 0.1) 30%, 
+                rgba(212, 175, 55, 0.05) 40%, 
+                transparent 50%);
+            filter: blur(120px);
+            animation: ambient-breathe 6s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 6;
+            mix-blend-mode: screen;
+        }
+        
+        @keyframes ambient-breathe {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.7; }
+        }
+        
+        @keyframes shimmer {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.7; }
+        }
+        
+        @keyframes glow-pulse {
+            0%, 100% { 
+                opacity: 0.9; 
+                transform: scale(1);
+            }
+            50% { 
+                opacity: 1; 
+                transform: scale(1.1);
+            }
+        }
+        
+        /* 内容样式 */
+        .section-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 12rem;
+            font-weight: 300;
+            color: rgba(255, 215, 0, 0.08);
+            position: absolute;
+            bottom: 5vh;
+            right: 10vw;
+            z-index: 0;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.05);
+        }
+        
+        /* ==================== 内页母版布局系统 (Inner Page Template) ==================== */
+        /* 
+         * 布局铁律 - 像素级重合
+         * 标题区: 固定在顶部 8%-20% 区域
+         * 内容安全区: 25%-85% 垂直范围，两侧 10% 边距
+         * 所有内页标题位置必须纺丝不动
+         */
+        
+        /* 统一标题区 - 固定位置，严禁漂移 */
+        .content-title {
+            font-family: 'MechSong', 'Noto Serif SC', 'Playfair Display', serif;
+            font-size: clamp(3.5rem, 7vw, 5rem);
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.08em;
+            color: var(--theme-gold-light);
+            
+            /* 固定定位 - 锁死位置 */
+            position: absolute;
+            top: var(--header-top);
+            left: var(--header-left);
+            right: var(--header-left);
+            z-index: 100;
+            
+            /* 禁止任何变换和动画 */
+            margin: 0;
+            padding: 0;
+            transform: none !important;
+            animation: none !important;
+            transition: none !important;
+        }
+        
+        /* 统一内容安全区 - 所有内容只能在这个区域内 */
+        .content-safe-zone {
+            position: absolute;
+            top: var(--content-top);
+            left: var(--content-side);
+            right: var(--content-side);
+            bottom: calc(100% - var(--content-bottom));
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+        
+        .section-label {
+            text-align: center;
+            font-size: 0.85rem;
+            letter-spacing: 0em;
+            text-transform: uppercase;
+            color: rgba(255, 215, 0, 0.6);
+            margin-bottom: 1rem;
+        }
+        
+        .divider-thin {
+            width: 100%;
+            height: 1px;
+            background: rgba(249, 249, 247, 0.2);
+            margin: 2rem 0;
+        }
+        
+        .data-card {
+            background: rgba(249, 249, 247, 0.03);
+            border: 1px solid rgba(249, 249, 247, 0.1);
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.4s ease;
+        }
+        
+        .data-card:hover {
+            background: rgba(249, 249, 247, 0.05);
+            transform: translateX(10px);
+        }
+        
+        .card-label {
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(249, 249, 247, 0.5);
+            margin-bottom: 1rem;
+        }
+        
+        .card-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 300;
+            background: linear-gradient(135deg, #FFD700, #D4AF37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+        
+        .card-text {
+            color: #eee;
+            line-height: 1.8;
+            font-size: 22px;
+            max-width: 80%;
+            font-weight: 300;
+        }
+        
+        .data-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .number-box {
+            padding: 3rem 2rem;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            background: rgba(255, 255, 255, 0.03);
+        }
+        
+        .big-number {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 300;
+            background: linear-gradient(135deg, #FFD700, #D4AF37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+        }
+        
+        .unit {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-left: 0.5rem;
+        }
+        
+        .number-desc {
+            font-size: 0.9rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        /* 装饰元素 */
+        .grid-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(rgba(255, 215, 0, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 215, 0, 0.05) 1px, transparent 1px);
+            background-size: 100px 100px;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .geometric-bg {
+            display: none;
+        }
+        
+        /* Particles.js - 增强景深效果 + 径向遮罩 */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            pointer-events: auto;
+            opacity: 1;
+            mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, rgba(0,0,0,1) 0%, rgba(0,0,0,0.6) 60%, rgba(0,0,0,0.2) 85%, rgba(0,0,0,0) 100%);
+            -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, rgba(0,0,0,1) 0%, rgba(0,0,0,0.6) 60%, rgba(0,0,0,0.2) 85%, rgba(0,0,0,0) 100%);
+        }
+        
+        #particles-js canvas {
+            filter: drop-shadow(0 0 2px rgba(212, 175, 55, 0.2));
+        }
+        
+        /* 粒子背景额外遮罩层 */
+        #particles-js::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse 70% 60% at 50% 50%, transparent 0%, rgba(10, 10, 10, 0.3) 50%, rgba(10, 10, 10, 0.7) 85%, rgba(10, 10, 10, 0.95) 100%);
+            pointer-events: none;
+        }
+        
+        /* 全屏按钮 - 极简透明 */
+        .fullscreen-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: transparent;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+            opacity: 0.2;
+            backdrop-filter: blur(5px);
+        }
+        
+        .fullscreen-btn:hover {
+            background: rgba(255, 215, 0, 0.05);
+            border-color: rgba(255, 215, 0, 0.6);
+            transform: scale(1.08);
+            opacity: 1;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+        }
+        
+        /* 页码指示器 - 极简透明 */
+        .page-indicator {
+            position: fixed;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 1000;
+            opacity: 0.2;
+        }
+        
+        .page-indicator:hover {
+            opacity: 1;
+        }
+        
+        .page-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: transparent;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .page-dot:hover {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: rgba(255, 215, 0, 0.6);
+            transform: scale(1.3);
+            box-shadow: 0 0 12px rgba(255, 215, 0, 0.3);
+        }
+        
+        .page-dot.active {
+            background: rgba(255, 215, 0, 0.6);
+            border-color: rgba(255, 215, 0, 0.8);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+            transform: scale(1.4);
+        }
+        
+        /* Timeline 样式 */
+        .timeline-item {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 2.5rem;
+            border-left: 2px solid rgba(255, 215, 0, 0.3);
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 0;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #FFD700;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+        }
+        
+        /* 列表样式 */
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .feature-list li {
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .feature-list li::before {
+            content: '✓';
+            color: #FFD700;
+            font-weight: bold;
+            margin-right: 1rem;
+        }
+        
+        /* ==================== HUD数字化面板样式 ==================== */
+        
+        /* 第2页：政策东风 - 演示级布局 */
+        .policy-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            gap: 2.5rem;
+            width: 84%;
+            height: auto;
+            margin-top: 21%;
+            margin-left: 8%;
+            padding: 0 2% 4% 2%;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .policy-cards-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+            flex-shrink: 0;
+        }
+        
+        .policy-timeline-bottom {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 1.5rem 0 1rem 0;
+            position: relative;
+            flex-shrink: 0;
+        }
+        
+        .policy-timeline-bottom::before {
+            content: '';
+            position: absolute;
+            left: 10%;
+            right: 10%;
+            top: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(255, 215, 0, 0.3) 20%, 
+                rgba(255, 215, 0, 0.6) 50%, 
+                rgba(255, 215, 0, 0.3) 80%, 
+                transparent 100%);
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            z-index: 0;
+        }
+        
+        /* 流动能量脉冲 */
+        .policy-timeline-bottom::after {
+            content: '';
+            position: absolute;
+            left: 10%;
+            top: 40px;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(255, 215, 0, 0.8) 50%, 
+                rgba(255, 215, 0, 1) 100%);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.8), 0 0 30px rgba(255, 215, 0, 0.4);
+            animation: energy-pulse 3s ease-in-out infinite;
+            z-index: 1;
+        }
+        
+        @keyframes energy-pulse {
+            0% {
+                left: 10%;
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                left: 90%;
+                opacity: 0;
+            }
+        }
+        
+        /* HUD微光卡片 - 仪表盘风格 */
+        .hud-card {
+            background: rgba(10, 10, 10, 0.3);
+            border: none;
+            border-top: 1px solid rgba(255, 215, 0, 0.6);
+            padding: 1.5rem 1.2rem;
+            position: relative;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 0 15px rgba(255, 215, 0, 0.05);
+        }
+        
+        /* 卡片顶部发光效果 */
+        .hud-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, rgba(255, 215, 0, 0.8) 50%, transparent 100%);
+            box-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+        }
+        
+        /* 左上L型坐标点 */
+        .hud-card::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            width: 12px;
+            height: 12px;
+            border-top: 1px solid rgba(255, 215, 0, 0.8);
+            border-left: 1px solid rgba(255, 215, 0, 0.8);
+            box-shadow: 0 0 6px rgba(255, 215, 0, 0.4);
+        }
+        
+        
+        .hud-card:hover {
+            border-top-color: rgba(255, 215, 0, 0.9);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 215, 0, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        /* 卡片标题图标 */
+        .hud-card-icon {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border: 1.5px solid #FFD700;
+            transform: rotate(45deg);
+            margin-right: 1rem;
+            box-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+        }
+        
+        .hud-card-title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 28px;
+            color: #FFD700;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            letter-spacing: -0.05em;
+        }
+        
+        .hud-card-content {
+            font-size: 22px;
+            line-height: 1.7;
+            color: #eee;
+            font-weight: 300;
+        }
+        
+        /* 横向时间轴节点 - 内容在线下方 */
+        .timeline-node-horizontal {
+            position: relative;
+            text-align: center;
+            z-index: 1;
+            padding-top: 40px;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            top: 10px;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #FFD700 0%, #D4AF37 100%);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 0 0 40px rgba(255, 215, 0, 0.4);
+            animation: timeline-pulse 3s ease-in-out infinite;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-dot:hover {
+            transform: scale(1.3);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 1), 0 0 60px rgba(255, 215, 0, 0.6);
+        }
+        
+        @keyframes timeline-pulse {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 0 0 40px rgba(255, 215, 0, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(255, 215, 0, 1), 0 0 60px rgba(255, 215, 0, 0.6);
+            }
+        }
+        
+        .timeline-year {
+            font-family: 'JetBrains Mono', 'Roboto Mono', 'Courier New', monospace;
+            font-size: 24px;
+            color: #FFD700;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        
+        .timeline-desc {
+            font-size: 18px;
+            color: #ccc;
+            line-height: 1.4;
+        }
+        
+        /* 第3页：行业浪潮 - 双栏HUD架构 */
+        .industry-container {
+            display: flex;
+            gap: 4%;
+            height: auto;
+            margin-top: 27vh;
+            padding: 0 8%;
+            position: relative;
+            z-index: 1;
+            align-items: flex-end;
+        }
+        
+        /* 左侧观点展示 - 40%宽度，极简HUD列表 */
+        .insights-grid {
+            width: 40%;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            justify-content: flex-start;
+            padding: 0;
+        }
+        
+        /* 极简观点卡片 - 无背景，左侧金色装饰线 */
+        .insight-card {
+            background: transparent;
+            border: none;
+            border-left: 3px solid var(--theme-gold);
+            padding: 0.5rem 0 0.5rem 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .insight-card::after,
+        .insight-card::before {
+            display: none;
+        }
+        
+        .insight-card:hover {
+            border-left-color: var(--theme-gold-light);
+            transform: translateX(5px);
+        }
+        
+        .insight-icon {
+            display: none;
+        }
+        
+        .insight-title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.3rem;
+            color: var(--theme-gold-light);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        
+        .insight-content {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.75);
+        }
+        
+        /* 右侧数据可视化 - 60%宽度，带参考线 */
+        .chart-container {
+            width: 56%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 1.5rem;
+            padding: 2rem 0 3rem 0;
+            height: 50vh;
+            background: 
+                linear-gradient(0deg, transparent 19.8%, rgba(212, 175, 55, 0.15) 20%, rgba(212, 175, 55, 0.15) 20.2%, transparent 20.4%),
+                linear-gradient(0deg, transparent 39.8%, rgba(212, 175, 55, 0.15) 40%, rgba(212, 175, 55, 0.15) 40.2%, transparent 40.4%),
+                linear-gradient(0deg, transparent 59.8%, rgba(212, 175, 55, 0.15) 60%, rgba(212, 175, 55, 0.15) 60.2%, transparent 60.4%),
+                linear-gradient(0deg, transparent 79.8%, rgba(212, 175, 55, 0.15) 80%, rgba(212, 175, 55, 0.15) 80.2%, transparent 80.4%);
+            border: none;
+        }
+        
+        .chart-bar {
+            position: relative;
+            width: 60px;
+            margin: 0 auto;
+            background: linear-gradient(180deg, 
+                rgba(255, 215, 0, 0.25) 0%, 
+                rgba(255, 215, 0, 0.15) 50%,
+                rgba(255, 215, 0, 0.05) 100%);
+            border: 0.5px solid rgba(255, 215, 0, 0.4);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.15), inset 0 0 30px rgba(255, 215, 0, 0.1);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: bottom;
+        }
+        
+        /* 柱子顶部强发光面 */
+        .chart-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -2px;
+            right: -2px;
+            height: 3px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(255, 215, 0, 0.8) 50%, 
+                transparent 100%);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.8), 0 -5px 20px rgba(255, 215, 0, 0.4);
+            filter: blur(1px);
+        }
+        
+        .chart-bar.highlight {
+            width: 80px;
+            background: linear-gradient(180deg, 
+                rgba(255, 215, 0, 0.7) 0%, 
+                rgba(255, 215, 0, 0.5) 50%,
+                rgba(255, 215, 0, 0.25) 100%);
+            border-color: rgba(255, 215, 0, 1);
+            border-width: 1px;
+            box-shadow: 0 0 60px rgba(255, 215, 0, 0.7), 0 0 100px rgba(255, 215, 0, 0.4), inset 0 0 50px rgba(255, 215, 0, 0.3);
+        }
+        
+        .chart-bar.highlight::after {
+            height: 5px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(255, 215, 0, 1) 50%, 
+                transparent 100%);
+            box-shadow: 0 0 25px rgba(255, 215, 0, 1), 0 -8px 30px rgba(255, 215, 0, 0.6);
+        }
+        
+        .chart-value {
+            position: absolute;
+            top: -45px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'JetBrains Mono', 'Roboto Mono', 'Courier New', monospace;
+            font-size: 24px;
+            font-weight: 700;
+            color: #FFD700;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+            white-space: nowrap;
+        }
+        
+        .chart-bar.highlight .chart-value {
+            font-size: 36px;
+            top: -60px;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 1), 0 0 60px rgba(255, 215, 0, 0.8);
+        }
+        
+        /* 3000亿上方星光点缀 */
+        .chart-bar.highlight::before {
+            content: '✦';
+            position: absolute;
+            top: -80px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 16px;
+            color: #FFD700;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 1), 0 0 40px rgba(255, 215, 0, 0.8);
+            animation: twinkle 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.6; transform: translateX(-50%) scale(1); }
+            50% { opacity: 1; transform: translateX(-50%) scale(1.3); }
+        }
+        
+        .chart-label {
+            position: absolute;
+            bottom: -45px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'JetBrains Mono', 'Roboto Mono', 'Courier New', monospace;
+            font-size: 14px;
+            color: #ccc;
+            white-space: nowrap;
+            text-align: center;
+            line-height: 1.4;
+        }
+        
+        /* 网格底纹背景 */
+        .grid-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 215, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 215, 0, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.3;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        /* 三列布局 */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        
+        /* 中心内容 */
+        .center-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+    
+        /* ==================== 旁白功能样式 ==================== */
+        
+        /* 旁白触发按钮 - 弱化 */
+        .notes-trigger {
+            position: fixed;
+            bottom: 30px;
+            right: 90px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(212, 175, 55, 0.1));
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 8px;
+            color: rgba(255, 215, 0, 0.5);
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 999;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+            opacity: 0.3;
+        }
+        
+        .notes-trigger:hover {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(212, 175, 55, 0.3));
+            transform: scale(1.1);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+            opacity: 1;
+            color: #FFD700;
+        }
+        
+        .notes-trigger.active {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.9), rgba(212, 175, 55, 0.9));
+            color: #000;
+        }
+        
+        /* 底部抽屉 */
+        .notes-drawer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 35vh;
+            background: linear-gradient(180deg, rgba(10, 10, 10, 0.98), rgba(15, 15, 15, 0.98));
+            border-top: 2px solid rgba(255, 215, 0, 0.3);
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 998;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 -10px 50px rgba(0, 0, 0, 0.5);
+        }
+        
+        .notes-drawer.open {
+            transform: translateY(0);
+        }
+        
+        .notes-drawer-handle {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: rgba(255, 215, 0, 0.4);
+            border-radius: 2px;
+            margin-top: 8px;
+            cursor: pointer;
+        }
+        
+        .notes-drawer-content {
+            padding: 3rem 8vw 2rem;
+            height: 100%;
+            overflow-y: auto;
+        }
+        
+        .notes-drawer-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            color: #FFD700;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.05em;
+        }
+        
+        .notes-drawer-page {
+            font-size: 0.75rem;
+            color: rgba(255, 215, 0, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 1.5rem;
+        }
+        
+        .notes-drawer-text {
+            font-size: 1.05rem;
+            line-height: 2;
+            color: rgba(255, 255, 255, 0.85);
+            max-width: 900px;
+        }
+        
+        /* 侧边栏模式 */
+        .notes-sidebar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 400px;
+            height: 100vh;
+            background: linear-gradient(90deg, rgba(10, 10, 10, 0.95), rgba(15, 15, 15, 0.98));
+            border-left: 2px solid rgba(255, 215, 0, 0.3);
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 997;
+            backdrop-filter: blur(20px);
+            box-shadow: -10px 0 50px rgba(0, 0, 0, 0.5);
+            overflow-y: auto;
+        }
+        
+        .notes-sidebar.open {
+            transform: translateX(0);
+        }
+        
+        .notes-sidebar-content {
+            padding: 4rem 2rem;
+        }
+        
+        .notes-sidebar-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 30px;
+            height: 30px;
+            background: transparent;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 4px;
+            color: #FFD700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .notes-sidebar-close:hover {
+            background: rgba(255, 215, 0, 0.2);
+            transform: rotate(90deg);
+        }
+        
+        /* 模式切换按钮 */
+        .notes-mode-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 150px;
+            padding: 0.6rem 1.2rem;
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 6px;
+            color: #FFD700;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            z-index: 999;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .notes-mode-toggle:hover {
+            background: rgba(255, 215, 0, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        /* 快捷键提示 */
+        .keyboard-hint {
+            position: fixed;
+            bottom: 95px;
+            right: 90px;
+            padding: 0.5rem 1rem;
+            background: rgba(10, 10, 10, 0.9);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 4px;
+            color: rgba(255, 215, 0, 0.7);
+            font-size: 0.7rem;
+            letter-spacing: 0.05em;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        
+        .keyboard-hint.show {
+            opacity: 1;
+        }
+        
+        .keyboard-hint kbd {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            background: rgba(255, 215, 0, 0.2);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 0.8rem;
+            margin: 0 0.2rem;
+        }
+        
+        /* 演讲者模式提示 */
+        .speaker-mode-hint {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 3rem 4rem;
+            background: rgba(10, 10, 10, 0.95);
+            border: 2px solid rgba(255, 215, 0, 0.4);
+            border-radius: 12px;
+            text-align: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 1001;
+            backdrop-filter: blur(20px);
+        }
+        
+        .speaker-mode-hint.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .speaker-mode-hint h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: #FFD700;
+            margin-bottom: 1rem;
+        }
+        
+        .speaker-mode-hint p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+        
+        .speaker-mode-hint button {
+            padding: 0.8rem 2rem;
+            background: linear-gradient(135deg, #FFD700, #D4AF37);
+            border: none;
+            border-radius: 6px;
+            color: #000;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .speaker-mode-hint button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+        }
+        
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .notes-sidebar {
+                width: 100%;
+            }
+            
+            .notes-drawer {
+                height: 50vh;
+            }
+            
+            .notes-mode-toggle {
+                display: none;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- 页面1：封面 -->
+    <div class="page page-1 bg-1" id="page1" style="background: url('output/firstbackground.png'); background-size: cover; background-position: center;">
+        <div id="particles-js"></div>
+        <div class="content-left">
+            <div class="subtitle">Business Proposal · 2026</div>
+            <h1 class="title">
+                <span>国</span>
+                <span>文</span>
+                <span>汇</span>
+                <span>通</span>
+            </h1>
+            <div class="seal-corner-tr"></div>
+            <div class="seal-corner-bl"></div>
+            <div class="asset-id">[ #CN-2026-X01 ]</div>
+            <div class="micro-data micro-data-top" id="micro-data-top">0x7A3F...</div>
+            <div class="micro-data micro-data-bottom" id="micro-data-bottom">TS:1738245600</div>
+            <p class="description">
+                数字文创资产合规发行与交易一站式平台
+            </p>
+            <a href="#page2" class="button">探索详情</a>
+        </div>
+        <div class="whitespace-right">
+            <div class="divider"></div>
+            <div class="light-beam"></div>
+            <div class="model-ambient-glow"></div>
+            <div class="cup-glow"></div>
+            <div class="cup-3d-container">
+                <canvas id="bronze-3d-canvas"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页面2：1. 政策东风：文化数字化的国家战略 -->
+    <div class="page" id="page2" style="background: linear-gradient(rgba(10, 10, 10, 0.5), rgba(10, 10, 10, 0.6)), url('output/andrew-kliatskyi-JdX0OeTj5S0-unsplash.jpg'); background-size: cover; background-position: center;">
+        <div class="grid-bg"></div>
+        <div id="particles-js-page2" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1; opacity: 0.3; pointer-events: none;"></div>
+        <div class="section-number">01</div>
+        <h2 class="content-title">政策东风：文化数字化的国家战略</h2>
+        
+        <div class="policy-container">
+            <!-- 三个HUD卡片横向排列 -->
+            <div class="policy-cards-row">
+                <div class="hud-card">
+                    <div class="hud-card-title">
+                        <span class="hud-card-icon"></span>
+                        顶层设计
+                    </div>
+                    <div class="hud-card-content">
+                        2022年5月印发《国家文化数字化战略意见》，从战略高度为文化数字化发展提供根本遵循。
+                    </div>
+                </div>
+                
+                <div class="hud-card">
+                    <div class="hud-card-title">
+                        <span class="hud-card-icon"></span>
+                        战略目标
+                    </div>
+                    <div class="hud-card-content">
+                        到2025年基本建成基础设施和服务平台；到2035年建成国家文化大数据体系，中华文化全景呈现。
+                    </div>
+                </div>
+                
+                <div class="hud-card">
+                    <div class="hud-card-title">
+                        <span class="hud-card-icon"></span>
+                        重点任务
+                    </div>
+                    <div class="hud-card-content">
+                        提出8项重点任务，明确"培育一批新型文化企业"，为平台型企业提供前所未有的发展机遇。
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 底部横向时间轴 -->
+            <div class="policy-timeline-bottom">
+                <div class="timeline-node-horizontal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-year">2022.05</div>
+                    <div class="timeline-desc">《意见》发布</div>
+                </div>
+                
+                <div class="timeline-node-horizontal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-year">2025</div>
+                    <div class="timeline-desc">基础设施建成</div>
+                </div>
+                
+                <div class="timeline-node-horizontal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-year">2035</div>
+                    <div class="timeline-desc">大数据体系建成</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页面3：2. 行业浪潮：数字文创资产的崛起 -->
+    <div class="page" id="page3" style="background: linear-gradient(rgba(10, 10, 10, 0.5), rgba(10, 10, 10, 0.6)), url('output/pawel-czerwinski-stcl1Pj2WzY-unsplash.jpg'); background-size: cover; background-position: center;">
+        <div class="grid-bg"></div>
+        <div id="particles-js-page3" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1; opacity: 0.3; pointer-events: none;"></div>
+        <div class="section-number">02</div>
+        <h2 class="content-title">行业浪潮：数字文创资产的崛起</h2>
+        
+        <div class="industry-container" style="position: relative; z-index: 2;">
+            <!-- 上半部分：三个核心观点横向排列 -->
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <div class="insight-title">市场规模持续扩大</div>
+                    <div class="insight-content">
+                        数字文化行业市场规模2024年达13.5万亿元，预计2026年增至14.7万亿元。数字资产市场2027年预计突破3000亿元。
+                    </div>
+                </div>
+                
+                <div class="insight-card">
+                    <div class="insight-title">Z世代成消费主力</div>
+                    <div class="insight-content">
+                        Z世代占比超67%，是数字原住民，追求个性化、情感化消费体验，愿为文化价值付费。
+                    </div>
+                </div>
+                
+                <div class="insight-card">
+                    <div class="insight-title">迈向合规与融合</div>
+                    <div class="insight-content">
+                        合规化、数实融合、生态化成为行业发展三大趋势，构建完整产业生态。
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 下半部分：发光柱状图 -->
+            <div class="chart-container">
+                <div class="chart-bar" data-height="180" data-value="13.5" style="height: 0;">
+                    <div class="chart-value">13.5万亿</div>
+                    <div class="chart-label">2024<br>数字文化</div>
+                </div>
+                
+                <div class="chart-bar" data-height="200" data-value="14.7" style="height: 0;">
+                    <div class="chart-value">14.7万亿</div>
+                    <div class="chart-label">2026<br>预测规模</div>
+                </div>
+                
+                <div class="chart-bar highlight" data-height="300" data-value="3000" style="height: 0;">
+                    <div class="chart-value">3000亿</div>
+                    <div class="chart-label">2027<br>数字资产</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页面4：3. 国文汇通为何出现？ -->
+    <div class="page" id="page4" style="background: linear-gradient(rgba(10, 10, 10, 0.96), rgba(10, 10, 10, 0.98)), url('output/majed-swan-tzhqSmy58d8-unsplash.jpg'); background-size: cover; background-position: center;">
+        <div class="grid-bg"></div>
+        <div class="geometric-bg"></div>
+        <div class="section-number">03</div>
+        <h2 class="content-title">3. 国文汇通为何出现？</h2>
+        <div class="divider-thin"></div>
+        <div class="card-text" style="margin-top: 2rem; line-height: 2;">
+            市场痛点：乱象与机遇<br>
+            在巨大需求的当下，市场亟需权威、合规、透明的平台来规范交易，重塑行业秩序，保护创作者与消费者权益。<br>
+            政策导向：国家战略要求<br>
+            响应国家文化数字化战略，成为连接文化、科技与金融的桥梁，推动产业高质量发展。<br>
+            技术发展：区块链赋能<br>
+            利用区块链确保数字资产的确权、追溯与交易，构建可信生态，让文化价值高效流转。<br>
+            国文汇通的出现，是市场、政策和技术共同作用的必然结果，是时代的呼唤。<br>
+        </div>
+    </div>
+
+    <!-- 页面5：4. 平台核心优势：构建坚实的护城河（一） -->
+    <div class="page" id="page5" style="background: linear-gradient(rgba(10, 10, 10, 0.96), rgba(10, 10, 10, 0.98)), url('output/pawel-czerwinski-WtNk-Ab9JEY-unsplash.jpg'); background-size: cover; background-position: center;">
+        <div class="grid-bg"></div>
+        <div class="geometric-bg"></div>
+        <div class="section-number">04</div>
+        <h2 class="content-title">4. 平台核心优势：构建坚实的护城河（一）</h2>
+        <div class="divider-thin"></div>
+        <div class="card-text" style="margin-top: 2rem; line-height: 2;">
+            国资背书，权威合规<br>
+            文交所直属、国企背景，双重监管加持，业务全流程可溯，公信力远超同行业其他平台。<br>
+            全资质完备，合规扎实<br>
+            持全链条合规证照，接入星火链网子链紫金山链，承接国家文化数字化战略，确权存证能力领先。<br>
+            全渠道覆盖，触达高效<br>
+            APP全平台应用商城上架，覆盖主流终端，打通用户获取通道，扩大市场覆盖面。<br>
+            支付最优，安全便捷<br>
+            搭建行业顶尖支付通道，即将对接省级结算中心持牌机构存管资金，兼顾资金安全与操作便捷性。<br>
+        </div>
+    </div>
+
+    <!-- 页面6：5. 平台核心优势：构建坚实的护城河（二） -->
+    <div class="page" id="page6" style="background: linear-gradient(rgba(10, 10, 10, 0.96), rgba(10, 10, 10, 0.98)), url('output/andrew-kliatskyi-JdX0OeTj5S0-unsplash.jpg'); background-size: cover; background-position: center;">
+        <div class="grid-bg"></div>
+        <div class="geometric-bg"></div>
+        <div class="section-number">05</div>
+        <h2 class="content-title">5. 平台核心优势：构建坚实的护城河（二）</h2>
+        <div class="divider-thin"></div>
+        <div class="card-text" style="margin-top: 2rem; line-height: 2;">
+            经济模型完整，价值稳健<br>
+            以“寄存复利+生态多元”玩法为核心，绑定真实需求抑制炒作，资产价值稳步增长。<br>
+            生态清晰，数实融合<br>
+            构建“数字获取-通宝流转-实体消费”闭环，依托五大模块，摆脱市场情绪驱动。<br>
+            团队顶尖，资源丰厚<br>
+            团队操盘过Ibox、唯一艺术等顶级平台，依托省文投实现“体育+文旅”跨界布局。<br>
+        </div>
+    </div>
+
+    <!-- 页面7：6. 平台团队介绍 -->
+    <div class="page" id="page7" style="background: linear-gradient(rgba(10, 10, 10, 0.96), rgba(10, 10, 10, 0.98)), url('output/andrew-kliatskyi-JdX0OeTj5S0-unsplash.jpg'); background-size: cover; background-position: center;">
+        <div class="grid-bg"></div>
+        <div class="geometric-bg"></div>
+        <div class="section-number">06</div>
+        <h2 class="content-title">6. 平台团队介绍</h2>
+        <div class="divider-thin"></div>
+        <div class="card-text" style="margin-top: 2rem; line-height: 2;">
+            “唯一艺术”团队<br>
+            由中国数字艺术、数字版权与区块链资产领域的资深创业者佟世天带领唯一艺术团队，全面负责国文汇通的战略规划与创新发展，致力于推动文化资产的数字化转型与数字文化资产产业生态建设。<br>
+            “IBOX”团队<br>
+            由原 IBOX 平台总运营“喜鹊”领衔，IBOX核心团队全面负责国文汇通的运营体系与生态建设，专注于平台增长策略、用户体系打造与生态协同发展。曾推动IBOX市值超百亿元、单日交易额近20亿元，能为国文汇通带来成熟的增长经验与模型。<br>
+            CMO首席宣传官 Jeff<br>
+            国文汇通首席宣传官，链大教育创始人、Cardano 亚洲增长负责人，首席培训行业博鳌峰会亚洲八大讲师。长期深耕数字经济与区块链教育领域，专注品牌战略、产业传播与人才培养体系建设，推动相关项目在亚洲市场落地与增长。<br>
+            核心团队拥有丰富的数字艺术与区块链资产化运营经验，是国内最早布局数字文化资产的专业团队。<br>
+        </div>
+    </div>
+
+    <!-- 页面8：7. 平台战略资源 -->
+    <div class="page" id="page8" style="background: linear-gradient(rgba(10, 10, 10, 0.96), rgba(10, 10, 10, 0.98)), url('output/pawel-czerwinski-WtNk-Ab9JEY-unsplash.jpg'); background-size: cover; background-position: center;">
+        <div class="grid-bg"></div>
+        <div class="geometric-bg"></div>
+        <div class="section-number">07</div>
+        <h2 class="content-title">7. 平台战略资源</h2>
+        <div class="divider-thin"></div>
+        <div class="card-text" style="margin-top: 2rem; line-height: 2;">
+            交易所资源<br>
+            战略合作，平台资源对接<br>
+            江苏、四川、甘肃、安徽等省级文交所<br>
+            股东资源<br>
+            虚实结合，实体权益体系支撑<br>
+            江苏文投、凤凰出版、省演艺、省广电等<br>
+            跨区域文旅局资源<br>
+            地方资源转化为国家平台优势<br>
+            重点合作：福建泉州市文旅局<br>
+            合作品牌资源<br>
+            构建高质量内容供给矩阵<br>
+            凤凰出版、泉州木偶剧院、紫金文创等<br>
+        </div>
+    </div>
+
+    <!-- 页面9：8. 平台介绍：“一体两翼三维四域”生态模型（一） -->
+    <div class="page" id="page9" style="background: linear-gradient(rgba(10, 10, 10, 0.96), rgba(10, 10, 10, 0.98)), url('output/majed-swan-tzhqSmy58d8-unsplash.jpg'); background-size: cover; background-position: center;">
+        <div class="grid-bg"></div>
+        <div class="geometric-bg"></div>
+        <div class="section-number">08</div>
+        <h2 class="content-title">8. 平台介绍：“一体两翼三维四域”生态模型（一）</h2>
+        <div class="divider-thin"></div>
+        <div class="card-text" style="margin-top: 2rem; line-height: 2;">
+            一体：国家文化数据中枢<br>
+            连接国家文化大数据体系与市场，汇聚权威文化数字资源，进行标准化的确权、登记、评估与发行。<br>
+            两翼：标准与信任<br>
+            标准翼<br>
+            制定文化数字资产全流程行业标准，掌握发展话语权。<br>
+            信任翼<br>
+            融合前沿技术，构建跨平台、可互信的技术基座。<br>
+            核心目标<br>
+            以中枢为核心，以标准和信任为保障，构建健康、繁荣的文化数字资产新生态。<br>
+        </div>
+    </div>
+
+    <!-- 页面10：9. 平台介绍：“一体两翼三维四域”生态模型（二） -->
+    <div class="page" id="page10" style="background: linear-gradient(rgba(10, 10, 10, 0.96), rgba(10, 10, 10, 0.98)), url('output/andrew-kliatskyi-JdX0OeTj5S0-unsplash.jpg'); background-size: cover; background-position: center;">
+        <div class="grid-bg"></div>
+        <div class="geometric-bg"></div>
+        <div class="section-number">09</div>
+        <h2 class="content-title">9. 平台介绍：“一体两翼三维四域”生态模型（二）</h2>
+        <div class="divider-thin"></div>
+        <div class="card-text" style="margin-top: 2rem; line-height: 2;">
+            三维：数据-平台-场景<br>
+            数据层<br>
+            汇聚“珍资源”、“活资源”与“潮资源”，构建海量数字资产库。<br>
+            平台层<br>
+            提供数据要素市场、发行服务平台、创意集市等多元化服务。<br>
+            场景层<br>
+            嵌入文博、商业、城市空间，实现数据价值的最终兑现。<br>
+            四域：深耕核心领域<br>
+            文博典藏·数字永生<br>
+            文物高精度数字化，发行数字资产，实现文化价值再生。<br>
+            非遗活化·产业赋能<br>
+            技艺数字化，助力非遗传承与商业化发展。<br>
+            文旅融合·虚实互促<br>
+            打造“数字资产+线下消费”新模式，提升文旅产业附加值。<br>
+            从数据采集到场景应用，我们在四大核心领域深耕细作，将生态模型转化为业务成果。<br>
+        </div>
+    </div>
+
+    <!-- 页面11：10. 商业模式：生态与经济模型 -->
+    <div class="page" id="page11" style="background: linear-gradient(rgba(10, 10, 10, 0.96), rgba(10, 10, 10, 0.98)), url('output/pawel-czerwinski-stcl1Pj2WzY-unsplash.jpg'); background-size: cover; background-position: center;">
+        <div class="grid-bg"></div>
+        <div class="geometric-bg"></div>
+        <div class="section-number">10</div>
+        <h2 class="content-title">10. 商业模式：生态与经济模型</h2>
+        <div class="divider-thin"></div>
+        <div class="card-text" style="margin-top: 2rem; line-height: 2;">
+            核心资产<br>
+            国文通卷<br>
+            平台基石资产，总量1000万份，象征核心共建者权益。<br>
+            “国文通宝”<br>
+            平台通用积分，总量10亿个，用于生态内价值流转。<br>
+            通胀激励：寄存通卷，每日获得通宝奖励。<br>
+            通缩消耗：交易注销、打新消耗、商品兑换等。<br>
+            价值流转闭环<br>
+            用户寄存《国文通卷》<br>
+            获得通宝奖励 (通胀)<br>
+            通宝用于交易、打新、兑换 (流通)<br>
+            部分注销，生态价值提升 (通缩)<br>
+        </div>
+    </div>
+
+    <!-- 页面12：11. 商业模式：六大通缩机制 -->
+    <div class="page" id="page12" style="background: linear-gradient(rgba(10, 10, 10, 0.96), rgba(10, 10, 10, 0.98)), url('output/pawel-czerwinski-WtNk-Ab9JEY-unsplash.jpg'); background-size: cover; background-position: center;">
+        <div class="grid-bg"></div>
+        <div class="geometric-bg"></div>
+        <div class="section-number">11</div>
+        <h2 class="content-title">11. 商业模式：六大通缩机制</h2>
+        <div class="divider-thin"></div>
+        <div class="card-text" style="margin-top: 2rem; line-height: 2;">
+            回收注销<br>
+            平台从收益中回收并永久注销通宝，是支撑其价值的核心机制。<br>
+            手续费抵扣<br>
+            用户可用通宝抵扣交易手续费并享折扣，促进流通与消耗。<br>
+            资产发行认证<br>
+            发行新资产需支付通宝作为认证费，筛选项目并消耗通宝。<br>
+            生态玩法博弈<br>
+            通过趣味玩法增加通宝的应用场景与消耗。<br>
+            企业入驻门槛<br>
+            品牌方需质押通宝作为保证金，确保生态合规运营。<br>
+            线下实体兑换<br>
+            兑换商品或服务，打通数字资产与实体经济的连接。<br>
+            核心总结：六大机制共同作用，构成完整的价值闭环，确保“国文通宝”的长期价值稳定。<br>
+        </div>
+    </div>
+
+    <!-- 页面13：12. 平台经济模型：通胀与通缩的动态平衡 -->
+    <div class="page" id="page13" style="background: linear-gradient(rgba(10, 10, 10, 0.96), rgba(10, 10, 10, 0.98)), url('output/pawel-czerwinski-stcl1Pj2WzY-unsplash.jpg'); background-size: cover; background-position: center;">
+        <div class="grid-bg"></div>
+        <div class="geometric-bg"></div>
+        <div class="section-number">12</div>
+        <h2 class="content-title">12. 平台经济模型：通胀与通缩的动态平衡</h2>
+        <div class="divider-thin"></div>
+        <div class="card-text" style="margin-top: 2rem; line-height: 2;">
+            通胀模块：价值注入与产出<br>
+            通卷寄存<br>
+            用户寄存“国文通卷”获取基础收益，为生态提供初始动力。<br>
+            通宝产出<br>
+            平台每日发放“通宝”作为奖励，注入生态流动性。<br>
+            价值注入<br>
+            为整个经济模型提供初始动力和价值基础。<br>
+            通缩模块：价值捕获与注销<br>
+            持续回收机制<br>
+            定期回收并注销“通卷”，提升长期价值。<br>
+            交易手续费抵扣<br>
+            使用“通宝”抵扣交易手续费，促进消耗。<br>
+            数字资产发行认证<br>
+            项目方发行资产需消耗“通卷”进行认证。<br>
+            生态多元玩法博弈<br>
+        </div>
+    </div>
+
+    <!-- 页面14：13. 生态模型发展路线：三步走战略 -->
+    <div class="page" id="page14" style="background: linear-gradient(rgba(10, 10, 10, 0.96), rgba(10, 10, 10, 0.98)), url('output/andrew-kliatskyi-JdX0OeTj5S0-unsplash.jpg'); background-size: cover; background-position: center;">
+        <div class="grid-bg"></div>
+        <div class="geometric-bg"></div>
+        <div class="section-number">13</div>
+        <h2 class="content-title">13. 生态模型发展路线：三步走战略</h2>
+        <div class="divider-thin"></div>
+        <div class="card-text" style="margin-top: 2rem; line-height: 2;">
+            阶段一：奠定基石<br>
+            (1-2年)<br>
+            高通缩、低通胀，快速积累早期核心用户，完成平台冷启动。<br>
+            阶段二：生态稳健<br>
+            (3-4年)<br>
+            平衡通胀通缩，精细化运营，验证商业模式，进入稳定发展期。<br>
+            阶段三：价值爆发<br>
+            (5年以上)<br>
+            拓展应用场景，实现爆发式增长，成为行业领导者，共享文化价值。<br>
+            清晰的战略路径，驱动生态价值持续增长<br>
+        </div>
+    </div>
+
+    <!-- 页面15：14. 用户多元化收益渠道 -->
+    <div class="page" id="page15" style="background: linear-gradient(rgba(10, 10, 10, 0.96), rgba(10, 10, 10, 0.98)), url('output/majed-swan-tzhqSmy58d8-unsplash.jpg'); background-size: cover; background-position: center;">
+        <div class="grid-bg"></div>
+        <div class="geometric-bg"></div>
+        <div class="section-number">14</div>
+        <h2 class="content-title">14. 用户多元化收益渠道</h2>
+        <div class="divider-thin"></div>
+        <div class="card-text" style="margin-top: 2rem; line-height: 2;">
+            寄存收益<br>
+            用户寄存数字资产，每日可获得“通宝”奖励。<br>
+            二级市场交易<br>
+            通过低买高卖藏品，获得价差收益。<br>
+            国文优选（打新）<br>
+            抢购新发售藏品，抢占升值先机。<br>
+            通宝生态增值<br>
+            持有“通宝”享受生态发展红利。<br>
+            线下实体消费<br>
+            凭藏品或通宝在合作商户处享受折扣。<br>
+            通宝商城兑换<br>
+            兑换实物商品与虚拟服务。<br>
+            额外福利：不定期赠送文旅及演出门票等权益。<br>
+        </div>
+    </div>
+
+    <!-- 页面16：15. 应用场景一：文化资产确权与流通 -->
+    <div class="page" id="page16" style="background: linear-gradient(rgba(10, 10, 10, 0.96), rgba(10, 10, 10, 0.98)), url('output/pawel-czerwinski-WtNk-Ab9JEY-unsplash.jpg'); background-size: cover; background-position: center;">
+        <div class="grid-bg"></div>
+        <div class="geometric-bg"></div>
+        <div class="section-number">15</div>
+        <h2 class="content-title">15. 应用场景一：文化资产确权与流通</h2>
+        <div class="divider-thin"></div>
+        <div class="card-text" style="margin-top: 2rem; line-height: 2;">
+            文博资源上链<br>
+            与博物馆、档案馆合作，对馆藏文物影像、文献进行数字确权与上链。<br>
+            目标：构建国家级文化数字资产库。<br>
+            非遗项目数字化<br>
+            对传统工艺、戏曲等非遗进行数字记录与资产化确权。<br>
+            目标：支持传承人数字融资与发行。<br>
+            艺术品资产交易<br>
+            提供艺术品、版权等数字资产发行与分账机制。<br>
+            目标：实现“确权-发行-收益”全流程。<br>
+            国文汇通致力于成为文化数字资产的“公证处”与“交易所”，让文化价值在数字时代高效流转。<br>
+        </div>
+    </div>
+
+    <!-- 页面17：16. 应用场景二：数字文旅与文化消费 -->
+    <div class="page" id="page17" style="background: linear-gradient(rgba(10, 10, 10, 0.96), rgba(10, 10, 10, 0.98)), url('output/pawel-czerwinski-stcl1Pj2WzY-unsplash.jpg'); background-size: cover; background-position: center;">
+        <div class="grid-bg"></div>
+        <div class="geometric-bg"></div>
+        <div class="section-number">16</div>
+        <h2 class="content-title">16. 应用场景二：数字文旅与文化消费</h2>
+        <div class="divider-thin"></div>
+        <div class="card-text" style="margin-top: 2rem; line-height: 2;">
+            文旅权益凭证化<br>
+            将景区门票、酒店住宿等权益资产化上链，实现文旅资产的数字化流转。<br>
+            文化园区消费支付<br>
+            支持在文创商场、书店等场景支付，打造“数字资产→实体消费”闭环。<br>
+            文创衍生品经济<br>
+            发行品牌NFT或会员数字卡，实现从线上收藏到线下消费的权益映射。<br>
+            国文通宝 · 构建数字文旅消费新生态<br>
+        </div>
+    </div>
+
+    <!-- 页面18：17. 应用场景三：GameFi / StudyFi 互动模块 -->
+    <div class="page" id="page18" style="background: linear-gradient(rgba(10, 10, 10, 0.96), rgba(10, 10, 10, 0.98)), url('output/andrew-kliatskyi-JdX0OeTj5S0-unsplash.jpg'); background-size: cover; background-position: center;">
+        <div class="grid-bg"></div>
+        <div class="geometric-bg"></div>
+        <div class="section-number">17</div>
+        <h2 class="content-title">17. 应用场景三：GameFi / StudyFi 互动模块</h2>
+        <div class="divider-thin"></div>
+        <div class="card-text" style="margin-top: 2rem; line-height: 2;">
+            GameFi：融合文化娱乐<br>
+            核心<br>
+            通过文化主题游戏，让用户在“玩中学、学中赚”，实现知识传播与资产激励双收益。<br>
+            StudyFi：面向私域场景<br>
+            核心<br>
+            承担引流与用户活化功能，通过任务激励，构建良性循环的学习与激励生态。<br>
+            共同构建一个充满活力、可持续发展的文化元宇宙生态。<br>
+        </div>
+    </div>
+
+    <!-- 页面19：18. 应用场景四：企业与产业协同 -->
+    <div class="page" id="page19" style="background: linear-gradient(rgba(10, 10, 10, 0.96), rgba(10, 10, 10, 0.98)), url('output/majed-swan-tzhqSmy58d8-unsplash.jpg'); background-size: cover; background-position: center;">
+        <div class="grid-bg"></div>
+        <div class="geometric-bg"></div>
+        <div class="section-number">18</div>
+        <h2 class="content-title">18. 应用场景四：企业与产业协同</h2>
+        <div class="divider-thin"></div>
+        <div class="card-text" style="margin-top: 2rem; line-height: 2;">
+            第三方项目发行接入<br>
+            向文旅集团、艺术院校等开放发行接口，提供API与SDK支持。<br>
+            目标：实现跨平台数据打通与联合营销。<br>
+            行业联盟与平台共建<br>
+            与地方政府共建“文化数字资产专区”，打造城市级管理交易中心。<br>
+            目标：构建区域性文化数字资产生态。<br>
+            品牌共创与营销合作<br>
+            跨界品牌基于文化IP共创数字资产、活动徽章，驱动会员体系。<br>
+            目标：实现“文化+消费”双循环。<br>
+            国文汇通不仅是交易平台，更是开放的生态系统，致力于构建共赢的产业新生态。<br>
+        </div>
+    </div>
+
+    <!-- 页面20：19. 应用场景五：国际传播与文化出海 -->
+    <div class="page" id="page20" style="background: linear-gradient(rgba(10, 10, 10, 0.96), rgba(10, 10, 10, 0.98)), url('output/pawel-czerwinski-WtNk-Ab9JEY-unsplash.jpg'); background-size: cover; background-position: center;">
+        <div class="grid-bg"></div>
+        <div class="geometric-bg"></div>
+        <div class="section-number">19</div>
+        <h2 class="content-title">19. 应用场景五：国际传播与文化出海</h2>
+        <div class="divider-thin"></div>
+        <div class="card-text" style="margin-top: 2rem; line-height: 2;">
+            数字文创国际化交易<br>
+            核心<br>
+            对接海外NFT、艺术交易平台，推动中国文化数字资产全球挂牌。<br>
+            目标<br>
+            推出多语言版平台与跨境结算体系，助力文化数字出海。<br>
+            海外文创IP授权<br>
+            核心<br>
+            文化企业可通过平台完成海外IP授权与收益追踪。<br>
+            目标<br>
+            实现跨境文化资产管理与权益保护。<br>
+        </div>
+    </div>
+
+    <!-- 页面21：20. 战略规划：未来的发展蓝图 -->
+    <div class="page" id="page21" style="background: linear-gradient(rgba(10, 10, 10, 0.96), rgba(10, 10, 10, 0.98)), url('output/pawel-czerwinski-stcl1Pj2WzY-unsplash.jpg'); background-size: cover; background-position: center;">
+        <div class="grid-bg"></div>
+        <div class="geometric-bg"></div>
+        <div class="section-number">20</div>
+        <h2 class="content-title">20. 战略规划：未来的发展蓝图</h2>
+        <div class="divider-thin"></div>
+        <div class="card-text" style="margin-top: 2rem; line-height: 2;">
+            短期目标 (1-2年)<br>
+            标杆打造与模式验证<br>
+            核心目标：集中资源深度绑定30-50家顶级文博机构与20-30个核心文旅目的地，打造行业标杆项目。<br>
+            关键成果：完成平台核心功能打磨，验证“文化+科技+商业”模式可行性，积累100万高质量用户并实现盈亏平衡。<br>
+            中期目标 (3-4年)<br>
+            生态扩张与网络效应<br>
+            核心目标：加速全国生态扩张，将成熟合作模式复制到更多省份与城市。<br>
+            关键成果：接入超1000家文化供给方与10万个线下消费品牌，注册用户突破5000万，形成强大网络效应。<br>
+            长期目标 (5年以上)<br>
+            全球影响与标准输出<br>
+            核心目标：探索文化数字资产跨境流通与交易，让中华文化通过数字力量走向世界。<br>
+            关键成果：对接海外主流交易平台与金融市场，建立跨境结算体系，参与全球文化数字化标准制定。<br>
+            战略核心：构建全球领先的文化数字资产生态<br>
+            通过三步走战略，从标杆打造到生态扩张，最终实现全球影响，让中华文化通过数字的力量走向世界。<br>
+        </div>
+    </div>
+
+    <!-- 页面22：21. 使命：以文化为魂 · 以科技为器 · 以金融为力 -->
+    <div class="page" id="page22" style="background: linear-gradient(rgba(10, 10, 10, 0.96), rgba(10, 10, 10, 0.98)), url('output/andrew-kliatskyi-JdX0OeTj5S0-unsplash.jpg'); background-size: cover; background-position: center;">
+        <div class="grid-bg"></div>
+        <div class="geometric-bg"></div>
+        <div class="section-number">21</div>
+        <h2 class="content-title">21. 使命：以文化为魂 · 以科技为器 · 以金融为力</h2>
+        <div class="divider-thin"></div>
+        <div class="card-text" style="margin-top: 2rem; line-height: 2;">
+            文化使命<br>
+            让中华优秀传统文化在数字时代“活起来”。<br>
+            推动文化资源数字化、资产化与全球化。<br>
+            产业使命<br>
+            建立合规、安全、可持续的数字文化资产体系。<br>
+            打造文化与金融深度融合的数字经济新引擎。<br>
+            社会使命<br>
+            通过技术创新与金融赋能，助力文化产业升级。<br>
+            让每个文化创意、艺术作品在数字经济中焕发新价值。<br>
+            赋能每一个文化创意，让价值在数字经济中绽放。<br>
+        </div>
+    </div>
+
+    <!-- 页面23：22.愿景：汇聚文化之光 · 通达数字未来 -->
+    <div class="page" id="page23" style="background: linear-gradient(rgba(10, 10, 10, 0.96), rgba(10, 10, 10, 0.98)), url('output/majed-swan-tzhqSmy58d8-unsplash.jpg'); background-size: cover; background-position: center;">
+        <div class="grid-bg"></div>
+        <div class="geometric-bg"></div>
+        <div class="section-number">22</div>
+        <h2 class="content-title">22.愿景：汇聚文化之光 · 通达数字未来</h2>
+        <div class="divider-thin"></div>
+        <div class="card-text" style="margin-top: 2rem; line-height: 2;">
+            成为中国领先的文化类数字资产基础设施平台<br>
+            构建坚实技术底座，赋能文化产业数字化转型<br>
+            打造国家级文化数字化生态枢纽<br>
+            促进文化价值社会共享与高效国际传播<br>
+            推动全球标准化与国际互认<br>
+            建立文化资产确权、交易、流通的全球准则<br>
+            建设数字文明新体系<br>
+            实现文化、科技与金融的共生共荣<br>
+            成为连接中华文化与世界的数字桥梁，让文化资产“确权有据、流通有序、价值可见”。<br>
+        </div>
+    </div>
+
+    <!-- 页面24：感谢 -->
+    <div class="page" id="page24" style="background: radial-gradient(ellipse at center, rgba(10, 10, 10, 0.94) 0%, rgba(10, 10, 10, 0.97) 100%), url('output/pawel-czerwinski-WtNk-Ab9JEY-unsplash.jpg'); background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center;">
+        <div class="center-content">
+            <div class="section-label" style="margin-bottom: 3rem;">Thank You</div>
+            <h2 class="content-title" style="font-size: 4rem; text-align: center; margin-bottom: 3rem;">
+                感谢聆听
+            </h2>
+            <div class="big-number" style="font-size: 5rem; margin-bottom: 2rem; text-align: center;">国文汇通</div>
+            <p class="description" style="text-align: center; margin: 0 auto;">
+                汇聚文化之光 · 通达数字未来
+            </p>
+        </div>
+    </div>
+
+    <!-- 全屏按钮 -->
+    <button class="fullscreen-btn" id="fullscreen-btn">⛶</button>
+    
+    <!-- 页码指示器 -->
+    <div class="page-indicator">
+        <div class="dot active" data-page="1"></div>
+        <div class="dot" data-page="2"></div>
+        <div class="dot" data-page="3"></div>
+        <div class="dot" data-page="4"></div>
+        <div class="dot" data-page="5"></div>
+        <div class="dot" data-page="6"></div>
+        <div class="dot" data-page="7"></div>
+        <div class="dot" data-page="8"></div>
+        <div class="dot" data-page="9"></div>
+        <div class="dot" data-page="10"></div>
+        <div class="dot" data-page="11"></div>
+        <div class="dot" data-page="12"></div>
+        <div class="dot" data-page="13"></div>
+        <div class="dot" data-page="14"></div>
+        <div class="dot" data-page="15"></div>
+        <div class="dot" data-page="16"></div>
+        <div class="dot" data-page="17"></div>
+        <div class="dot" data-page="18"></div>
+        <div class="dot" data-page="19"></div>
+        <div class="dot" data-page="20"></div>
+        <div class="dot" data-page="21"></div>
+        <div class="dot" data-page="22"></div>
+        <div class="dot" data-page="23"></div>
+        <div class="dot" data-page="24"></div>
+    </div>
+    
+    <script>
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
+        }
+        
+        function scrollToPage(num) {
+            document.getElementById('page' + num).scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // 绑定全屏按钮
+        document.getElementById('fullscreen-btn').addEventListener('click', toggleFullscreen);
+        
+        // 绑定页码指示器
+        document.querySelectorAll('.dot').forEach(dot => {
+            dot.addEventListener('click', function() {
+                const pageNum = parseInt(this.getAttribute('data-page'));
+                scrollToPage(pageNum);
+            });
+        });
+        
+        // 更新页码指示器
+        window.addEventListener('scroll', () => {
+            const pages = document.querySelectorAll('.page');
+            const dots = document.querySelectorAll('.dot');
+            
+            pages.forEach((page, index) => {
+                const rect = page.getBoundingClientRect();
+                if (rect.top >= -100 && rect.top < window.innerHeight / 2) {
+                    dots.forEach(d => d.classList.remove('active'));
+                    if (dots[index]) dots[index].classList.add('active');
+                }
+            });
+        });
+        
+        // 微缩数据动态更新
+        function updateMicroData() {
+            const chars = '0123456789ABCDEF';
+            const topEl = document.getElementById('micro-data-top');
+            const bottomEl = document.getElementById('micro-data-bottom');
+            
+            // 更新哈希值（每3秒）
+            if (topEl) {
+                let hash = '0x';
+                for (let i = 0; i < 4; i++) {
+                    hash += chars[Math.floor(Math.random() * 16)];
+                }
+                hash += '...';
+                topEl.textContent = hash;
+            }
+            
+            // 更新时间戳（每秒）
+            if (bottomEl) {
+                const updateTimestamp = () => {
+                    const timestamp = Math.floor(Date.now() / 1000);
+                    bottomEl.textContent = `TS:${timestamp}`;
+                };
+                updateTimestamp();
+                setInterval(updateTimestamp, 1000);
+            }
+        }
+        
+        // 每秒更新哈希值后四位（模拟实时数据校验）
+        setInterval(() => {
+            const chars = '0123456789ABCDEF';
+            const topEl = document.getElementById('micro-data-top');
+            if (topEl) {
+                let hash = '0x';
+                for (let i = 0; i < 4; i++) {
+                    hash += chars[Math.floor(Math.random() * 16)];
+                }
+                hash += '...';
+                topEl.textContent = hash;
+            }
+        }, 1000);
+        
+        updateMicroData();
+        
+        // Particles.js 初始化（简洁版 - 增强可见度）
+        particlesJS('particles-js', {
+            "particles": {
+                "number": { "value": 22, "density": { "enable": false } },
+                "color": { "value": ["#FFD700", "#FFC870", "#FFDB58"] },
+                "shape": { "type": "circle" },
+                "opacity": { 
+                    "value": 0.7, 
+                    "random": true, 
+                    "anim": { "enable": true, "speed": 0.5, "opacity_min": 0.3, "sync": false } 
+                },
+                "size": { 
+                    "value": 5.5, 
+                    "random": true, 
+                    "anim": { "enable": true, "speed": 1, "size_min": 2.5, "sync": false } 
+                },
+                "line_linked": { 
+                    "enable": true, 
+                    "distance": 220, 
+                    "color": "#FFD700", 
+                    "opacity": 0.5, 
+                    "width": 1.5 
+                },
+                "move": { 
+                    "enable": true, 
+                    "speed": 0.5, 
+                    "direction": "none", 
+                    "random": true, 
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": { "enable": false }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": { 
+                    "onhover": { "enable": true, "mode": "grab" },
+                    "onclick": { "enable": false },
+                    "resize": true 
+                },
+                "modes": { 
+                    "grab": { 
+                        "distance": 250, 
+                        "line_linked": { "opacity": 0.5 } 
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+        
+        // ========== 终极精修版粒子系统 ==========
+        setTimeout(() => {
+            const particlesContainer = document.getElementById('particles-js');
+            if (!particlesContainer || !window.pJSDom || !window.pJSDom[0]) return;
+            
+            const pJS = window.pJSDom[0].pJS;
+            const particles = pJS.particles.array;
+            
+            // === 1. 景深层级：为粒子分配远中近三层 ===
+            particles.forEach((p, i) => {
+                if (i < 4) {
+                    // 前景层：大模糊光斑
+                    p.layer = 'near';
+                    p.radius = 20 + Math.random() * 15;
+                    p.opacity = 0.06 + Math.random() * 0.04;
+                    p.vx *= 0.2;
+                    p.vy *= 0.2;
+                    p.blur = 15 + Math.random() * 10;
+                } else if (i < 12) {
+                    // 中景层：正常星座连线
+                    p.layer = 'mid';
+                    p.radius = 4 + Math.random() * 3;
+                    p.opacity = 0.5 + Math.random() * 0.3;
+                } else {
+                    // 远景层：细碎星点
+                    p.layer = 'far';
+                    p.radius = 1.5 + Math.random() * 2;
+                    p.opacity = 0.3 + Math.random() * 0.2;
+                    p.vx *= 0.5;
+                    p.vy *= 0.5;
+                }
+            });
+            
+            // === 2. 创建前景模糊光斑层 ===
+            const blurCanvas = document.createElement('canvas');
+            blurCanvas.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:3;';
+            particlesContainer.appendChild(blurCanvas);
+            const blurCtx = blurCanvas.getContext('2d');
+            
+            // 前景光斑数据
+            const bokehSpots = [];
+            for (let i = 0; i < 5; i++) {
+                bokehSpots.push({
+                    x: Math.random() * window.innerWidth,
+                    y: Math.random() * window.innerHeight,
+                    radius: 40 + Math.random() * 60,
+                    opacity: 0.03 + Math.random() * 0.03,
+                    vx: (Math.random() - 0.5) * 0.3,
+                    vy: (Math.random() - 0.5) * 0.2,
+                    phase: Math.random() * Math.PI * 2
+                });
+            }
+            
+            // === 3. 能量脉冲数据 ===
+            const pulses = [];
+            function createPulse() {
+                if (particles.length < 2) return;
+                const startIdx = Math.floor(Math.random() * particles.length);
+                const endIdx = Math.floor(Math.random() * particles.length);
+                if (startIdx !== endIdx) {
+                    pulses.push({
+                        startIdx, endIdx,
+                        progress: 0,
+                        speed: 0.015 + Math.random() * 0.01,
+                        brightness: 0.8 + Math.random() * 0.2
+                    });
+                }
+            }
+            setInterval(createPulse, 800 + Math.random() * 1200);
+            
+            // === 4. 鼠标交互数据 ===
+            let mouseX = -1000, mouseY = -1000;
+            let mouseActive = false;
+            
+            particlesContainer.addEventListener('mousemove', (e) => {
+                const rect = particlesContainer.getBoundingClientRect();
+                mouseX = e.clientX - rect.left;
+                mouseY = e.clientY - rect.top;
+                mouseActive = true;
+            });
+            particlesContainer.addEventListener('mouseleave', () => {
+                mouseActive = false;
+            });
+            
+            // === 5. 标题避让区域（印章位置） ===
+            const sealCenter = { x: window.innerWidth * 0.22, y: window.innerHeight * 0.45 };
+            const sealRadius = 180;
+            
+            // === 主动画循环 ===
+            let breathPhase = 0;
+            let time = 0;
+            
+            function resizeBlurCanvas() {
+                blurCanvas.width = window.innerWidth;
+                blurCanvas.height = window.innerHeight;
+            }
+            resizeBlurCanvas();
+            window.addEventListener('resize', resizeBlurCanvas);
+            
+            function ultimateEnhance() {
+                time += 0.016;
+                breathPhase += 0.008;
+                
+                // 连线呼吸效果
+                const breathValue = 0.35 + (Math.sin(breathPhase) * 0.5 + 0.5) * 0.2;
+                pJS.particles.line_linked.opacity = breathValue;
+                
+                // === 绘制前景模糊光斑 ===
+                blurCtx.clearRect(0, 0, blurCanvas.width, blurCanvas.height);
+                
+                bokehSpots.forEach(spot => {
+                    // 移动
+                    spot.x += spot.vx;
+                    spot.y += spot.vy;
+                    spot.phase += 0.01;
+                    
+                    // 边界反弹
+                    if (spot.x < -100 || spot.x > blurCanvas.width + 100) spot.vx *= -1;
+                    if (spot.y < -100 || spot.y > blurCanvas.height + 100) spot.vy *= -1;
+                    
+                    // 呼吸透明度
+                    const pulseOpacity = spot.opacity * (0.7 + 0.3 * Math.sin(spot.phase));
+                    
+                    // 绘制模糊光斑（高斯模糊效果）
+                    const gradient = blurCtx.createRadialGradient(spot.x, spot.y, 0, spot.x, spot.y, spot.radius);
+                    gradient.addColorStop(0, 'rgba(255, 215, 0, ' + pulseOpacity + ')');
+                    gradient.addColorStop(0.3, 'rgba(212, 175, 55, ' + (pulseOpacity * 0.5) + ')');
+                    gradient.addColorStop(1, 'rgba(139, 109, 35, 0)');
+                    
+                    blurCtx.beginPath();
+                    blurCtx.arc(spot.x, spot.y, spot.radius, 0, Math.PI * 2);
+                    blurCtx.fillStyle = gradient;
+                    blurCtx.fill();
+                });
+                
+                // === 绘制能量脉冲 ===
+                pulses.forEach((pulse, idx) => {
+                    pulse.progress += pulse.speed;
+                    if (pulse.progress >= 1) {
+                        pulses.splice(idx, 1);
+                        return;
+                    }
+                    
+                    const p1 = particles[pulse.startIdx];
+                    const p2 = particles[pulse.endIdx];
+                    if (!p1 || !p2) return;
+                    
+                    const dx = p2.x - p1.x;
+                    const dy = p2.y - p1.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (dist < 250) {
+                        const px = p1.x + dx * pulse.progress;
+                        const py = p1.y + dy * pulse.progress;
+                        
+                        // 绘制脉冲光点
+                        const pulseGradient = blurCtx.createRadialGradient(px, py, 0, px, py, 12);
+                        pulseGradient.addColorStop(0, 'rgba(255, 230, 100, ' + pulse.brightness + ')');
+                        pulseGradient.addColorStop(0.5, 'rgba(255, 215, 0, ' + (pulse.brightness * 0.4) + ')');
+                        pulseGradient.addColorStop(1, 'rgba(212, 175, 55, 0)');
+                        
+                        blurCtx.beginPath();
+                        blurCtx.arc(px, py, 12, 0, Math.PI * 2);
+                        blurCtx.fillStyle = pulseGradient;
+                        blurCtx.fill();
+                    }
+                });
+                
+                // === 鼠标交互：粒子扩散/汇聚 ===
+                if (mouseActive) {
+                    particles.forEach(p => {
+                        const dx = p.x - mouseX;
+                        const dy = p.y - mouseY;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (dist < 150 && dist > 0) {
+                            // 轻微扩散效果
+                            const force = (150 - dist) / 150 * 0.3;
+                            p.vx += (dx / dist) * force * 0.1;
+                            p.vy += (dy / dist) * force * 0.1;
+                        }
+                    });
+                    
+                    // 鼠标附近绘制光晕
+                    const mouseGlow = blurCtx.createRadialGradient(mouseX, mouseY, 0, mouseX, mouseY, 80);
+                    mouseGlow.addColorStop(0, 'rgba(255, 215, 0, 0.08)');
+                    mouseGlow.addColorStop(1, 'rgba(255, 215, 0, 0)');
+                    blurCtx.beginPath();
+                    blurCtx.arc(mouseX, mouseY, 80, 0, Math.PI * 2);
+                    blurCtx.fillStyle = mouseGlow;
+                    blurCtx.fill();
+                }
+                
+                // === 标题避让：印章周围气场 ===
+                const auraGradient = blurCtx.createRadialGradient(
+                    sealCenter.x, sealCenter.y, sealRadius * 0.6,
+                    sealCenter.x, sealCenter.y, sealRadius * 1.5
+                );
+                auraGradient.addColorStop(0, 'rgba(255, 215, 0, 0)');
+                auraGradient.addColorStop(0.5, 'rgba(255, 215, 0, ' + (0.02 + 0.01 * Math.sin(time * 0.5)) + ')');
+                auraGradient.addColorStop(1, 'rgba(255, 215, 0, 0)');
+                
+                blurCtx.beginPath();
+                blurCtx.arc(sealCenter.x, sealCenter.y, sealRadius * 1.5, 0, Math.PI * 2);
+                blurCtx.fillStyle = auraGradient;
+                blurCtx.fill();
+                
+                // 粒子远离印章中心
+                particles.forEach(p => {
+                    const dx = p.x - sealCenter.x;
+                    const dy = p.y - sealCenter.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (dist < sealRadius && dist > 0) {
+                        const pushForce = (sealRadius - dist) / sealRadius * 0.5;
+                        p.vx += (dx / dist) * pushForce;
+                        p.vy += (dy / dist) * pushForce;
+                    }
+                });
+                
+                requestAnimationFrame(ultimateEnhance);
+            }
+            
+            ultimateEnhance();
+            
+        }, 600);
+    </script>
+    
+    <!-- 3D 青铜鼎模型 -->
+    <script type="module">
+        import * as THREE from 'three';
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+        
+        // 获取 canvas 容器
+        const canvas = document.getElementById('bronze-3d-canvas');
+        if (!canvas) {
+            console.error('Canvas element not found');
+        } else {
+            const container = canvas.parentElement;
+            
+            // 创建场景
+            const scene = new THREE.Scene();
+            
+            // 创建相机（正常透视，稍微仰视）
+            const camera = new THREE.PerspectiveCamera(
+                45,  // 标准视角，不会变形
+                container.clientWidth / container.clientHeight,
+                0.1,
+                1000
+            );
+            // 相机位置：稍微从下往上，但保持正常透视
+            camera.position.set(0, -0.5, 5);  // 稍微偏下，距离适中
+            camera.lookAt(0, 0, 0);  // 看向中心
+            
+            // 创建渲染器
+            const renderer = new THREE.WebGLRenderer({ 
+                canvas: canvas,
+                antialias: true, 
+                alpha: true 
+            });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            
+            // 后处理已移除，使用标准渲染
+            // const renderScene = new RenderPass(scene, camera);
+            // const bloomPass = new UnrealBloomPass(...);
+            // const composer = new EffectComposer(renderer);
+            // composer.addPass(renderScene);
+            // composer.addPass(bloomPass);
+            
+            // 环境光
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambientLight);
+            
+            // 方向光
+            const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            dirLight.position.set(5, 5, 5);
+            scene.add(dirLight);
+            
+            // 金色点光源（前方）- 增强
+            const pointLight = new THREE.PointLight(0xFFD700, 1.5);  // 从0.5增加到1.5
+            pointLight.position.set(-5, -3, 3);
+            scene.add(pointLight);
+            
+            // 边缘勾勒光（Rim Lighting）- 背后斜45度强力金色光源 - 增强
+            const rimLight = new THREE.PointLight(0xFFD700, 8.0);  // 从5.0增加到8.0
+            rimLight.position.set(3, 2, -4);
+            scene.add(rimLight);
+            
+            // 顶部轮廓光 - 增强
+            const topRimLight = new THREE.PointLight(0xD4AF37, 5.0);  // 从3.0增加到5.0
+            topRimLight.position.set(0, 5, -3);
+            scene.add(topRimLight);
+            
+            // 额外的金色聚光灯
+            const spotLight = new THREE.SpotLight(0xFFD700, 3.0);
+            spotLight.position.set(-3, 3, 5);
+            spotLight.angle = Math.PI / 4;
+            scene.add(spotLight);
+            
+            // 底部环境光 - 减少底座沉重感
+            const bottomLight = new THREE.PointLight(0xFFD700, 2.0);
+            bottomLight.position.set(0, -3, 0);
+            scene.add(bottomLight);
+            
+            // 底部辅助光 - 营造悬浮感
+            const bottomAmbient = new THREE.PointLight(0xD4AF37, 1.5);
+            bottomAmbient.position.set(0, -4, 2);
+            scene.add(bottomAmbient);
+            
+            // 底部右前方点光源 - 照亮模型底部和胸部（配合右下角环境光晕）
+            const bottomRightLight = new THREE.PointLight(0xFFD700, 3.5);
+            bottomRightLight.position.set(2, -2, 3);
+            scene.add(bottomRightLight);
+            
+            // 底部右侧辅助光 - 增强模型底座亮度
+            const bottomRightAmbient = new THREE.PointLight(0xFFC870, 2.0);
+            bottomRightAmbient.position.set(3, -3, 2);
+            scene.add(bottomRightAmbient);
+            
+            // 加载 GLB 模型（贴图版本）
+            const loader = new GLTFLoader();
+            let model;
+            let originalMaterials = [];
+            let scanlineY = -4;  // 扫描线初始位置，扩大范围
+            
+            loader.load(
+                './output/texture_v128_768_moved.glb',
+                function (gltf) {
+                    model = gltf.scene;
+                    
+                    // 保存原始材质并调整饱和度
+                    model.traverse((child) => {
+                        if (child.isMesh) {
+                            originalMaterials.push({
+                                mesh: child,
+                                material: child.material
+                            });
+                            
+                            // 调整材质：降低饱和度，增加金属感
+                            if (child.material) {
+                                child.material.emissiveIntensity = 0.05;
+                                // 如果材质有颜色，调整为古铜金色调
+                                if (child.material.color) {
+                                    const originalColor = child.material.color;
+                                    // 降低饱和度，增加金色调
+                                    child.material.color.r = Math.min(originalColor.r * 0.8 + 0.2, 1);
+                                    child.material.color.g = Math.min(originalColor.g * 0.7 + 0.15, 1);
+                                    child.material.color.b = originalColor.b * 0.5;
+                                }
+                                // 增加金属度
+                                if (child.material.metalness !== undefined) {
+                                    child.material.metalness = 0.6;
+                                }
+                                if (child.material.roughness !== undefined) {
+                                    child.material.roughness = 0.4;
+                                }
+                            }
+                        }
+                    });
+                    
+                    // 计算模型大小并居中
+                    const box = new THREE.Box3().setFromObject(model);
+                    const center = box.getCenter(new THREE.Vector3());
+                    const size = box.getSize(new THREE.Vector3());
+                    
+                    // 移动到中心
+                    model.position.x = -center.x;
+                    model.position.y = -center.y;
+                    model.position.z = -center.z;
+                    
+                    // 稍微放大，让模型更有存在感
+                    const maxDim = Math.max(size.x, size.y, size.z);
+                    const scale = 3.3 / maxDim;  // 从3.0增加到3.3，稍微放大
+                    model.scale.set(scale, scale, scale);
+                    
+                    // 向左平移更多，并稍微放大，让模型成为真正主角
+                    model.position.x += 0.1;  // 从0.3减少到0.1，继续向左移动
+                    model.position.y -= 1.3;  // 从1.5调整到1.3，稍微上移
+                    
+                    // 设置初始旋转角度
+                    model.rotation.x = 0;
+                    model.rotation.y = Math.PI / 6;
+                    
+                    scene.add(model);
+                    
+                    // 移除底座光环，让模型单独悬浮
+                },
+                undefined,
+                function (error) {
+                    console.error('GLB 加载错误:', error);
+                }
+            );
+            
+            // 动画循环
+            let time = 0;
+            function animate() {
+                requestAnimationFrame(animate);
+                time += 0.01;
+                
+                if (model) {
+                    // Y轴自转
+                    model.rotation.y += 0.003;
+                    
+                    // Y轴平滑浮动动效（简谐运动）
+                    const floatAmplitude = 0.15;  // 浮动幅度，很小很平滑
+                    const floatSpeed = 0.4;  // 浮动频率，很慢
+                    model.position.y = -1.8 + Math.sin(time * floatSpeed) * floatAmplitude;
+                    
+                    // 扫描线动效 - 正弦波循环，从下往上再从上往下
+                    scanlineY = Math.sin(time * 0.3) * 4;  // 使用正弦波，范围±4
+                    
+                    // 扫描线光源跟随
+                    rimLight.position.y = scanlineY;
+                }
+                
+                renderer.render(scene, camera);
+            }
+            
+            animate();
+            
+            // 响应窗口大小变化
+            window.addEventListener('resize', () => {
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            });
+        }
+    </script>
+    
+    <!-- 第2、3页粒子背景和柱状图动画 -->
+    <script>
+        // 初始化第2页粒子背景
+        particlesJS('particles-js-page2', {
+            "particles": {
+                "number": { "value": 15, "density": { "enable": false } },
+                "color": { "value": ["#FFD700", "#FFC870"] },
+                "shape": { "type": "circle" },
+                "opacity": { 
+                    "value": 0.4, 
+                    "random": true, 
+                    "anim": { "enable": true, "speed": 0.3, "opacity_min": 0.1, "sync": false } 
+                },
+                "size": { 
+                    "value": 3, 
+                    "random": true, 
+                    "anim": { "enable": true, "speed": 0.8, "size_min": 1, "sync": false } 
+                },
+                "line_linked": { 
+                    "enable": true, 
+                    "distance": 180, 
+                    "color": "#FFD700", 
+                    "opacity": 0.15, 
+                    "width": 1 
+                },
+                "move": { 
+                    "enable": true, 
+                    "speed": 0.3, 
+                    "direction": "none", 
+                    "random": true, 
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": { 
+                    "onhover": { "enable": false },
+                    "onclick": { "enable": false },
+                    "resize": true 
+                }
+            },
+            "retina_detect": true
+        });
+        
+        // 初始化第3页粒子背景
+        particlesJS('particles-js-page3', {
+            "particles": {
+                "number": { "value": 15, "density": { "enable": false } },
+                "color": { "value": ["#FFD700", "#FFC870"] },
+                "shape": { "type": "circle" },
+                "opacity": { 
+                    "value": 0.4, 
+                    "random": true, 
+                    "anim": { "enable": true, "speed": 0.3, "opacity_min": 0.1, "sync": false } 
+                },
+                "size": { 
+                    "value": 3, 
+                    "random": true, 
+                    "anim": { "enable": true, "speed": 0.8, "size_min": 1, "sync": false } 
+                },
+                "line_linked": { 
+                    "enable": true, 
+                    "distance": 180, 
+                    "color": "#FFD700", 
+                    "opacity": 0.15, 
+                    "width": 1 
+                },
+                "move": { 
+                    "enable": true, 
+                    "speed": 0.3, 
+                    "direction": "none", 
+                    "random": true, 
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": { 
+                    "onhover": { "enable": false },
+                    "onclick": { "enable": false },
+                    "resize": true 
+                }
+            },
+            "retina_detect": true
+        });
+        
+        // 柱状图动画：页面滚动到第3页时触发
+        let chartAnimated = false;
+        
+        function animateChart() {
+            if (chartAnimated) return;
+            chartAnimated = true;
+            
+            const bars = document.querySelectorAll('.chart-bar');
+            
+            bars.forEach((bar, index) => {
+                const targetHeight = parseInt(bar.getAttribute('data-height'));
+                const valueEl = bar.querySelector('.chart-value');
+                const finalText = valueEl.textContent; // 保存最终显示的文本
+                
+                let currentHeight = 0;
+                const duration = 2000; // 2秒
+                const startTime = Date.now() + (index * 300); // 每个柱子延迟300ms
+                
+                function animate() {
+                    const now = Date.now();
+                    const elapsed = now - startTime;
+                    
+                    if (elapsed < 0) {
+                        requestAnimationFrame(animate);
+                        return;
+                    }
+                    
+                    if (elapsed < duration) {
+                        const progress = elapsed / duration;
+                        const easeProgress = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+                        
+                        currentHeight = targetHeight * easeProgress;
+                        bar.style.height = currentHeight + 'px';
+                        
+                        requestAnimationFrame(animate);
+                    } else {
+                        bar.style.height = targetHeight + 'px';
+                        valueEl.textContent = finalText;
+                    }
+                }
+                
+                animate();
+            });
+        }
+        
+        // 监听页面滚动，当滚动到第3页时触发动画
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && entry.target.id === 'page3') {
+                    animateChart();
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        const page3 = document.getElementById('page3');
+        if (page3) {
+            observer.observe(page3);
+        }
+    </script>
+
+    <!-- 旁白功能 -->
+    <button class="notes-trigger" id="notes-trigger-btn" title="演讲者备注 (N)">
+        <span id="notes-icon">📝</span>
+    </button>
+    
+    <button class="notes-mode-toggle" id="notes-mode-btn">
+        <span id="mode-text">切换侧边栏</span>
+    </button>
+    
+    <div class="keyboard-hint" id="keyboard-hint">
+        按 <kbd>N</kbd> 切换旁白 · 按 <kbd>S</kbd> 演讲者模式
+    </div>
+    
+    <!-- 底部抽屉 -->
+    <div class="notes-drawer" id="notes-drawer">
+        <div class="notes-drawer-handle" id="drawer-handle"></div>
+        <div class="notes-drawer-content">
+            <div class="notes-drawer-page" id="drawer-page">Page 1 of 24</div>
+            <div class="notes-drawer-title" id="drawer-title">封面 - 国文汇通</div>
+            <div class="notes-drawer-text" id="drawer-text">
+                各位投资人，大家好...
+            </div>
+        </div>
+    </div>
+    
+    <!-- 侧边栏 -->
+    <div class="notes-sidebar" id="notes-sidebar">
+        <button class="notes-sidebar-close" id="sidebar-close-btn">✕</button>
+        <div class="notes-sidebar-content">
+            <div class="notes-drawer-page" id="sidebar-page">Page 1 of 24</div>
+            <div class="notes-drawer-title" id="sidebar-title">封面 - 国文汇通</div>
+            <div class="notes-drawer-text" id="sidebar-text">
+                各位投资人，大家好...
+            </div>
+        </div>
+    </div>
+    
+    <!-- 演讲者模式提示 -->
+    <div class="speaker-mode-hint" id="speaker-mode-hint">
+        <h3>演讲者模式</h3>
+        <p>
+            将在新窗口打开演讲者视图<br>
+            包含当前页预览、旁白文档和计时器
+        </p>
+        <button id="open-speaker-btn">打开演讲者模式</button>
+        <button id="close-speaker-hint-btn" style="background: transparent; border: 1px solid rgba(255,215,0,0.3); color: #FFD700; margin-left: 1rem;">取消</button>
+    </div>
+    
+    <script>
+        // 旁白数据
+        const speakerNotes = {"1": {"title": "封面 - 国文汇通", "notes": "各位投资人，大家好。今天我将为大家介绍国文汇通——一个响应国家文化数字化战略的创新平台。我们致力于构建数字文创资产合规发行与交易的一站式生态体系。"}, "2": {"title": "政策东风", "notes": "首先看政策背景。2022年5月，中办国办印发《关于推进实施国家文化数字化战略的意见》，这是国家级战略定调。目标是到2025年基本建成基础设施，到2035年建成国家文化大数据体系。这为我们提供了前所未有的发展机遇。"}, "3": {"title": "行业浪潮", "notes": "市场规模方面，2024年中国数字文化行业已达13.5万亿元，数字资产细分市场预计2027年突破3000亿元。Z世代占比超过67%，他们是数字原住民，愿意为文化价值付费。行业正在走向合规化、数实融合和生态化。"}, "4": {"title": "为何出现", "notes": "市场存在三大痛点：交易乱象、权益不清、信任缺失。国文汇通的出现，是响应国家战略、利用区块链技术、解决市场痛点的必然结果。我们要成为连接文化、科技与金融的桥梁。"}, "5": {"title": "核心优势（一）", "notes": "我们的第一大护城河是权威合规。文交所直属、国企背景，持全链条合规证照，接入国家级星火链网。APP全平台上架，支付通道对接省级结算中心，资金安全有保障。"}, "6": {"title": "核心优势（二）", "notes": "第二大护城河是经济模型和团队。我们采用'寄存复利+生态多元'模式，构建数实融合闭环。团队曾操盘Ibox、唯一艺术等顶级平台，依托省文投实现跨界布局。"}, "7": {"title": "核心团队", "notes": "团队方面，佟世天带领唯一艺术原班人马负责战略；'喜鹊'团队来自IBOX，曾推动市值超百亿；CMO Jeff是链大教育创始人、Cardano亚洲增长负责人。这是国内最早布局数字文化资产的专业团队。"}, "8": {"title": "战略资源", "notes": "资源方面，我们深度绑定江苏、四川、甘肃、安徽等省级文交所；股东包括江苏文投、凤凰出版、省演艺集团；重点合作福建泉州市文旅局；内容合作伙伴包括泉州木偶剧院、紫金文创等。"}, "9": {"title": "生态模型（一）", "notes": "我们的生态模型是'一体两翼'。一体是国家文化数据中枢，连接国家文化大数据体系与市场。两翼分别是标准制定和信任基座，掌握行业话语权，构建跨平台可互信的技术底层。"}, "10": {"title": "生态模型（二）", "notes": "三维四域深耕。数据层汇聚文博、非遗、文创资源；平台层提供交易市场和创意集市；场景层嵌入商业空间实现价值兑现。四大领域包括文博典藏、非遗活化、文旅融合，从数据采集到场景应用全链路覆盖。"}, "11": {"title": "商业模式", "notes": "核心是双币模型。国文通卷1000万份，是基石资产；国文通宝10亿个，是流通积分。用户寄存通卷获得通宝奖励，通宝用于交易、打新、兑换，部分注销提升生态价值，形成完整闭环。"}, "12": {"title": "通缩机制", "notes": "六大通缩机制支撑价值：回收注销是核心，平台从收益中回购永久注销；手续费抵扣促进流通；资产发行认证筛选项目；生态玩法增加消耗；企业入驻质押保证金；线下实体兑换打通数实连接。"}, "13": {"title": "经济模型", "notes": "通胀与通缩的动态平衡。通胀端：通卷寄存产出通宝，注入流动性。通缩端：持续回收注销、交易手续费、发行认证、多元玩法等多维度消耗。确保生态健康可持续发展。"}, "14": {"title": "发展路线", "notes": "三步走战略。第一阶段1-2年：高通缩低通胀，快速积累核心用户，完成冷启动。第二阶段3-4年：平衡运营，验证商业模式，进入稳定期。第三阶段5年以上：拓展场景，实现爆发式增长，成为行业领导者。"}, "15": {"title": "用户收益", "notes": "用户有多元化收益渠道：寄存收益每日获得通宝；二级市场交易获取价差；打新抢购稀缺资产；通宝生态增值；线下实体消费折扣；商城兑换商品；不定期赠送文旅演出门票等福利。"}, "16": {"title": "应用场景一", "notes": "文化资产确权与流通。与博物馆合作，文物影像上链，构建国家级文化数字资产库；非遗项目数字化，支持传承人融资；艺术品资产交易，实现确权-发行-收益全流程。我们要成为文化数字资产的'公证处'与'交易所'。"}, "17": {"title": "应用场景二", "notes": "数字文旅与文化消费。文旅权益凭证化，景区门票酒店上链；文化园区支付，打造数字资产到实体消费闭环；文创衍生品经济，发行品牌NFT和会员数字卡。构建数字文旅消费新生态。"}, "18": {"title": "应用场景三", "notes": "GameFi和StudyFi互动模块。通过文化主题游戏，让用户在'玩中学、学中赚'，实现知识传播与资产激励双收益。StudyFi面向私域场景，承担引流与用户活化功能，构建学习与激励生态。"}, "19": {"title": "应用场景四", "notes": "企业与产业协同。向文旅集团、艺术院校开放发行接口，提供API和SDK；与地方政府共建文化数字资产专区；跨界品牌共创数字资产和活动徽章。我们不仅是交易平台，更是开放的生态系统。"}, "20": {"title": "应用场景五", "notes": "国际传播与文化出海。对接海外NFT和艺术交易平台，推动中国文化数字资产全球挂牌；推出多语言版平台和跨境结算体系；完成海外IP授权与收益追踪，实现跨境文化资产管理。"}, "21": {"title": "战略规划", "notes": "未来发展蓝图。短期1-2年：深度绑定30-50家顶级文博机构和20-30个核心文旅目的地，积累100万高质量用户，实现盈亏平衡。中期3-4年：全国生态扩张，接入超1000家文化供给方和10万个线下品牌，注册用户突破5000万。长期5年以上：探索跨境流通，对接海外平台，参与全球标准制定。"}, "22": {"title": "使命", "notes": "我们的使命是：以文化为魂、以科技为器、以金融为力。让中华优秀传统文化在数字时代'活起来'，建立合规、安全、可持续的数字文化资产体系，赋能每一个文化创意，让价值在数字经济中绽放。"}, "23": {"title": "愿景", "notes": "我们的愿景是：成为中国领先的文化类数字资产基础设施平台，构建国家级文化数字化生态枢纽，推动全球标准化与国际互认，建设数字文明新体系。成为连接中华文化与世界的数字桥梁，让文化资产'确权有据、流通有序、价值可见'。汇聚文化之光，通达数字未来。"}, "24": {"title": "感谢聆听", "notes": "感谢各位投资人的聆听。国文汇通团队期待与您携手，共同推动中国文化数字化产业的发展，创造更大的社会价值和商业价值。谢谢！"}};
+        
+        let notesMode = 'drawer'; // 'drawer' or 'sidebar'
+        let notesOpen = false;
+        let currentPage = 1;
+        
+        // 更新旁白内容
+        function updateNotes(pageNum) {
+            currentPage = pageNum;
+            const note = speakerNotes[pageNum.toString()];
+            
+            if (note) {
+                // 更新抽屉
+                document.getElementById('drawer-page').textContent = `Page ${pageNum} of 24`;
+                document.getElementById('drawer-title').textContent = note.title;
+                document.getElementById('drawer-text').textContent = note.notes;
+                
+                // 更新侧边栏
+                document.getElementById('sidebar-page').textContent = `Page ${pageNum} of 24`;
+                document.getElementById('sidebar-title').textContent = note.title;
+                document.getElementById('sidebar-text').textContent = note.notes;
+            }
+        }
+        
+        // 切换旁白显示
+        function toggleNotes() {
+            notesOpen = !notesOpen;
+            const trigger = document.querySelector('.notes-trigger');
+            
+            if (notesMode === 'drawer') {
+                const drawer = document.getElementById('notes-drawer');
+                drawer.classList.toggle('open', notesOpen);
+            } else {
+                const sidebar = document.getElementById('notes-sidebar');
+                sidebar.classList.toggle('open', notesOpen);
+            }
+            
+            trigger.classList.toggle('active', notesOpen);
+        }
+        
+        // 切换显示模式
+        function toggleNotesMode() {
+            const drawer = document.getElementById('notes-drawer');
+            const sidebar = document.getElementById('notes-sidebar');
+            const modeText = document.getElementById('mode-text');
+            
+            if (notesMode === 'drawer') {
+                notesMode = 'sidebar';
+                drawer.classList.remove('open');
+                if (notesOpen) sidebar.classList.add('open');
+                modeText.textContent = '切换抽屉';
+            } else {
+                notesMode = 'drawer';
+                sidebar.classList.remove('open');
+                if (notesOpen) drawer.classList.add('open');
+                modeText.textContent = '切换侧边栏';
+            }
+        }
+        
+        // 打开演讲者模式
+        function openSpeakerMode() {
+            const speakerWindow = window.open('', 'SpeakerView', 'width=1400,height=900');
+            const notesData = JSON.stringify(speakerNotes);
+            const currentUrl = window.location.href;
+            const totalPages = document.querySelectorAll('.page').length;
+            
+            speakerWindow.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>演讲者视图 - 国文汇通</title>
+                    <style>
+                        * { margin: 0; padding: 0; box-sizing: border-box; }
+                        body {
+                            font-family: 'Inter', -apple-system, sans-serif;
+                            background: #0A0A0A;
+                            color: #F9F9F7;
+                            height: 100vh;
+                            overflow: hidden;
+                        }
+                        /* 顶部栏 */
+                        .top-bar {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            padding: 0.8rem 2rem;
+                            background: rgba(0,0,0,0.8);
+                            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+                        }
+                        .top-bar h1 {
+                            color: #FFD700;
+                            font-size: 1rem;
+                        }
+                        .timer {
+                            font-size: 3rem;
+                            color: #FFD700;
+                            font-family: 'Courier New', monospace;
+                            font-weight: bold;
+                        }
+                        /* 主容器 */
+                        .container {
+                            display: grid;
+                            grid-template-columns: 30% 70%;
+                            height: calc(100vh - 60px);
+                        }
+                        /* 左侧：缩略图 */
+                        .left-panel {
+                            padding: 1rem;
+                            border-right: 1px solid rgba(255, 215, 0, 0.2);
+                            display: flex;
+                            flex-direction: column;
+                            background: rgba(0,0,0,0.5);
+                        }
+                        .preview-wrapper {
+                            width: 100%;
+                            aspect-ratio: 16 / 9;
+                            border: 2px solid rgba(255, 215, 0, 0.4);
+                            border-radius: 8px;
+                            overflow: hidden;
+                            background: #000;
+                            position: relative;
+                        }
+                        .preview-wrapper iframe {
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            width: 1920px;
+                            height: 1080px;
+                            transform-origin: top left;
+                            transform: scale(0.2);
+                            border: none;
+                            pointer-events: none;
+                        }
+                        .page-nav {
+                            text-align: center;
+                            margin-top: 1rem;
+                            color: #FFD700;
+                            font-size: 1.5rem;
+                            font-weight: 600;
+                        }
+                        .auto-scroll-btn {
+                            margin-top: auto;
+                            padding: 1rem 2rem;
+                            background: linear-gradient(135deg, #FFD700, #D4AF37);
+                            border: none;
+                            color: #000;
+                            font-weight: 700;
+                            border-radius: 8px;
+                            cursor: pointer;
+                            font-size: 1.2rem;
+                            transition: all 0.2s;
+                        }
+                        .auto-scroll-btn:hover {
+                            transform: scale(1.05);
+                        }
+                        .auto-scroll-btn.active {
+                            background: #00BFFF;
+                            color: #fff;
+                        }
+                        /* 右侧：大字文稿 */
+                        .lyrics-panel {
+                            padding: 2rem 3rem;
+                            overflow-y: auto;
+                            scroll-behavior: smooth;
+                        }
+                        .page-block {
+                            margin-bottom: 4rem;
+                            padding: 2rem 2.5rem;
+                            border-radius: 12px;
+                            transition: all 0.3s ease;
+                            opacity: 0.3;
+                            border-left: 6px solid transparent;
+                        }
+                        .page-block.active {
+                            background: rgba(255, 215, 0, 0.1);
+                            border-left-color: #FFD700;
+                            opacity: 1;
+                            box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+                        }
+                        .page-block.done {
+                            opacity: 0.2;
+                        }
+                        .page-number {
+                            color: #FFD700;
+                            font-size: 1.5rem;
+                            margin-bottom: 1rem;
+                            font-weight: 700;
+                        }
+                        .page-title {
+                            color: #FFD700;
+                            font-size: 4rem;
+                            margin-bottom: 1.5rem;
+                            font-weight: 600;
+                        }
+                        .page-text {
+                            color: rgba(255, 255, 255, 0.7);
+                            font-size: 3.2rem;
+                            line-height: 1.7;
+                        }
+                        .page-block.active .page-title {
+                            color: #FFD700;
+                        }
+                        .page-block.active .page-text {
+                            color: #fff;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="top-bar">
+                        <h1>🎤 演讲者视图</h1>
+                        <div class="timer" id="timer">00:00</div>
+                    </div>
+                    <div class="container">
+                        <div class="left-panel">
+                            <div class="preview-wrapper" id="preview-wrapper">
+                                <iframe src="${currentUrl}" id="preview-iframe"></iframe>
+                            </div>
+                            <div class="page-nav" id="page-info">第 1 页 / 共 ${totalPages} 页</div>
+                            <button class="auto-scroll-btn" id="auto-scroll-btn">▶ 自动滚动</button>
+                        </div>
+                        <div class="lyrics-panel" id="lyrics-panel">
+                            <!-- 所有页面文稿将在这里生成 -->
+                        </div>
+                    </div>
+                    <script>
+                        const notes = ${notesData};
+                        const totalPages = ${totalPages};
+                        let seconds = 0;
+                        let currentPage = 1;
+                        
+                        // 计时器
+                        setInterval(() => {
+                            seconds++;
+                            const mins = Math.floor(seconds / 60);
+                            const secs = seconds % 60;
+                            document.getElementById('timer').textContent = 
+                                String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
+                        }, 1000);
+                        
+                        // 生成所有页面的歌词式文稿
+                        function renderAllLyrics() {
+                            const panel = document.getElementById('lyrics-panel');
+                            let html = '';
+                            
+                            for (let i = 1; i <= totalPages; i++) {
+                                const note = notes[i.toString()];
+                                if (note) {
+                                    html += '<div class="page-block' + (i === 1 ? ' active' : '') + '" data-page="' + i + '">';
+                                    html += '<div class="page-number">📄 第 ' + i + ' 页</div>';
+                                    html += '<div class="page-title">' + note.title + '</div>';
+                                    html += '<div class="page-text">' + (note.notes || '').replace(/\\n/g, '<br>') + '</div>';
+                                    html += '</div>';
+                                }
+                            }
+                            panel.innerHTML = html;
+                        }
+                        
+                        // 高亮当前页面并滚动
+                        function highlightPage(pageNum) {
+                            currentPage = pageNum;
+                            document.getElementById('page-info').textContent = '第 ' + pageNum + ' 页 / 共 ' + totalPages + ' 页';
+                            
+                            // 更新高亮状态
+                            document.querySelectorAll('.page-block').forEach((block, i) => {
+                                const blockPage = parseInt(block.dataset.page);
+                                block.classList.remove('active', 'done');
+                                if (blockPage === pageNum) {
+                                    block.classList.add('active');
+                                    block.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                } else if (blockPage < pageNum) {
+                                    block.classList.add('done');
+                                }
+                            });
+                            
+                            // 让iframe内的页面也滚动到对应页码
+                            const iframe = document.getElementById('preview-iframe');
+                            if (iframe && iframe.contentWindow) {
+                                iframe.contentWindow.postMessage({ type: 'goToPage', page: pageNum }, '*');
+                            }
+                        }
+                        
+                        // 监听主窗口的页面变化
+                        window.addEventListener('message', (e) => {
+                            if (e.data.type === 'pageChange') {
+                                highlightPage(e.data.page);
+                            }
+                        });
+                        
+                        // 点击文稿块跳转
+                        document.getElementById('lyrics-panel').addEventListener('click', (e) => {
+                            const block = e.target.closest('.page-block');
+                            if (block) {
+                                const pageNum = parseInt(block.dataset.page);
+                                highlightPage(pageNum);
+                                // 通知主窗口跳转
+                                if (window.opener) {
+                                    window.opener.postMessage({ type: 'goToPage', page: pageNum }, '*');
+                                }
+                            }
+                        });
+                        
+                        // 自动滚动功能
+                        let autoScrolling = false;
+                        let autoScrollTimer = null;
+                        
+                        function toggleAutoScroll() {
+                            autoScrolling = !autoScrolling;
+                            const btn = document.getElementById('auto-scroll-btn');
+                            
+                            if (autoScrolling) {
+                                btn.textContent = '⏸ 暂停滚动';
+                                btn.classList.add('active');
+                                // 每8秒滚动到下一页
+                                autoScrollTimer = setInterval(() => {
+                                    if (currentPage < totalPages) {
+                                        highlightPage(currentPage + 1);
+                                    } else {
+                                        // 到最后一页，停止
+                                        toggleAutoScroll();
+                                    }
+                                }, 8000);
+                            } else {
+                                btn.textContent = '▶ 自动滚动';
+                                btn.classList.remove('active');
+                                clearInterval(autoScrollTimer);
+                            }
+                        }
+                        
+                        document.getElementById('auto-scroll-btn').addEventListener('click', toggleAutoScroll);
+                        
+                        // 键盘控制：下键翻页
+                        document.addEventListener('keydown', (e) => {
+                            if (e.code === 'ArrowDown' || e.code === 'PageDown') {
+                                e.preventDefault();
+                                if (currentPage < totalPages) {
+                                    highlightPage(currentPage + 1);
+                                    // 通知主窗口翻页
+                                    if (window.opener) {
+                                        window.opener.postMessage({ type: 'goToPage', page: currentPage }, '*');
+                                    }
+                                }
+                            } else if (e.code === 'ArrowUp' || e.code === 'PageUp') {
+                                e.preventDefault();
+                                if (currentPage > 1) {
+                                    highlightPage(currentPage - 1);
+                                    // 通知主窗口翻页
+                                    if (window.opener) {
+                                        window.opener.postMessage({ type: 'goToPage', page: currentPage }, '*');
+                                    }
+                                }
+                            }
+                        });
+                        
+                        // 动态调整缩略图缩放比例
+                        function updatePreviewScale() {
+                            const wrapper = document.getElementById('preview-wrapper');
+                            const iframe = document.getElementById('preview-iframe');
+                            const wrapperWidth = wrapper.clientWidth;
+                            const scale = wrapperWidth / 1920;
+                            iframe.style.transform = 'scale(' + scale + ')';
+                        }
+                        
+                        window.addEventListener('resize', updatePreviewScale);
+                        setTimeout(updatePreviewScale, 100);
+                        
+                        // 初始化
+                        renderAllLyrics();
+                    <\/script>
+                </body>
+                </html>
+            `);
+            closeSpeakerHint();
+        }
+        
+        function closeSpeakerHint() {
+            document.getElementById('speaker-mode-hint').classList.remove('show');
+        }
+        
+        // 翻页到指定页面
+        function goToPage(pageNumber) {
+            const pages = document.querySelectorAll('.page');
+            if (pageNumber >= 1 && pageNumber <= pages.length) {
+                const targetPage = pages[pageNumber - 1];
+                targetPage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+        
+        // 获取当前页码
+        function getCurrentPage() {
+            const pages = document.querySelectorAll('.page');
+            let currentPageNum = 1;
+            pages.forEach((page, index) => {
+                const rect = page.getBoundingClientRect();
+                if (rect.top >= -100 && rect.top < window.innerHeight / 2) {
+                    currentPageNum = index + 1;
+                }
+            });
+            return currentPageNum;
+        }
+        
+        // 键盘快捷键
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'n' || e.key === 'N') {
+                toggleNotes();
+            } else if (e.key === 's' || e.key === 'S') {
+                document.getElementById('speaker-mode-hint').classList.add('show');
+            } else if (e.key === 'Escape') {
+                if (notesOpen) toggleNotes();
+                closeSpeakerHint();
+            } else if (e.key === 'ArrowDown' || e.key === 'Down') {
+                e.preventDefault();
+                const currentPage = getCurrentPage();
+                goToPage(currentPage + 1);
+            } else if (e.key === 'ArrowUp' || e.key === 'Up') {
+                e.preventDefault();
+                const currentPage = getCurrentPage();
+                goToPage(currentPage - 1);
+            }
+        });
+        
+        // 滚轮中键翻页
+        document.addEventListener('mousedown', (e) => {
+            if (e.button === 1) { // 中键
+                e.preventDefault();
+                const currentPage = getCurrentPage();
+                goToPage(currentPage + 1);
+            }
+        });
+        
+        // 监听演讲者窗口发来的翻页消息
+        window.addEventListener('message', (e) => {
+            if (e.data.type === 'goToPage') {
+                goToPage(e.data.page);
+            }
+        });
+        
+        // 绑定按钮事件
+        document.getElementById('notes-trigger-btn').addEventListener('click', toggleNotes);
+        document.getElementById('notes-mode-btn').addEventListener('click', toggleNotesMode);
+        document.getElementById('drawer-handle').addEventListener('click', toggleNotes);
+        document.getElementById('sidebar-close-btn').addEventListener('click', toggleNotes);
+        document.getElementById('open-speaker-btn').addEventListener('click', openSpeakerMode);
+        document.getElementById('close-speaker-hint-btn').addEventListener('click', closeSpeakerHint);
+        
+        // 显示快捷键提示
+        setTimeout(() => {
+            document.getElementById('keyboard-hint').classList.add('show');
+            setTimeout(() => {
+                document.getElementById('keyboard-hint').classList.remove('show');
+            }, 5000);
+        }, 2000);
+        
+        // 监听页面滚动，更新旁白
+        let scrollTimeout;
+        window.addEventListener('scroll', () => {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                const pages = document.querySelectorAll('.page');
+                pages.forEach((page, index) => {
+                    const rect = page.getBoundingClientRect();
+                    if (rect.top >= -100 && rect.top < window.innerHeight / 2) {
+                        updateNotes(index + 1);
+                        
+                        // 通知演讲者窗口
+                        if (window.opener) {
+                            window.opener.postMessage({ type: 'pageChange', page: index + 1 }, '*');
+                        }
+                    }
+                });
+            }, 100);
+        });
+        
+        // 初始化
+        updateNotes(1);
+    </script>
+
+    <!-- 开发模式：拖拽+缩放+网格功能 -->
+    <script>
+        (function() {
+            let devMode = false;
+            let gridMode = false;
+            let dragTarget = null;
+            let resizeTarget = null;
+            let offsetX = 0, offsetY = 0;
+            let startWidth = 0, startHeight = 0, startX = 0, startY = 0;
+            
+            // 可拖拽的选择器（从小到大排列，优先匹配内部元素）
+            const draggableSelectors = [
+                '.chart-bar',
+                '.chart-value',
+                '.chart-label',
+                '.insight-card',
+                '.hud-card',
+                '.timeline-item',
+                '.timeline-dot',
+                '.content-title',
+                '.policy-cards-row',
+                '.policy-container',
+                '.policy-timeline-bottom',
+                '.industry-container',
+                '.insights-grid',
+                '.chart-container',
+                '.chart-item'
+            ];
+            
+            // 创建网格覆盖层 - 基于16:9页面区域
+            const gridOverlay = document.createElement('div');
+            gridOverlay.id = 'dev-grid-overlay';
+            document.body.appendChild(gridOverlay);
+            
+            // 动态更新网格位置和尺寸
+            function updateGridOverlay() {
+                // 计算16:9页面的实际尺寸和位置
+                const windowW = window.innerWidth;
+                const windowH = window.innerHeight;
+                const aspectRatio = 16 / 9;
+                
+                let pageW, pageH, pageLeft, pageTop;
+                if (windowW / windowH > aspectRatio) {
+                    // 窗口太宽，以高度为准
+                    pageH = windowH;
+                    pageW = windowH * aspectRatio;
+                    pageLeft = (windowW - pageW) / 2;
+                    pageTop = 0;
+                } else {
+                    // 窗口太高，以宽度为准
+                    pageW = windowW;
+                    pageH = windowW / aspectRatio;
+                    pageLeft = 0;
+                    pageTop = 0;
+                }
+                
+                gridOverlay.style.cssText = `
+                    position: fixed;
+                    top: ${pageTop}px;
+                    left: ${pageLeft}px;
+                    width: ${pageW}px;
+                    height: ${pageH}px;
+                    pointer-events: none;
+                    z-index: 99990;
+                    display: none;
+                    border: 2px solid #FF0000;
+                `;
+                
+                // 生成网格线 (10% 间隔)
+                let gridHTML = '';
+                // 垂直线 (每10%宽度)
+                for (let i = 0; i <= 100; i += 10) {
+                    const color = i === 50 ? 'rgba(255,0,0,0.5)' : 'rgba(255,215,0,0.3)';
+                    const lineW = i === 50 ? '2px' : '1px';
+                    const px = Math.round(pageW * i / 100);
+                    gridHTML += `<div style="position:absolute;left:${i}%;top:0;width:${lineW};height:100%;background:${color};"></div>`;
+                    gridHTML += `<div style="position:absolute;left:${i}%;top:5px;color:#FFD700;font-size:10px;font-family:monospace;transform:translateX(-50%);">${i}%<br>${px}px</div>`;
+                }
+                // 水平线 (每10%高度)
+                for (let i = 0; i <= 100; i += 10) {
+                    const color = i === 50 ? 'rgba(255,0,0,0.5)' : 'rgba(255,215,0,0.3)';
+                    const lineH = i === 50 ? '2px' : '1px';
+                    const px = Math.round(pageH * i / 100);
+                    gridHTML += `<div style="position:absolute;top:${i}%;left:0;height:${lineH};width:100%;background:${color};"></div>`;
+                    gridHTML += `<div style="position:absolute;top:${i}%;left:5px;color:#FFD700;font-size:10px;font-family:monospace;transform:translateY(-50%);">${i}%<br>${px}px</div>`;
+                }
+                // 显示页面尺寸信息
+                gridHTML += `<div style="position:absolute;bottom:10px;right:10px;background:#1a1a1a;color:#FFD700;padding:8px 12px;border:1px solid #FFD700;border-radius:4px;font-family:monospace;font-size:11px;">
+                    页面: ${Math.round(pageW)}×${Math.round(pageH)}px (16:9)<br>
+                    窗口: ${windowW}×${windowH}px
+                </div>`;
+                gridOverlay.innerHTML = gridHTML;
+            }
+            
+            updateGridOverlay();
+            window.addEventListener('resize', updateGridOverlay);
+            
+            // 获取16:9页面的实际尺寸和位置
+            function getPageBounds() {
+                const windowW = window.innerWidth;
+                const windowH = window.innerHeight;
+                const aspectRatio = 16 / 9;
+                
+                let pageW, pageH, pageLeft, pageTop;
+                if (windowW / windowH > aspectRatio) {
+                    pageH = windowH;
+                    pageW = windowH * aspectRatio;
+                    pageLeft = (windowW - pageW) / 2;
+                    pageTop = 0;
+                } else {
+                    pageW = windowW;
+                    pageH = windowW / aspectRatio;
+                    pageLeft = 0;
+                    pageTop = 0;
+                }
+                return { pageW, pageH, pageLeft, pageTop };
+            }
+            
+            // 创建坐标显示面板
+            const panel = document.createElement('div');
+            panel.id = 'dev-panel';
+            panel.innerHTML = `
+                <div style="background:#1a1a1a;color:#FFD700;padding:10px 15px;border:1px solid #FFD700;border-radius:8px;font-family:monospace;font-size:12px;box-shadow:0 0 20px rgba(255,215,0,0.3);max-width:280px;">
+                    <div style="margin-bottom:8px;font-weight:bold;">🔧 开发模式 (按D关闭)</div>
+                    <div style="color:#aaa;font-size:10px;margin-bottom:8px;">拖拽移动 | 右下角拉伸 | G键切换网格</div>
+                    <div id="dev-info">点击模块查看/拖拽</div>
+                    <div id="dev-coords" style="margin-top:8px;color:#aaa;"></div>
+                </div>
+            `;
+            panel.style.cssText = 'position:fixed;top:10px;left:10px;z-index:99999;display:none;';
+            document.body.appendChild(panel);
+            
+            // 创建resize手柄的样式
+            const style = document.createElement('style');
+            style.textContent = `
+                .dev-resize-handle {
+                    position: absolute;
+                    width: 16px;
+                    height: 16px;
+                    background: #FFD700;
+                    border: 2px solid #000;
+                    border-radius: 3px;
+                    z-index: 99999;
+                    box-shadow: 0 0 8px rgba(255,215,0,0.8);
+                }
+                .dev-resize-handle:hover {
+                    background: #FFF;
+                    transform: scale(1.3);
+                }
+                /* 四角 */
+                .dev-resize-handle.corner-se { bottom: -8px; right: -8px; cursor: nwse-resize; }
+                .dev-resize-handle.corner-sw { bottom: -8px; left: -8px; cursor: nesw-resize; }
+                .dev-resize-handle.corner-ne { top: -8px; right: -8px; cursor: nesw-resize; }
+                .dev-resize-handle.corner-nw { top: -8px; left: -8px; cursor: nwse-resize; }
+                /* 四边 */
+                .dev-resize-handle.edge-n { top: -8px; left: 50%; transform: translateX(-50%); cursor: ns-resize; width: 30px; height: 12px; }
+                .dev-resize-handle.edge-s { bottom: -8px; left: 50%; transform: translateX(-50%); cursor: ns-resize; width: 30px; height: 12px; }
+                .dev-resize-handle.edge-e { right: -8px; top: 50%; transform: translateY(-50%); cursor: ew-resize; width: 12px; height: 30px; }
+                .dev-resize-handle.edge-w { left: -8px; top: 50%; transform: translateY(-50%); cursor: ew-resize; width: 12px; height: 30px; }
+            `;
+            document.head.appendChild(style);
+            
+            // 切换开发模式
+            document.addEventListener('keydown', (e) => {
+                // G键切换网格
+                if (e.key === 'g' || e.key === 'G') {
+                    gridMode = !gridMode;
+                    gridOverlay.style.display = gridMode ? 'block' : 'none';
+                    return;
+                }
+                
+                if (e.key === 'd' || e.key === 'D') {
+                    devMode = !devMode;
+                    panel.style.display = devMode ? 'block' : 'none';
+                    // 同时显示网格
+                    gridMode = devMode;
+                    gridOverlay.style.display = devMode ? 'block' : 'none';
+                    
+                    if (devMode) {
+                        // 给所有可拖拽元素添加样式和resize手柄
+                        draggableSelectors.forEach(sel => {
+                            document.querySelectorAll(sel).forEach(el => {
+                                el.style.cursor = 'move';
+                                el.style.outline = '2px dashed rgba(255,215,0,0.5)';
+                                el.style.position = 'relative';
+                                el.style.overflow = 'visible';
+                                
+                                // 添加8个resize手柄（四角+四边）
+                                if (!el.querySelector('.dev-resize-handle')) {
+                                    const positions = ['corner-se', 'corner-sw', 'corner-ne', 'corner-nw', 'edge-n', 'edge-s', 'edge-e', 'edge-w'];
+                                    positions.forEach(pos => {
+                                        const handle = document.createElement('div');
+                                        handle.className = 'dev-resize-handle ' + pos;
+                                        handle.dataset.resizeDir = pos;
+                                        el.appendChild(handle);
+                                    });
+                                }
+                            });
+                        });
+                    } else {
+                        // 移除样式和resize手柄
+                        draggableSelectors.forEach(sel => {
+                            document.querySelectorAll(sel).forEach(el => {
+                                el.style.cursor = '';
+                                el.style.outline = '';
+                                el.querySelectorAll('.dev-resize-handle').forEach(h => h.remove());
+                            });
+                        });
+                    }
+                }
+            });
+            
+            // 鼠标按下
+            document.addEventListener('mousedown', (e) => {
+                if (!devMode) return;
+                
+                // 检查是否点击了resize手柄
+                if (e.target.classList.contains('dev-resize-handle')) {
+                    resizeTarget = e.target.parentElement;
+                    resizeTarget.dataset.resizeDir = e.target.dataset.resizeDir;
+                    const rect = resizeTarget.getBoundingClientRect();
+                    startWidth = rect.width;
+                    startHeight = rect.height;
+                    startX = e.clientX;
+                    startY = e.clientY;
+                    resizeTarget.dataset.startLeft = rect.left;
+                    resizeTarget.dataset.startTop = rect.top;
+                    resizeTarget.style.outline = '2px solid #00FF00';
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return;
+                }
+                
+                for (let sel of draggableSelectors) {
+                    const el = e.target.closest(sel);
+                    if (el) {
+                        dragTarget = el;
+                        const rect = el.getBoundingClientRect();
+                        offsetX = e.clientX - rect.left;
+                        offsetY = e.clientY - rect.top;
+                        
+                        // 切换到绝对定位
+                        const computed = getComputedStyle(el);
+                        if (computed.position === 'static' || computed.position === 'relative') {
+                            el.style.position = 'absolute';
+                            el.style.left = rect.left + 'px';
+                            el.style.top = rect.top + 'px';
+                            el.style.width = rect.width + 'px';
+                        }
+                        
+                        el.style.outline = '2px solid #FFD700';
+                        e.preventDefault();
+                        break;
+                    }
+                }
+            });
+            
+            // 鼠标移动
+            document.addEventListener('mousemove', (e) => {
+                if (!devMode) return;
+                
+                // 处理resize
+                if (resizeTarget) {
+                    const dir = resizeTarget.dataset.resizeDir;
+                    const deltaX = e.clientX - startX;
+                    const deltaY = e.clientY - startY;
+                    let newWidth = startWidth;
+                    let newHeight = startHeight;
+                    let newLeft = parseFloat(resizeTarget.dataset.startLeft);
+                    let newTop = parseFloat(resizeTarget.dataset.startTop);
+                    
+                    // 根据方向计算新尺寸
+                    if (dir.includes('e') || dir === 'corner-se' || dir === 'corner-ne') {
+                        newWidth = Math.max(100, startWidth + deltaX);
+                    }
+                    if (dir.includes('w') || dir === 'corner-sw' || dir === 'corner-nw') {
+                        newWidth = Math.max(100, startWidth - deltaX);
+                        newLeft = parseFloat(resizeTarget.dataset.startLeft) + deltaX;
+                    }
+                    if (dir.includes('s') || dir === 'corner-se' || dir === 'corner-sw') {
+                        newHeight = Math.max(50, startHeight + deltaY);
+                    }
+                    if (dir.includes('n') || dir === 'corner-ne' || dir === 'corner-nw') {
+                        newHeight = Math.max(50, startHeight - deltaY);
+                        newTop = parseFloat(resizeTarget.dataset.startTop) + deltaY;
+                    }
+                    
+                    resizeTarget.style.width = newWidth + 'px';
+                    resizeTarget.style.height = newHeight + 'px';
+                    resizeTarget.style.left = newLeft + 'px';
+                    resizeTarget.style.top = newTop + 'px';
+                    resizeTarget.style.position = 'absolute';
+                    resizeTarget.style.minHeight = 'unset';
+                    resizeTarget.style.maxHeight = 'unset';
+                    resizeTarget.style.minWidth = 'unset';
+                    resizeTarget.style.maxWidth = 'unset';
+                    
+                    // 更新尺寸显示 - 基于16:9页面区域
+                    const bounds = getPageBounds();
+                    const relLeft = newLeft - bounds.pageLeft;
+                    const relTop = newTop - bounds.pageTop;
+                    const lPct = (relLeft / bounds.pageW * 100).toFixed(1);
+                    const tPct = (relTop / bounds.pageH * 100).toFixed(1);
+                    const wPct = (newWidth / bounds.pageW * 100).toFixed(1);
+                    const hPct = (newHeight / bounds.pageH * 100).toFixed(1);
+                    document.getElementById('dev-info').textContent = resizeTarget.className.split(' ')[0] + ' [' + dir + ']';
+                    document.getElementById('dev-coords').innerHTML = `
+                        <b>相对页面(16:9):</b><br>
+                        left: ${lPct}% (${Math.round(relLeft)}px)<br>
+                        top: ${tPct}% (${Math.round(relTop)}px)<br>
+                        width: ${wPct}% (${Math.round(newWidth)}px)<br>
+                        height: ${hPct}% (${Math.round(newHeight)}px)
+                    `;
+                    return;
+                }
+                
+                // 处理拖拽
+                if (dragTarget) {
+                    const rect = dragTarget.getBoundingClientRect();
+                    let x = e.clientX - offsetX;
+                    let y = e.clientY - offsetY;
+                    
+                    // 触边自动缩放
+                    let newWidth = rect.width;
+                    let newHeight = rect.height;
+                    let scaled = false;
+                    
+                    // 右边界触边 - 缩小宽度
+                    if (x + rect.width > window.innerWidth) {
+                        newWidth = window.innerWidth - x;
+                        scaled = true;
+                    }
+                    // 下边界触边 - 缩小高度
+                    if (y + rect.height > window.innerHeight) {
+                        newHeight = window.innerHeight - y;
+                        scaled = true;
+                    }
+                    // 左边界
+                    if (x < 0) {
+                        x = 0;
+                    }
+                    // 上边界
+                    if (y < 0) {
+                        y = 0;
+                    }
+                    
+                    dragTarget.style.left = x + 'px';
+                    dragTarget.style.top = y + 'px';
+                    
+                    if (scaled) {
+                        dragTarget.style.width = Math.max(100, newWidth) + 'px';
+                        dragTarget.style.height = Math.max(50, newHeight) + 'px';
+                        dragTarget.style.minWidth = 'unset';
+                        dragTarget.style.maxWidth = 'unset';
+                        dragTarget.style.minHeight = 'unset';
+                        dragTarget.style.maxHeight = 'unset';
+                    }
+                    
+                    // 更新坐标显示 - 基于16:9页面区域
+                    const bounds = getPageBounds();
+                    const relX = x - bounds.pageLeft;
+                    const relY = y - bounds.pageTop;
+                    const lPct = (relX / bounds.pageW * 100).toFixed(1);
+                    const tPct = (relY / bounds.pageH * 100).toFixed(1);
+                    const wPct = (newWidth / bounds.pageW * 100).toFixed(1);
+                    const hPct = (newHeight / bounds.pageH * 100).toFixed(1);
+                    document.getElementById('dev-info').textContent = dragTarget.className.split(' ')[0] + (scaled ? ' [触边缩放]' : '');
+                    document.getElementById('dev-coords').innerHTML = `
+                        <b>相对页面(16:9):</b><br>
+                        left: ${lPct}% (${Math.round(relX)}px)<br>
+                        top: ${tPct}% (${Math.round(relY)}px)<br>
+                        width: ${wPct}% (${Math.round(newWidth)}px)<br>
+                        height: ${hPct}% (${Math.round(newHeight)}px)
+                    `;
+                }
+            });
+            
+            // 鼠标松开
+            document.addEventListener('mouseup', () => {
+                if (dragTarget) {
+                    dragTarget.style.outline = '2px dashed rgba(255,215,0,0.5)';
+                    dragTarget = null;
+                }
+                if (resizeTarget) {
+                    resizeTarget.style.outline = '2px dashed rgba(255,215,0,0.5)';
+                    resizeTarget = null;
+                }
+            });
+        })();
+    </script>
+
+</body>
+</html>

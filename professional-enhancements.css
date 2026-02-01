@@ -1,0 +1,164 @@
+/* 专业化增强样式 - 防翻车必备 */
+
+/* 锦囊一：隐藏滚动条，保持沉浸感 */
+* {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+}
+
+*::-webkit-scrollbar {
+    display: none; /* Chrome/Safari/Opera */
+}
+
+body {
+    overflow-x: hidden;
+    overflow-y: auto; /* 保留滚轮功能 */
+}
+
+/* 锦囊二：响应式字体 - 大屏优雅，小屏可读 */
+.title-serif {
+    font-size: clamp(3rem, 8vw, 9rem);
+}
+
+.content-title {
+    font-size: clamp(2rem, 5vw, 4rem);
+}
+
+.display-number {
+    font-size: clamp(3rem, 10vw, 8rem);
+}
+
+.description, .card-description {
+    font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+}
+
+.subtitle-sans, .card-label {
+    font-size: clamp(0.7rem, 1vw, 0.9rem);
+}
+
+/* 全屏按钮样式 */
+.fullscreen-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: rgba(0, 47, 167, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 9999;
+    backdrop-filter: blur(10px);
+}
+
+.fullscreen-btn:hover {
+    background: rgba(0, 47, 167, 1);
+    transform: scale(1.1);
+    box-shadow: 0 10px 30px rgba(0, 47, 167, 0.4);
+}
+
+.fullscreen-btn svg {
+    width: 24px;
+    height: 24px;
+    fill: white;
+}
+
+/* 锦囊三：PDF打印样式 */
+@media print {
+    /* 隐藏不需要打印的元素 */
+    .fullscreen-btn,
+    .reveal .controls,
+    .reveal .progress {
+        display: none !important;
+    }
+    
+    /* 每页独立打印 */
+    .reveal .slides section {
+        page-break-after: always;
+        page-break-inside: avoid;
+    }
+    
+    /* 优化打印布局 */
+    body {
+        background: white !important;
+    }
+    
+    .reveal {
+        width: 100% !important;
+        height: auto !important;
+        overflow: visible !important;
+    }
+    
+    /* 确保文字清晰 */
+    * {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    
+    /* 深色背景页面打印优化 */
+    .dark-content {
+        background: white !important;
+        color: black !important;
+    }
+    
+    .dark-content * {
+        color: black !important;
+    }
+}
+
+/* 移动端优化 */
+@media (max-width: 768px) {
+    .fullscreen-btn {
+        bottom: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+    }
+    
+    /* 确保小屏幕可读性 */
+    .description, .card-description {
+        font-size: 1rem !important;
+        line-height: 1.6;
+    }
+    
+    .card-label {
+        font-size: 0.75rem !important;
+    }
+}
+
+/* 加载动画 - 专业感 */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #F9F9F7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    transition: opacity 0.6s ease;
+}
+
+.loading-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 2px solid rgba(0, 47, 167, 0.1);
+    border-top-color: #002FA7;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
