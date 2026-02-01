@@ -3862,27 +3862,36 @@
     <!-- 手机端缩放适配 -->
     <script>
         (function() {
-            // 检测是否为移动设备（更可靠的方式）
+            // 检测是否为移动设备
             function isMobileDevice() {
-                // 方法1：userAgent检测
                 const mobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-                
-                // 方法2：触摸屏检测
                 const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-                
-                // 方法3：屏幕尺寸检测
-                const smallScreen = Math.min(window.innerWidth, window.innerHeight) <= 900;
-                
-                // 任意两个条件满足即认为是移动设备
-                return (mobileUA && hasTouch) || (mobileUA && smallScreen) || (hasTouch && smallScreen);
+                return mobileUA || hasTouch;
             }
             
             function isLandscape() {
                 return window.innerWidth > window.innerHeight;
             }
             
+            let wrappersCreated = false;
+            
+            function createWrappers() {
+                if (wrappersCreated) return;
+                const pages = document.querySelectorAll('.page:not(.page-wrapper .page)');
+                pages.forEach(page => {
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'page-wrapper';
+                    page.parentNode.insertBefore(wrapper, page);
+                    wrapper.appendChild(page);
+                });
+                wrappersCreated = true;
+            }
+            
             function setupMobileScale() {
                 if (!isMobileDevice()) return;
+                
+                // 先创建wrapper
+                createWrappers();
                 
                 const pages = document.querySelectorAll('.page');
                 const vw = window.innerWidth;
@@ -3895,31 +3904,46 @@
                 let scale;
                 
                 if (isLandscape()) {
-                    // 横屏模式
-                    if (screenRatio > targetRatio) {
-                        // 屏幕比16:9更宽（大多数手机）：按高度缩放
-                        scale = (vh * 0.98) / 1080;
-                    } else {
-                        // 屏幕比16:9更窄（iPad等）：按宽度缩放
-                        scale = (vw * 0.98) / 1920;
-                    }
+                    // 横屏模式：按高度缩放
+                    scale = (vh * 0.95) / 1080;
                 } else {
                     // 竖屏：按宽度缩放
                     scale = vw / 1920;
                 }
                 
-                pages.forEach(page => {
-                    // 如果还没有包装器，创建一个
-                    if (!page.parentElement.classList.contains('page-wrapper')) {
-                        const wrapper = document.createElement('div');
-                        wrapper.className = 'page-wrapper';
-                        page.parentNode.insertBefore(wrapper, page);
-                        wrapper.appendChild(page);
+                // 设置wrapper样式
+                const wrappers = document.querySelectorAll('.page-wrapper');
+                wrappers.forEach(wrapper => {
+                    if (isLandscape()) {
+                        wrapper.style.width = '100vw';
+                        wrapper.style.height = '100vh';
+                        wrapper.style.display = 'flex';
+                        wrapper.style.justifyContent = 'center';
+                        wrapper.style.alignItems = 'center';
+                    } else {
+                        wrapper.style.width = '100vw';
+                        wrapper.style.height = (vw * 9 / 16) + 'px';
+                        wrapper.style.display = 'block';
                     }
-                    
-                    // 设置缩放
-                    page.style.transform = `scale(${scale})`;
+                    wrapper.style.overflow = 'hidden';
+                    wrapper.style.background = '#000';
+                    wrapper.style.position = 'relative';
                 });
+                
+                // 设置页面缩放
+                pages.forEach(page => {
+                    page.style.transform = `scale(${scale})`;
+                    page.style.transformOrigin = isLandscape() ? 'center center' : 'top left';
+                    if (!isLandscape()) {
+                        page.style.position = 'absolute';
+                        page.style.top = '0';
+                        page.style.left = '0';
+                    } else {
+                        page.style.position = 'relative';
+                    }
+                });
+                
+                console.log('Mobile scale applied:', scale, 'Landscape:', isLandscape());
             }
             
             // 页面加载时执行
@@ -3934,7 +3958,8 @@
             
             // 屏幕旋转时重新计算
             window.addEventListener('orientationchange', () => {
-                setTimeout(setupMobileScale, 100);
+                setTimeout(setupMobileScale, 200);
+                setTimeout(setupMobileScale, 500);
             });
         })();
     </script>
