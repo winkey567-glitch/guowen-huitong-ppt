@@ -41,3 +41,8 @@ gallery-simple.html
 # 系统文件
 .DS_Store
 Thumbs.db
+
+# 大文件（超过10MB）
+*.psd
+output/*.glb
+output/*.ttf
