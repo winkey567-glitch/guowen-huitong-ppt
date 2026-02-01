@@ -3720,6 +3720,38 @@
         })();
     </script>
     
+    <!-- 主页面键盘导航 -->
+    <script>
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'ArrowDown' || e.code === 'PageDown' || e.code === 'Space') {
+                e.preventDefault();
+                const pages = document.querySelectorAll('.page');
+                const currentScroll = window.scrollY;
+                const windowHeight = window.innerHeight;
+                
+                for (let i = 0; i < pages.length; i++) {
+                    const pageTop = pages[i].offsetTop;
+                    if (pageTop > currentScroll + 10) {
+                        pages[i].scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        break;
+                    }
+                }
+            } else if (e.code === 'ArrowUp' || e.code === 'PageUp') {
+                e.preventDefault();
+                const pages = document.querySelectorAll('.page');
+                const currentScroll = window.scrollY;
+                
+                for (let i = pages.length - 1; i >= 0; i--) {
+                    const pageTop = pages[i].offsetTop;
+                    if (pageTop < currentScroll - 10) {
+                        pages[i].scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        break;
+                    }
+                }
+            }
+        });
+    </script>
+    
     <!-- 手机端适配 -->
     <script>
         (function() {
