@@ -1529,12 +1529,14 @@
                 overflow-x: hidden;
             }
             
-            /* 页面包装器：设置实际占用高度 */
+            /* 页面包装器：设置实际占用高度，确保页面分隔 */
             .page-wrapper {
                 width: 100vw;
                 height: calc(100vw * 9 / 16);
                 overflow: hidden;
                 position: relative;
+                display: block;
+                background: #000;
             }
             
             /* 页面容器：固定16:9比例，缩放适配屏幕宽度 */
@@ -1548,6 +1550,15 @@
                 top: 0;
                 left: 0;
                 transform-origin: top left;
+            }
+        }
+        
+        /* 通用移动端样式 - 确保wrapper在所有移动设备上生效 */
+        @media (max-width: 1024px) {
+            .page-wrapper {
+                display: block;
+                overflow: hidden;
+                background: #000;
             }
             
             .notes-sidebar {
@@ -1577,6 +1588,15 @@
             
             .keyboard-hint {
                 display: none;
+            }
+        }
+        
+        /* 确保没有wrapper时页面也能正确显示 */
+        @media (max-width: 1024px) {
+            .page:not(.page-wrapper .page) {
+                /* 如果JS没有创建wrapper，使用CSS fallback */
+                display: block;
+                margin-bottom: 0;
             }
         }
 
@@ -3821,9 +3841,14 @@
     <script>
         (function() {
             function isMobileOrTablet() {
-                // 只在小屏幕设备上启用缩放，避免影响桌面端
-                const isSmallScreen = window.innerWidth <= 1366 && window.innerHeight <= 900;
-                return isSmallScreen;
+                // 在移动设备上启用缩放
+                // 横屏：宽度<=1366且高度<=900
+                // 竖屏：宽度<=768（手机竖屏宽度通常小于768）
+                const isLandscapeSmall = window.innerWidth > window.innerHeight && 
+                                         window.innerWidth <= 1366 && window.innerHeight <= 900;
+                const isPortraitSmall = window.innerWidth <= window.innerHeight && 
+                                        window.innerWidth <= 768;
+                return isLandscapeSmall || isPortraitSmall;
             }
             
             function isLandscape() {
