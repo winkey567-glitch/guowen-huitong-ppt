@@ -3840,15 +3840,19 @@
     <!-- 手机端缩放适配 -->
     <script>
         (function() {
-            function isMobileOrTablet() {
-                // 在移动设备上启用缩放
-                // 横屏：宽度<=1366且高度<=900
-                // 竖屏：宽度<=768（手机竖屏宽度通常小于768）
-                const isLandscapeSmall = window.innerWidth > window.innerHeight && 
-                                         window.innerWidth <= 1366 && window.innerHeight <= 900;
-                const isPortraitSmall = window.innerWidth <= window.innerHeight && 
-                                        window.innerWidth <= 768;
-                return isLandscapeSmall || isPortraitSmall;
+            // 检测是否为移动设备（更可靠的方式）
+            function isMobileDevice() {
+                // 方法1：userAgent检测
+                const mobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                
+                // 方法2：触摸屏检测
+                const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+                
+                // 方法3：屏幕尺寸检测
+                const smallScreen = Math.min(window.innerWidth, window.innerHeight) <= 900;
+                
+                // 任意两个条件满足即认为是移动设备
+                return (mobileUA && hasTouch) || (mobileUA && smallScreen) || (hasTouch && smallScreen);
             }
             
             function isLandscape() {
@@ -3856,7 +3860,7 @@
             }
             
             function setupMobileScale() {
-                if (!isMobileOrTablet()) return;
+                if (!isMobileDevice()) return;
                 
                 const pages = document.querySelectorAll('.page');
                 const vw = window.innerWidth;
