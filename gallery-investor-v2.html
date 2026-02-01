@@ -2732,22 +2732,24 @@
         });
         
         // 柱状图动画：页面滚动到第3页时触发
-        let chartAnimated = false;
+        let chartAnimating = false;
         
         function animateChart() {
-            if (chartAnimated) return;
-            chartAnimated = true;
+            if (chartAnimating) return;
+            chartAnimating = true;
             
             const bars = document.querySelectorAll('.chart-bar');
             
             bars.forEach((bar, index) => {
                 const targetHeight = parseInt(bar.getAttribute('data-height'));
                 const valueEl = bar.querySelector('.chart-value');
-                const finalText = valueEl.textContent; // 保存最终显示的文本
+                const finalText = valueEl.textContent;
                 
-                let currentHeight = 0;
-                const duration = 2000; // 2秒
-                const startTime = Date.now() + (index * 300); // 每个柱子延迟300ms
+                // 先重置高度
+                bar.style.height = '0px';
+                
+                const duration = 2000;
+                const startTime = Date.now() + (index * 300);
                 
                 function animate() {
                     const now = Date.now();
@@ -2760,10 +2762,9 @@
                     
                     if (elapsed < duration) {
                         const progress = elapsed / duration;
-                        const easeProgress = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+                        const easeProgress = 1 - Math.pow(1 - progress, 3);
                         
-                        currentHeight = targetHeight * easeProgress;
-                        bar.style.height = currentHeight + 'px';
+                        bar.style.height = (targetHeight * easeProgress) + 'px';
                         
                         requestAnimationFrame(animate);
                     } else {
@@ -2776,18 +2777,30 @@
             });
         }
         
+        function resetChart() {
+            chartAnimating = false;
+            const bars = document.querySelectorAll('.chart-bar');
+            bars.forEach(bar => {
+                bar.style.height = '0px';
+            });
+        }
+        
         // 监听页面滚动，当滚动到第3页时触发动画
-        const observer = new IntersectionObserver((entries) => {
+        const chartObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting && entry.target.id === 'page3') {
-                    animateChart();
+                if (entry.target.id === 'page3') {
+                    if (entry.isIntersecting) {
+                        animateChart();
+                    } else {
+                        resetChart();
+                    }
                 }
             });
-        }, { threshold: 0.5 });
+        }, { threshold: 0.3 });
         
         const page3 = document.getElementById('page3');
         if (page3) {
-            observer.observe(page3);
+            chartObserver.observe(page3);
         }
     </script>
 
