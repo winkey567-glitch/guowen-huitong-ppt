@@ -91,12 +91,10 @@
             color: var(--theme-text);
         }
         
-        /* 视口锁定 - 16:9固定比例，居中显示 */
+        /* 视口锁定 - 16:9固定比例 */
         .page {
-            width: 100vw;
-            height: calc(100vw / (16 / 9));
-            max-height: 100vh;
-            max-width: calc(100vh * (16 / 9));
+            width: 1920px;
+            height: 1080px;
             margin: 0 auto;
             scroll-snap-align: start;
             position: relative;
@@ -125,7 +123,7 @@
         }
         
         .content-left {
-            padding: 8vh 4vw;
+            padding: 86px 77px;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
@@ -148,12 +146,12 @@
         /* 数字印章容器 - 磨砂玻璃质感 */
         .title {
             font-family: 'FangZheng BangShu', 'CustomFont1', 'Noto Serif SC', 'STSong', serif;
-            font-size: clamp(7.5625rem, 15.125vw, 13.0625rem);
+            font-size: 121px;
             font-weight: 400;
             color: #D4AF37;
             position: absolute;
-            top: 50%;
-            left: 12vw;
+            top: 540px;
+            left: 230px;
             transform: translateY(-50%);
             width: 495px;
             height: 495px;
@@ -230,8 +228,8 @@
             letter-spacing: 0.15em;
             text-transform: uppercase;
             position: absolute;
-            top: 4vh;
-            left: 4vw;
+            top: 43px;
+            left: 77px;
             font-weight: 400;
         }
         
@@ -243,8 +241,8 @@
             letter-spacing: 0.15em;
             text-transform: uppercase;
             position: absolute;
-            top: calc(50vh - 275px);
-            left: 12vw;
+            top: 265px;
+            left: 230px;
             font-weight: 400;
         }
         
@@ -262,16 +260,16 @@
         }
         
         .seal-corner-tr {
-            top: calc(50vh - 247.5px - 1px);
-            left: calc(12vw + 495px - 19px);
+            top: 291px;
+            left: 706px;
             border-width: 1.5px 1.5px 0 0;
             border-color: rgba(255, 215, 0, 0.7);
             box-shadow: 0 0 12px rgba(255, 215, 0, 0.4), 0 0 25px rgba(255, 215, 0, 0.15);
         }
         
         .seal-corner-bl {
-            top: calc(50vh + 247.5px - 19px);
-            left: calc(12vw - 1px);
+            top: 769px;
+            left: 229px;
             border-width: 0 0 1.5px 1.5px;
             border-color: rgba(255, 215, 0, 0.7);
             box-shadow: 0 0 12px rgba(255, 215, 0, 0.4), 0 0 25px rgba(255, 215, 0, 0.15);
@@ -290,13 +288,13 @@
         }
         
         .micro-data-top {
-            top: calc(50vh - 275px);
-            left: calc(12vw + 227px);
+            top: 265px;
+            left: 457px;
         }
         
         .micro-data-bottom {
-            top: calc(50vh - 275px);
-            left: calc(12vw + 351px);
+            top: 265px;
+            left: 581px;
         }
         
         @keyframes stream-scroll {
@@ -311,8 +309,8 @@
             line-height: 1.8;
             color: rgba(255, 255, 255, 0.6);
             position: absolute;
-            top: calc(50vh + 275px);
-            left: 12vw;
+            top: 815px;
+            left: 230px;
             font-weight: 300;
             letter-spacing: 0.12em;
             max-width: 618px;
@@ -332,8 +330,8 @@
             width: fit-content;
             font-weight: 300;
             position: absolute;
-            top: calc(50vh + 358px);
-            left: 12vw;
+            top: 898px;
+            left: 230px;
         }
         
         .button:hover {
@@ -368,23 +366,23 @@
         }
         
         .scan-line:nth-child(1) {
-            top: calc(50vh - 60px);
-            left: calc(12vw + 360px);
-            width: 35vw;
+            top: 480px;
+            left: 590px;
+            width: 672px;
             animation: scan-pulse-smooth 4s ease-in-out infinite;
         }
         
         .scan-line:nth-child(2) {
-            top: 50vh;
-            left: calc(12vw + 360px);
-            width: 30vw;
+            top: 540px;
+            left: 590px;
+            width: 576px;
             animation: scan-pulse-smooth 4s ease-in-out infinite 1s;
         }
         
         .scan-line:nth-child(3) {
-            top: calc(50vh + 60px);
-            left: calc(12vw + 360px);
-            width: 32vw;
+            top: 600px;
+            left: 590px;
+            width: 614px;
             animation: scan-pulse-smooth 4s ease-in-out infinite 2s;
         }
         
@@ -474,8 +472,8 @@
             font-weight: 300;
             color: rgba(255, 215, 0, 0.08);
             position: absolute;
-            bottom: 5vh;
-            right: 10vw;
+            bottom: 54px;
+            right: 192px;
             z-index: 0;
             text-shadow: 0 0 30px rgba(255, 215, 0, 0.05);
         }
@@ -491,7 +489,7 @@
         /* 统一标题区 - 固定位置，严禁漂移 */
         .content-title {
             font-family: 'MechSong', 'Noto Serif SC', 'Playfair Display', serif;
-            font-size: clamp(3.5rem, 7vw, 5rem);
+            font-size: 80px;
             font-weight: 700;
             line-height: 1.2;
             letter-spacing: -0.08em;
@@ -596,7 +594,7 @@
         
         .big-number {
             font-family: 'Playfair Display', serif;
-            font-size: clamp(3rem, 6vw, 5rem);
+            font-size: 80px;
             font-weight: 300;
             background: linear-gradient(135deg, #FFD700, #D4AF37);
             -webkit-background-clip: text;
@@ -986,7 +984,7 @@
             display: flex;
             gap: 4%;
             height: auto;
-            margin-top: 27vh;
+            margin-top: 292px;
             padding: 0 8%;
             position: relative;
             z-index: 1;
@@ -1049,7 +1047,7 @@
             align-items: flex-end;
             gap: 1.5rem;
             padding: 2rem 0 3rem 0;
-            height: 50vh;
+            height: 540px;
             background: 
                 linear-gradient(0deg, transparent 19.8%, rgba(212, 175, 55, 0.15) 20%, rgba(212, 175, 55, 0.15) 20.2%, transparent 20.4%),
                 linear-gradient(0deg, transparent 39.8%, rgba(212, 175, 55, 0.15) 40%, rgba(212, 175, 55, 0.15) 40.2%, transparent 40.4%),
@@ -1231,7 +1229,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            height: 35vh;
+            height: 378px;
             background: linear-gradient(180deg, rgba(10, 10, 10, 0.98), rgba(15, 15, 15, 0.98));
             border-top: 2px solid rgba(255, 215, 0, 0.3);
             transform: translateY(100%);
@@ -1259,7 +1257,7 @@
         }
         
         .notes-drawer-content {
-            padding: 3rem 8vw 2rem;
+            padding: 3rem 154px 2rem;
             height: 100%;
             overflow-y: auto;
         }
@@ -1293,7 +1291,7 @@
             top: 0;
             right: 0;
             width: 400px;
-            height: 100vh;
+            height: 1080px;
             background: linear-gradient(90deg, rgba(10, 10, 10, 0.95), rgba(15, 15, 15, 0.98));
             border-left: 2px solid rgba(255, 215, 0, 0.3);
             transform: translateX(100%);
@@ -1443,145 +1441,8 @@
             box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
         }
         
-        /* 响应式 - 平板 */
+        /* 移动端样式由JS动态处理，这里只保留基础样式 */
         @media (max-width: 1024px) {
-            .page {
-                padding: 30px;
-            }
-            
-            .main-title {
-                font-size: clamp(28px, 6vw, 48px);
-            }
-            
-            .subtitle {
-                font-size: clamp(12px, 2.5vw, 18px);
-            }
-            
-            .content-title {
-                font-size: clamp(24px, 5vw, 42px);
-            }
-            
-            .section-number {
-                font-size: clamp(60px, 12vw, 120px);
-            }
-        }
-        
-        /* 响应式 - 手机/平板横屏：完美16:9展示 */
-        /* 只在小屏幕设备上生效，避免影响桌面端 */
-        @media (max-width: 1366px) and (max-height: 900px) and (orientation: landscape) {
-            html {
-                scroll-snap-type: y mandatory;
-                overflow-x: hidden;
-            }
-            
-            body {
-                background: #000;
-                overflow-x: hidden;
-            }
-            
-            /* 横屏时页面占满屏幕高度，每页一屏 */
-            .page-wrapper {
-                width: 100vw;
-                height: 100vh;
-                overflow: hidden;
-                position: relative;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                scroll-snap-align: start;
-                background: #000;
-            }
-            
-            .page {
-                width: 1920px;
-                height: 1080px;
-                max-width: none;
-                max-height: none;
-                margin: 0;
-                position: relative;
-                transform-origin: center center;
-                flex-shrink: 0;
-            }
-            
-            .notes-trigger, .notes-mode-toggle, .keyboard-hint, #dev-panel {
-                display: none !important;
-            }
-            
-            /* 手机横屏时左侧内容往右移 */
-            .content-left {
-                padding-left: 8vw;
-            }
-            
-            .title {
-                left: 16vw;
-            }
-        }
-        
-        /* 响应式 - 手机竖屏：缩放适配 */
-        @media (max-width: 768px) and (orientation: portrait) {
-            html {
-                scroll-snap-type: none;
-                overflow-x: hidden;
-            }
-            
-            body {
-                background: #000;
-                overflow-x: hidden;
-            }
-            
-            /* 手机竖屏时左侧内容往右移，与网页版等比 */
-            .content-left {
-                padding-left: 6vw;
-            }
-            
-            .title {
-                left: 18vw;
-            }
-            
-            /* 页面包装器：设置实际占用高度，确保页面分隔 */
-            .page-wrapper {
-                width: 100vw;
-                height: calc(100vw * 9 / 16);
-                overflow: hidden;
-                position: relative;
-                display: block;
-                background: #000;
-            }
-            
-            /* 页面容器：固定16:9比例，缩放适配屏幕宽度 */
-            .page {
-                width: 1920px;
-                height: 1080px;
-                max-width: none;
-                max-height: none;
-                margin: 0;
-                position: absolute;
-                top: 0;
-                left: 0;
-                transform-origin: top left;
-            }
-        }
-        
-        /* 通用移动端样式 - 确保wrapper在所有移动设备上生效 */
-        @media (max-width: 1024px) {
-            .page-wrapper {
-                display: block;
-                overflow: hidden;
-                background: #000;
-            }
-            
-            .notes-sidebar {
-                width: 100%;
-            }
-            
-            .notes-drawer {
-                height: 40vh;
-            }
-            
-            .notes-mode-toggle {
-                display: none;
-            }
-            
             .notes-trigger {
                 position: fixed;
                 bottom: 15px;
