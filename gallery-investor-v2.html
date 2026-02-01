@@ -1466,8 +1466,8 @@
             }
         }
         
-        /* 响应式 - 手机横屏：完美16:9展示 */
-        @media (max-width: 1024px) and (orientation: landscape) {
+        /* 响应式 - 手机/平板横屏：完美16:9展示 */
+        @media (max-width: 1366px) and (orientation: landscape) {
             html {
                 scroll-snap-type: y mandatory;
                 overflow-x: hidden;
@@ -3811,7 +3811,7 @@
     <script>
         (function() {
             function isMobileOrTablet() {
-                return window.innerWidth <= 1024;
+                return window.innerWidth <= 1366 || window.innerHeight <= 1024;
             }
             
             function isLandscape() {
@@ -3822,14 +3822,27 @@
                 if (!isMobileOrTablet()) return;
                 
                 const pages = document.querySelectorAll('.page');
+                const vw = window.innerWidth;
+                const vh = window.innerHeight;
+                
+                // 16:9 = 1.778
+                const targetRatio = 16 / 9;
+                const screenRatio = vw / vh;
+                
                 let scale;
                 
                 if (isLandscape()) {
-                    // 横屏：按高度缩放，留一点边距
-                    scale = (window.innerHeight * 0.98) / 1080;
+                    // 横屏模式
+                    if (screenRatio > targetRatio) {
+                        // 屏幕比16:9更宽（大多数手机）：按高度缩放
+                        scale = (vh * 0.98) / 1080;
+                    } else {
+                        // 屏幕比16:9更窄（iPad等）：按宽度缩放
+                        scale = (vw * 0.98) / 1920;
+                    }
                 } else {
                     // 竖屏：按宽度缩放
-                    scale = window.innerWidth / 1920;
+                    scale = vw / 1920;
                 }
                 
                 pages.forEach(page => {
