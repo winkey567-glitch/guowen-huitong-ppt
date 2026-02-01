@@ -3859,83 +3859,37 @@
         })();
     </script>
     
-    <!-- 手机端缩放适配 -->
+    <!-- 手机端适配：通过viewport让页面以1920px宽度渲染 -->
     <script>
         (function() {
-            // 检测是否为移动设备（更可靠的方式）
             function isMobileDevice() {
-                // 方法1：userAgent检测
                 const mobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-                
-                // 方法2：触摸屏检测
                 const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-                
-                // 方法3：屏幕尺寸检测
-                const smallScreen = Math.min(window.innerWidth, window.innerHeight) <= 900;
-                
-                // 任意两个条件满足即认为是移动设备
-                return (mobileUA && hasTouch) || (mobileUA && smallScreen) || (hasTouch && smallScreen);
+                return mobileUA || hasTouch;
             }
             
-            function isLandscape() {
-                return window.innerWidth > window.innerHeight;
-            }
-            
-            function setupMobileScale() {
+            function setupMobileViewport() {
                 if (!isMobileDevice()) return;
                 
-                const pages = document.querySelectorAll('.page');
-                const vw = window.innerWidth;
-                const vh = window.innerHeight;
-                
-                // 16:9 = 1.778
-                const targetRatio = 16 / 9;
-                const screenRatio = vw / vh;
-                
-                let scale;
-                
-                if (isLandscape()) {
-                    // 横屏模式
-                    if (screenRatio > targetRatio) {
-                        // 屏幕比16:9更宽（大多数手机）：按高度缩放
-                        scale = (vh * 0.98) / 1080;
-                    } else {
-                        // 屏幕比16:9更窄（iPad等）：按宽度缩放
-                        scale = (vw * 0.98) / 1920;
-                    }
-                } else {
-                    // 竖屏：按宽度缩放
-                    scale = vw / 1920;
+                // 设置viewport宽度为1920px，让浏览器自动缩放
+                // 这样所有vw/vh单位都会相对于1920x1080计算，位置完全一致
+                const viewport = document.querySelector('meta[name="viewport"]');
+                if (viewport) {
+                    viewport.content = 'width=1920, initial-scale=0.2, user-scalable=yes';
                 }
                 
-                pages.forEach(page => {
-                    // 如果还没有包装器，创建一个
-                    if (!page.parentElement.classList.contains('page-wrapper')) {
-                        const wrapper = document.createElement('div');
-                        wrapper.className = 'page-wrapper';
-                        page.parentNode.insertBefore(wrapper, page);
-                        wrapper.appendChild(page);
+                // 隐藏不需要的UI元素
+                const style = document.createElement('style');
+                style.textContent = `
+                    .notes-trigger, .notes-mode-toggle, .keyboard-hint, #dev-panel {
+                        display: none !important;
                     }
-                    
-                    // 设置缩放
-                    page.style.transform = `scale(${scale})`;
-                });
+                `;
+                document.head.appendChild(style);
             }
             
-            // 页面加载时执行
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', setupMobileScale);
-            } else {
-                setupMobileScale();
-            }
-            
-            // 窗口大小改变时重新计算
-            window.addEventListener('resize', setupMobileScale);
-            
-            // 屏幕旋转时重新计算
-            window.addEventListener('orientationchange', () => {
-                setTimeout(setupMobileScale, 100);
-            });
+            // 立即执行
+            setupMobileViewport();
         })();
     </script>
 
