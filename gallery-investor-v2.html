@@ -1478,14 +1478,17 @@
                 overflow-x: hidden;
             }
             
-            /* 横屏时页面占满屏幕高度 */
+            /* 横屏时页面占满屏幕高度，每页一屏 */
             .page-wrapper {
-                width: calc(100vh * 16 / 9);
+                width: 100vw;
                 height: 100vh;
                 overflow: hidden;
                 position: relative;
-                margin: 0 auto;
+                display: flex;
+                justify-content: center;
+                align-items: center;
                 scroll-snap-align: start;
+                background: #000;
             }
             
             .page {
@@ -1494,10 +1497,9 @@
                 max-width: none;
                 max-height: none;
                 margin: 0;
-                position: absolute;
-                top: 0;
-                left: 0;
-                transform-origin: top left;
+                position: relative;
+                transform-origin: center center;
+                flex-shrink: 0;
             }
             
             .notes-trigger, .notes-mode-toggle, .keyboard-hint, #dev-panel {
@@ -3823,8 +3825,8 @@
                 let scale;
                 
                 if (isLandscape()) {
-                    // 横屏：按高度缩放，占满屏幕高度
-                    scale = window.innerHeight / 1080;
+                    // 横屏：按高度缩放，留一点边距
+                    scale = (window.innerHeight * 0.98) / 1080;
                 } else {
                     // 竖屏：按宽度缩放
                     scale = window.innerWidth / 1920;
@@ -3845,7 +3847,11 @@
             }
             
             // 页面加载时执行
-            setupMobileScale();
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', setupMobileScale);
+            } else {
+                setupMobileScale();
+            }
             
             // 窗口大小改变时重新计算
             window.addEventListener('resize', setupMobileScale);
