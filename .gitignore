@@ -1,0 +1,43 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# IDE
+.vscode/
+.idea/
+
+# 测试文件
+test-*.html
+simple_test.html
+museum-test.html
+test_notes.html
+test.pptx
+
+# 临时文件
+*.tmp
+build_ppt.txt
+enhancements.txt
+ppt_full_content.txt
+ppt_full_content.md
+final_ppt.py
+image.png
+
+# Python脚本（开发用）
+create_*.py
+generate_24pages.py
+add_speaker_notes.py
+extract_ppt_content.py
+final_script.py
+complete_ppt.py
+
+# 旧版本HTML
+gallery-complete.html
+gallery-complete-v2.html
+gallery-investor.html
+gallery-simple.html
+
+# 系统文件
+.DS_Store
+Thumbs.db
