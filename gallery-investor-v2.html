@@ -1466,8 +1466,47 @@
             }
         }
         
-        /* 响应式 - 手机：使用缩放方案，保持16:9完整布局 */
-        @media (max-width: 768px) {
+        /* 响应式 - 手机横屏：完美16:9展示 */
+        @media (max-width: 1024px) and (orientation: landscape) {
+            html {
+                scroll-snap-type: y mandatory;
+                overflow-x: hidden;
+            }
+            
+            body {
+                background: #000;
+                overflow-x: hidden;
+            }
+            
+            /* 横屏时页面占满屏幕高度 */
+            .page-wrapper {
+                width: calc(100vh * 16 / 9);
+                height: 100vh;
+                overflow: hidden;
+                position: relative;
+                margin: 0 auto;
+                scroll-snap-align: start;
+            }
+            
+            .page {
+                width: 1920px;
+                height: 1080px;
+                max-width: none;
+                max-height: none;
+                margin: 0;
+                position: absolute;
+                top: 0;
+                left: 0;
+                transform-origin: top left;
+            }
+            
+            .notes-trigger, .notes-mode-toggle, .keyboard-hint, #dev-panel {
+                display: none !important;
+            }
+        }
+        
+        /* 响应式 - 手机竖屏：缩放适配 */
+        @media (max-width: 768px) and (orientation: portrait) {
             html {
                 scroll-snap-type: none;
                 overflow-x: hidden;
@@ -1488,7 +1527,6 @@
             
             /* 页面容器：固定16:9比例，缩放适配屏幕宽度 */
             .page {
-                /* 基准尺寸：1920x1080 */
                 width: 1920px;
                 height: 1080px;
                 max-width: none;
@@ -1497,11 +1535,9 @@
                 position: absolute;
                 top: 0;
                 left: 0;
-                /* 缩放到屏幕宽度 */
                 transform-origin: top left;
             }
             
-            /* 备注侧边栏 */
             .notes-sidebar {
                 width: 100%;
             }
@@ -1523,7 +1559,6 @@
                 z-index: 10000;
             }
             
-            /* 隐藏开发模式 */
             #dev-panel {
                 display: none !important;
             }
@@ -3773,15 +3808,27 @@
     <!-- 手机端缩放适配 -->
     <script>
         (function() {
-            function isMobile() {
-                return window.innerWidth <= 768;
+            function isMobileOrTablet() {
+                return window.innerWidth <= 1024;
+            }
+            
+            function isLandscape() {
+                return window.innerWidth > window.innerHeight;
             }
             
             function setupMobileScale() {
-                if (!isMobile()) return;
+                if (!isMobileOrTablet()) return;
                 
                 const pages = document.querySelectorAll('.page');
-                const scale = window.innerWidth / 1920;
+                let scale;
+                
+                if (isLandscape()) {
+                    // 横屏：按高度缩放，占满屏幕高度
+                    scale = window.innerHeight / 1080;
+                } else {
+                    // 竖屏：按宽度缩放
+                    scale = window.innerWidth / 1920;
+                }
                 
                 pages.forEach(page => {
                     // 如果还没有包装器，创建一个
@@ -3802,6 +3849,11 @@
             
             // 窗口大小改变时重新计算
             window.addEventListener('resize', setupMobileScale);
+            
+            // 屏幕旋转时重新计算
+            window.addEventListener('orientationchange', () => {
+                setTimeout(setupMobileScale, 100);
+            });
         })();
     </script>
 
