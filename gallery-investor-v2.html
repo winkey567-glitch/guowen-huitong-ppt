@@ -125,13 +125,16 @@
         }
         
         .content-left {
+            width: 960px;
+            height: 1080px;
             padding: 86px 77px;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
+            justify-content: center;
             align-items: flex-start;
             position: relative;
             z-index: 2;
+            box-sizing: border-box;
         }
         
         .whitespace-right {
@@ -151,10 +154,8 @@
             font-size: 121px;
             font-weight: 400;
             color: #D4AF37;
-            position: absolute;
-            top: 50%;
-            left: 230px;
-            transform: translateY(-50%);
+            position: relative;
+            margin-left: 150px;
             width: 495px;
             height: 495px;
             display: grid;
