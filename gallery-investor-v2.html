@@ -2732,76 +2732,50 @@
         });
         
         // 柱状图动画：页面滚动到第3页时触发
-        let chartAnimating = false;
+        let chartAnimated = false;
+        let lastPage = 0;
         
-        function animateChart() {
-            if (chartAnimating) return;
-            chartAnimating = true;
-            
+        function animateChartBars() {
             const bars = document.querySelectorAll('.chart-bar');
             
             bars.forEach((bar, index) => {
                 const targetHeight = parseInt(bar.getAttribute('data-height'));
-                const valueEl = bar.querySelector('.chart-value');
-                const finalText = valueEl.textContent;
                 
-                // 先重置高度
-                bar.style.height = '0px';
-                
-                const duration = 2000;
-                const startTime = Date.now() + (index * 300);
-                
-                function animate() {
-                    const now = Date.now();
-                    const elapsed = now - startTime;
-                    
-                    if (elapsed < 0) {
-                        requestAnimationFrame(animate);
-                        return;
-                    }
-                    
-                    if (elapsed < duration) {
-                        const progress = elapsed / duration;
-                        const easeProgress = 1 - Math.pow(1 - progress, 3);
-                        
-                        bar.style.height = (targetHeight * easeProgress) + 'px';
-                        
-                        requestAnimationFrame(animate);
-                    } else {
-                        bar.style.height = targetHeight + 'px';
-                        valueEl.textContent = finalText;
-                    }
-                }
-                
-                animate();
+                setTimeout(() => {
+                    bar.style.transition = 'height 1.5s cubic-bezier(0.4, 0, 0.2, 1)';
+                    bar.style.height = targetHeight + 'px';
+                }, index * 300);
             });
         }
         
-        function resetChart() {
-            chartAnimating = false;
+        function resetChartBars() {
             const bars = document.querySelectorAll('.chart-bar');
             bars.forEach(bar => {
+                bar.style.transition = 'none';
                 bar.style.height = '0px';
             });
         }
         
-        // 监听页面滚动，当滚动到第3页时触发动画
-        const chartObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.target.id === 'page3') {
-                    if (entry.isIntersecting) {
-                        animateChart();
-                    } else {
-                        resetChart();
-                    }
-                }
-            });
-        }, { threshold: 0.3 });
-        
-        const page3 = document.getElementById('page3');
-        if (page3) {
-            chartObserver.observe(page3);
+        // 监听滚动事件，检测当前页面
+        function checkChartAnimation() {
+            const page3El = document.getElementById('page3');
+            if (!page3El) return;
+            
+            const rect = page3El.getBoundingClientRect();
+            const isVisible = rect.top < window.innerHeight * 0.7 && rect.bottom > window.innerHeight * 0.3;
+            
+            if (isVisible && !chartAnimated) {
+                chartAnimated = true;
+                animateChartBars();
+            } else if (!isVisible && chartAnimated) {
+                chartAnimated = false;
+                resetChartBars();
+            }
         }
+        
+        window.addEventListener('scroll', checkChartAnimation);
+        // 页面加载后也检查一次
+        setTimeout(checkChartAnimation, 500);
     </script>
 
     <!-- 旁白功能 -->
