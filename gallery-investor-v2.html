@@ -1469,11 +1469,21 @@
         /* 响应式 - 手机：使用缩放方案，保持16:9完整布局 */
         @media (max-width: 768px) {
             html {
-                scroll-snap-type: y mandatory;
+                scroll-snap-type: none;
+                overflow-x: hidden;
             }
             
             body {
                 background: #000;
+                overflow-x: hidden;
+            }
+            
+            /* 页面包装器：设置实际占用高度 */
+            .page-wrapper {
+                width: 100vw;
+                height: calc(100vw * 9 / 16);
+                overflow: hidden;
+                position: relative;
             }
             
             /* 页面容器：固定16:9比例，缩放适配屏幕宽度 */
@@ -1483,11 +1493,12 @@
                 height: 1080px;
                 max-width: none;
                 max-height: none;
+                margin: 0;
+                position: absolute;
+                top: 0;
+                left: 0;
                 /* 缩放到屏幕宽度 */
-                transform: scale(calc(100vw / 1920));
                 transform-origin: top left;
-                /* 缩放后的实际高度 */
-                margin-bottom: calc(-1080px + 100vw * 1080 / 1920);
             }
             
             /* 备注侧边栏 */
@@ -3756,6 +3767,41 @@
                     resizeTarget = null;
                 }
             });
+        })();
+    </script>
+    
+    <!-- 手机端缩放适配 -->
+    <script>
+        (function() {
+            function isMobile() {
+                return window.innerWidth <= 768;
+            }
+            
+            function setupMobileScale() {
+                if (!isMobile()) return;
+                
+                const pages = document.querySelectorAll('.page');
+                const scale = window.innerWidth / 1920;
+                
+                pages.forEach(page => {
+                    // 如果还没有包装器，创建一个
+                    if (!page.parentElement.classList.contains('page-wrapper')) {
+                        const wrapper = document.createElement('div');
+                        wrapper.className = 'page-wrapper';
+                        page.parentNode.insertBefore(wrapper, page);
+                        wrapper.appendChild(page);
+                    }
+                    
+                    // 设置缩放
+                    page.style.transform = `scale(${scale})`;
+                });
+            }
+            
+            // 页面加载时执行
+            setupMobileScale();
+            
+            // 窗口大小改变时重新计算
+            window.addEventListener('resize', setupMobileScale);
         })();
     </script>
 
