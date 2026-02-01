@@ -3859,7 +3859,7 @@
         })();
     </script>
     
-    <!-- 手机端适配：通过viewport让页面以1920px宽度渲染 -->
+    <!-- 手机端适配 -->
     <script>
         (function() {
             function isMobileDevice() {
@@ -3868,28 +3868,83 @@
                 return mobileUA || hasTouch;
             }
             
-            function setupMobileViewport() {
+            function isLandscape() {
+                return window.innerWidth > window.innerHeight;
+            }
+            
+            function setupMobile() {
                 if (!isMobileDevice()) return;
                 
-                // 设置viewport宽度为1920px，让浏览器自动缩放
-                // 这样所有vw/vh单位都会相对于1920x1080计算，位置完全一致
                 const viewport = document.querySelector('meta[name="viewport"]');
-                if (viewport) {
-                    viewport.content = 'width=1920, initial-scale=0.2, user-scalable=yes';
+                const vw = window.innerWidth;
+                const vh = window.innerHeight;
+                
+                if (isLandscape()) {
+                    // 横屏：用viewport方案，让浏览器以1920px渲染
+                    if (viewport) {
+                        viewport.content = 'width=1920, user-scalable=yes';
+                    }
+                    // 移除竖屏时添加的wrapper样式
+                    document.querySelectorAll('.page').forEach(page => {
+                        page.style.transform = '';
+                        page.style.transformOrigin = '';
+                    });
+                } else {
+                    // 竖屏：用transform缩放
+                    if (viewport) {
+                        viewport.content = 'width=device-width, initial-scale=1.0, user-scalable=yes';
+                    }
+                    
+                    const scale = vw / 1920;
+                    const scaledHeight = 1080 * scale;
+                    
+                    document.querySelectorAll('.page').forEach((page, index) => {
+                        // 创建wrapper
+                        if (!page.parentElement.classList.contains('page-wrapper')) {
+                            const wrapper = document.createElement('div');
+                            wrapper.className = 'page-wrapper';
+                            wrapper.style.cssText = `
+                                width: 100vw;
+                                height: ${scaledHeight}px;
+                                overflow: hidden;
+                                position: relative;
+                            `;
+                            page.parentNode.insertBefore(wrapper, page);
+                            wrapper.appendChild(page);
+                        } else {
+                            page.parentElement.style.height = `${scaledHeight}px`;
+                        }
+                        
+                        page.style.transform = `scale(${scale})`;
+                        page.style.transformOrigin = 'top left';
+                    });
                 }
                 
                 // 隐藏不需要的UI元素
-                const style = document.createElement('style');
-                style.textContent = `
-                    .notes-trigger, .notes-mode-toggle, .keyboard-hint, #dev-panel {
-                        display: none !important;
-                    }
-                `;
-                document.head.appendChild(style);
+                if (!document.getElementById('mobile-hide-style')) {
+                    const style = document.createElement('style');
+                    style.id = 'mobile-hide-style';
+                    style.textContent = `
+                        .notes-trigger, .notes-mode-toggle, .keyboard-hint, #dev-panel {
+                            display: none !important;
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
             }
             
-            // 立即执行
-            setupMobileViewport();
+            // 页面加载后执行
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', setupMobile);
+            } else {
+                setupMobile();
+            }
+            
+            // 屏幕旋转时重新设置
+            window.addEventListener('orientationchange', () => {
+                setTimeout(setupMobile, 200);
+            });
+            window.addEventListener('resize', setupMobile);
         })();
     </script>
 
