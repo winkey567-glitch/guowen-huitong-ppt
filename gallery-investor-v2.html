@@ -1443,8 +1443,205 @@
             box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
         }
         
-        /* 响应式 */
+        /* 响应式 - 平板 */
+        @media (max-width: 1024px) {
+            .page {
+                padding: 30px;
+            }
+            
+            .main-title {
+                font-size: clamp(28px, 6vw, 48px);
+            }
+            
+            .subtitle {
+                font-size: clamp(12px, 2.5vw, 18px);
+            }
+            
+            .content-title {
+                font-size: clamp(24px, 5vw, 42px);
+            }
+            
+            .section-number {
+                font-size: clamp(60px, 12vw, 120px);
+            }
+        }
+        
+        /* 响应式 - 手机 */
         @media (max-width: 768px) {
+            body {
+                scroll-snap-type: none;
+            }
+            
+            .page {
+                width: 100vw;
+                height: auto;
+                min-height: 100vh;
+                max-width: 100vw;
+                max-height: none;
+                padding: 20px;
+                scroll-snap-align: none;
+            }
+            
+            /* 封面页 */
+            .content-left {
+                position: relative;
+                top: auto;
+                left: auto;
+                padding: 60px 20px 40px;
+                text-align: center;
+            }
+            
+            .main-title {
+                font-size: clamp(24px, 8vw, 36px);
+                line-height: 1.3;
+            }
+            
+            .subtitle {
+                font-size: clamp(10px, 3vw, 14px);
+                left: auto;
+                position: relative;
+            }
+            
+            .tagline {
+                font-size: clamp(14px, 4vw, 20px);
+                max-width: 100%;
+            }
+            
+            .button {
+                padding: 12px 24px;
+                font-size: 14px;
+            }
+            
+            /* 章节标题 */
+            .content-title {
+                font-size: clamp(20px, 6vw, 32px);
+                padding: 0 10px;
+            }
+            
+            .section-number {
+                font-size: clamp(40px, 15vw, 80px);
+                top: 10px;
+                right: 10px;
+            }
+            
+            /* 第2页 - 愿景 */
+            .vision-layout {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .vision-left, .vision-right {
+                width: 100%;
+            }
+            
+            .vision-main-text {
+                font-size: clamp(16px, 4vw, 24px);
+            }
+            
+            .vision-sub-text {
+                font-size: clamp(12px, 3vw, 16px);
+            }
+            
+            /* 第3页 - 行业浪潮 */
+            .industry-container {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .insights-grid {
+                width: 100%;
+            }
+            
+            .chart-container {
+                width: 100%;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20px;
+            }
+            
+            .chart-bar {
+                width: 50px;
+            }
+            
+            .chart-bar.highlight {
+                width: 60px;
+            }
+            
+            .chart-value {
+                font-size: 16px;
+                top: -35px;
+            }
+            
+            .chart-bar.highlight .chart-value {
+                font-size: 24px;
+                top: -45px;
+            }
+            
+            .chart-label {
+                font-size: 10px;
+                bottom: -40px;
+            }
+            
+            .insight-card {
+                padding: 15px;
+            }
+            
+            .insight-card h4 {
+                font-size: 14px;
+            }
+            
+            .insight-card p {
+                font-size: 12px;
+            }
+            
+            /* HUD卡片 */
+            .hud-card {
+                padding: 15px;
+            }
+            
+            .hud-card h3 {
+                font-size: 16px;
+            }
+            
+            .hud-card p {
+                font-size: 12px;
+            }
+            
+            /* 时间线 */
+            .timeline-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding: 15px;
+            }
+            
+            /* 3D模型区域 */
+            #bronze-3d-canvas {
+                height: 250px !important;
+            }
+            
+            /* 团队页 */
+            .team-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            
+            .team-member {
+                padding: 15px;
+            }
+            
+            .team-member h4 {
+                font-size: 14px;
+            }
+            
+            .team-member .role {
+                font-size: 11px;
+            }
+            
+            /* 备注侧边栏 */
             .notes-sidebar {
                 width: 100%;
             }
@@ -1455,6 +1652,50 @@
             
             .notes-mode-toggle {
                 display: none;
+            }
+            
+            .notes-trigger {
+                bottom: 15px;
+                right: 15px;
+                width: 45px;
+                height: 45px;
+            }
+            
+            /* 隐藏开发模式按钮 */
+            #dev-panel {
+                display: none !important;
+            }
+            
+            /* 粒子效果在手机上减少 */
+            #particles-js {
+                opacity: 0.5;
+            }
+        }
+        
+        /* 响应式 - 小手机 */
+        @media (max-width: 480px) {
+            .page {
+                padding: 15px;
+            }
+            
+            .main-title {
+                font-size: clamp(20px, 7vw, 28px);
+            }
+            
+            .content-title {
+                font-size: clamp(18px, 5.5vw, 26px);
+            }
+            
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .chart-bar {
+                width: 40px;
+            }
+            
+            .chart-bar.highlight {
+                width: 50px;
             }
         }
 
