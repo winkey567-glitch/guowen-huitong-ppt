@@ -3727,12 +3727,16 @@
                 e.preventDefault();
                 const pages = document.querySelectorAll('.page');
                 const currentScroll = window.scrollY;
-                const windowHeight = window.innerHeight;
                 
                 for (let i = 0; i < pages.length; i++) {
-                    const pageTop = pages[i].offsetTop;
+                    // 如果有wrapper，用wrapper的位置，否则用page的位置
+                    const element = pages[i].parentElement.classList.contains('page-wrapper') 
+                        ? pages[i].parentElement 
+                        : pages[i];
+                    const pageTop = element.offsetTop;
+                    
                     if (pageTop > currentScroll + 10) {
-                        pages[i].scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
                         break;
                     }
                 }
@@ -3742,9 +3746,14 @@
                 const currentScroll = window.scrollY;
                 
                 for (let i = pages.length - 1; i >= 0; i--) {
-                    const pageTop = pages[i].offsetTop;
+                    // 如果有wrapper，用wrapper的位置，否则用page的位置
+                    const element = pages[i].parentElement.classList.contains('page-wrapper') 
+                        ? pages[i].parentElement 
+                        : pages[i];
+                    const pageTop = element.offsetTop;
+                    
                     if (pageTop < currentScroll - 10) {
-                        pages[i].scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
                         break;
                     }
                 }
