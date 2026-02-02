@@ -3772,46 +3772,53 @@
                 const vw = window.innerWidth;
                 const vh = window.innerHeight;
                 
-                if (isLandscape()) {
-                    // 横屏：用viewport方案，让浏览器以1920px渲染
-                    if (viewport) {
-                        viewport.content = 'width=1920, user-scalable=yes';
-                    }
-                    // 移除竖屏时添加的wrapper样式
-                    document.querySelectorAll('.page').forEach(page => {
-                        page.style.transform = '';
-                        page.style.transformOrigin = '';
-                    });
-                } else {
-                    // 竖屏：用transform缩放
-                    if (viewport) {
-                        viewport.content = 'width=device-width, initial-scale=1.0, user-scalable=yes';
-                    }
-                    
-                    const scale = vw / 1920;
-                    const scaledHeight = 1080 * scale;
-                    
-                    document.querySelectorAll('.page').forEach((page, index) => {
-                        // 创建wrapper
-                        if (!page.parentElement.classList.contains('page-wrapper')) {
-                            const wrapper = document.createElement('div');
-                            wrapper.className = 'page-wrapper';
-                            wrapper.style.cssText = `
-                                width: 100vw;
-                                height: ${scaledHeight}px;
-                                overflow: hidden;
-                                position: relative;
-                            `;
-                            page.parentNode.insertBefore(wrapper, page);
-                            wrapper.appendChild(page);
-                        } else {
-                            page.parentElement.style.height = `${scaledHeight}px`;
-                        }
-                        
-                        page.style.transform = `scale(${scale})`;
-                        page.style.transformOrigin = 'top left';
-                    });
+                // 统一用transform缩放方案
+                if (viewport) {
+                    viewport.content = 'width=device-width, initial-scale=1.0, user-scalable=yes';
                 }
+                
+                // 计算缩放比例：横屏按高度缩放，竖屏按宽度缩放
+                let scale;
+                if (isLandscape()) {
+                    scale = vh / 1080;
+                } else {
+                    scale = vw / 1920;
+                }
+                
+                const scaledWidth = 1920 * scale;
+                const scaledHeight = 1080 * scale;
+                
+                document.querySelectorAll('.page').forEach((page, index) => {
+                    // 创建wrapper
+                    if (!page.parentElement.classList.contains('page-wrapper')) {
+                        const wrapper = document.createElement('div');
+                        wrapper.className = 'page-wrapper';
+                        wrapper.style.cssText = `
+                            width: 100vw;
+                            height: ${scaledHeight}px;
+                            overflow: hidden;
+                            position: relative;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                        `;
+                        page.parentNode.insertBefore(wrapper, page);
+                        wrapper.appendChild(page);
+                    } else {
+                        page.parentElement.style.height = `${scaledHeight}px`;
+                    }
+                    
+                    page.style.transform = `scale(${scale})`;
+                    page.style.transformOrigin = 'top left';
+                    
+                    // 横屏时居中
+                    if (isLandscape()) {
+                        const leftOffset = (vw - scaledWidth) / 2;
+                        page.style.marginLeft = `${leftOffset}px`;
+                    } else {
+                        page.style.marginLeft = '0';
+                    }
+                });
                 
                 // 隐藏不需要的UI元素
                 if (!document.getElementById('mobile-hide-style')) {
